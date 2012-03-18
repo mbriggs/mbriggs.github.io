@@ -42,7 +42,7 @@ with the differences being that the name of the variable is on the left side, an
 
 I think he (and many others) see `Object#tap` as meaning "fancy method that give me a 1 character placeholder variable and implicit return". I see tap as meaning "tap into the object initialization", or more practically "This entire expression is related to object initialization."
 
-Typically, I wont use `tap` unless there is a high degree of locality, and you are talking about left-side = right-side type code. So
+Typically, I wont use `tap` unless there is a high degree of locality, and you are talking about left-side = right-side type code. Something like this
 
 {% codeblock lang:ruby %}
 def build_foo
@@ -53,7 +53,26 @@ def build_foo
 end
 {% endcodeblock %}
 
-In this case I think Gary's first objection doesn't really apply -- the name in this case is nowhere near as important as the thing that I am building. So it is actually a benefit to see that on the left side rather then the right, since the placeholder var is inconsiquencial. Additionally, with a glance I am able to tell the purpose of all the code in that level of indentation. The third benefit is that the block evaluates to the object being built. I like most things in ruby, but I find implicit returns that are not part of a larger expression to be sort of ugly. By that I mean that something like this I find the implicit return elegant
+Building out values on an object is an incredibly common pattern that is logically a single thing. Visually, tap is grouping the code for that pattern. Also, I find it reduces density in a place where the additional verbosity really doesn't add anything in terms of clarity. At work, we are still using 1.8.7 ree, so when we need ordered hashes (often as identifiers for keys on objects), we have a lot of code that looks like this
+
+{% codeblock lang:ruby %}
+UNIT_OF_MEASURES = ActiveSupport::OrderedHash
+UNIT_OF_MEASURES[1] = "Eaches"
+UNIT_OF_MEASURES[2] = "Cases"
+UNIT_OF_MEASURES[3] = "Pallets"
+{% endcodeblock %}
+
+I think the move from that to tap style is a significant improvement
+
+{% codeblock lang:ruby %}
+UNIT_OF_MEASURES = ActiveSupport::OrderedHash.tap |uom|
+  uom[1] = "Eaches"
+  uom[2] = "Cases"
+  uom[3] = "Pallets"
+end
+{% endcodeblock %}
+
+The last thing is the fact that its a single expression. I love implicit returns in ruby where your entire method is a single expression, it feels kind of lispy. Something like this
 
 {% codeblock me likey lang:ruby %}
 def foo
@@ -61,7 +80,7 @@ def foo
 end
 {% endcodeblock %}
 
-where something like this, I find it ugly
+However, I am really not a fan of implicit returns when you just end a function with a bare word. If you are writing imperative style of code, I think each statement should actually be a statement that says what it does. Something like this just sort of feels like a mis-use of a language feature.
 
 {% codeblock ugh lang:ruby %}
 def foo
@@ -71,11 +90,9 @@ def foo
 end
 {% endcodeblock %}
 
-and will usually do an explicit return, even though it is not strictly nessicary. 
+This is something that I think falls squarely into personal style. But because of how I enjoy writing more expression oriented code, having an expression for a common pattern is a big plus for me.
 
-This is something that I think falls squarely into personal style, but because of where I fall on that, `Object#tap` to me makes the pattern of initialization of an object more elegant.
-
-Another interesting thing to note is that in rails-land, it is very common to use hash initializers for this kind of thing. While that syntax is very minimal, I actually prefer the `Object#tap` way, because I find it gives a clearer separation between arguments and that kind of initialization pattern.
+Another interesting thing to note is that in rails-land, it is very common to use hash initializers for this kind of thing. While that syntax is very minimal, I actually prefer the `Object#tap` way, because I find it gives a clearer separation between plain old method arguments, and object initialization.
 
 ## Not Hatin On Gary
 
