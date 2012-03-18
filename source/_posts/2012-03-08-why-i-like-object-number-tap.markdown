@@ -92,7 +92,23 @@ end
 
 This is something that I think falls squarely into personal style. But because of how I enjoy writing more expression oriented code, having an expression for a common pattern is a big plus for me.
 
-Another interesting thing to note is that in rails-land, it is very common to use hash initializers for this kind of thing. While that syntax is very minimal, I actually prefer the `Object#tap` way, because I find it gives a clearer separation between plain old method arguments, and object initialization.
+Another interesting thing to note is that in rails-land, it is very common to use hash initializers for this kind of thing. Something like this
+
+{% codeblock lang:ruby %}
+Post.create! author: current_user,
+             published: true,
+             category: "some-category"
+{% endcodeblock %}
+
+While that syntax is very minimal, I actually prefer the `Object#tap` style of api, because I find it gives a clearer separation between plain old method arguments, and object initialization.
+
+{% codeblock lang:ruby %}
+Post.create! do |p|
+  p.author = current_user
+  p.published = true
+  p.category = "some-category"
+end
+{% endcodeblock %}
 
 ## Not Hatin On Gary
 
