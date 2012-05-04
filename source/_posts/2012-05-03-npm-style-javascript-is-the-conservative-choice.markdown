@@ -8,7 +8,7 @@ categories: javascript
 
 I am sick of talking about semicolons. But after reading some comments on Tom Dale's recent post on best practices, I think I need to talk about the reasoning behind NPM style, and what it does to your code. It is not about being "cool", it is about dealing with two of the three types of bugs that are the hardest things to debug in the language.
 
-*I don't care if you use semi-colons or not, that is not what this blog post is about*
+#### I dont care if you use semi-colons or not, that is not what this blog post is about
 
 What this post is about is
 
@@ -207,9 +207,10 @@ Since this happens in one case if you are doing cross platform browser work (a l
 {% codeblock lang:javascript %}
 function foo(){
   var apples = 1
-  var bananas = 2
-  var array = [apples, bananas]
-  var carrots = 3
+    , bananas = 2
+    , array = [apples, bananas]
+    , carrots = 3
+
   ;(function(){
     var a = 1
     var b = 2
@@ -225,7 +226,7 @@ function foo(){
 
 {% endcodeblock %}
 
-Notice the leading comma in front of the immediately invoking function?
+Notice the leading semicolon in front of the immediately invoking function?
 
 Now, you might argue that it is even MORE invisible to not have the leading comma. First of all, once you get used to seeing `;(function(){}())`, not having that leading comma is the thing that makes it look strange. Since it is at the start of the line, the fact it is missing also helps me immensely. Lastly, when debugging the problem, you aren't looking for pairs of lines, you are looking for a single thing (that you can easily grep for)
 
