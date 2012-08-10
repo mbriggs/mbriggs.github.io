@@ -12,30 +12,30 @@ HTML5 has a lot of cool things in it, but the one thing I wish I could remove ar
 
 We have 3 technologies that go into building a web app, HTML, CSS, and JavaScript. All three operate on an abstract concept called the DOM, in their own ways.
 
-- *css*
+- *css*<br/>
 This is the language we use to declaratively set the visual properties of our UI. It consists of a path matching syntax, and a series of rules. Clean css is a) readable, b) doesn't repeat itself too much, and c) is modular (i.e. you shouldn't have styles intended for one thing leak into another thing) CSS is very hard (and frustrating) to learn, and even harder to write well.
 
-- *javascript*
+- *javascript*<br/>
 This is the language we use to specify the behaviour of our application. Up until the last 2 years there wasn't a lot of guidance on how to do this properly, but nowadays there is a tonne. Clean javascript is worthy of a book rather then a half paragraph, but for the purpose of this blog post, clean javascript is keeping your behaviour in javascript and your javascript out of the html. Also, that your DOM centric code should be segregated from the more abstract code.
 
-- *html*
+- *html*<br/>
 Html is the language we use to form the base structure of the DOM. Many people confuse HTML with being the DOM, but that usually comes from not much javascript experience. The HTML should be expressing the structure of your interface in a very abstract way. For example, if you have a navigation sidebar, it may look something like this
 
 ```html
 <nav>
   <header>Pages</header>
   <ul>
-    <li><a href="foo.html>foo</a></li>
-    <li><a href="foo.html>foo</a></li>
-    <li><a href="foo.html>foo</a></li>
-    <li><a href="foo.html>foo</a></li>
+    <li><a href="foo.html">foo</a></li>
+    <li><a href="foo.html">foo</a></li>
+    <li><a href="foo.html">foo</a></li>
+    <li><a href="foo.html">foo</a></li>
   </ul>
 </nav>
 ```
 
 There is nothing talking about whether this sits at the left, right, or bottom of the page. There is nothing that talks about how the links should be pjaxing the main content div of the app. All it describes is a navigation widget at a very high level.
 
-- *the DOM*
+- *the DOM*<br/>
 This is where all of those things come together. The DOM is the in memory representation of your UI. It has event handlers bound to elements, it has styles, and it changes dynamically. When you hit view source in your browser, you are looking at the html. When you open the web inspector, you are looking at the DOM (made to look html, due to how confused people are about these things). 
 
 ## The role of data attributes
@@ -70,7 +70,7 @@ In the small scale, it really doesn't matter at all. More then that, it works ve
 
 If you are building highly dynamic apps, or larger scale apps, things start to break down. When people are taught by rails that data attributes are a way to configure javascript libraries, you end up with stuff like this
 
-```html
+```erb
 <%= text_field_tag "text_field_import_scenario_#{scenario.id}", "", :style => "width:346px;", :size => 24, :'data-autocomplete-path' => search_scenarios_quote_scenario_path(scenario.quote, scenario), :'data-autocomplete-raw-html' => true, :'data-autocomplete-send-form' => true, :'data-autocomplete-select' => "$j('#import_error_message').html('');$j('#text_field_import_scenario_#{scenario.id}').val(ui.item.name); $j('#object_id_#{scenario.id}').val(ui.item.value);", :'data-autocomplete-after-update-bad' => "$j('#import_link_#{scenario.id}').show(); resizePopup('import_pop_up_#{scenario.id}');" %>
 ```
 
