@@ -3,7 +3,6 @@ layout: post
 title: "Scope in Angular"
 date: 2014-01-22 14:34
 comments: true
-published: false
 categories:
  - angular
  - javascript

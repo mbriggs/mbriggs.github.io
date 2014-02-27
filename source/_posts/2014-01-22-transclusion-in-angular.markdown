@@ -3,7 +3,6 @@ layout: post
 title: "Transclusion in Angular"
 date: 2014-01-22 14:54
 comments: true
-published: false
 author: Matt Briggs
 categories:
 - angular

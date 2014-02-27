@@ -3,8 +3,18 @@ layout: post
 title: "Why I Don't Use Semicolons"
 date: 2012-04-16 18:00
 comments: true
-categories: javascript politics 
+categories: javascript politics
 ---
+
+**Update** I was looking at old posts on my blog, and ran across this
+one. It is more then a little angry, and takes a very hard line. If I
+were to write this today, it would come out very differently. It was
+written during a time when the JS community flamed each other very hard
+for about a month over this issue. Where I stand now is that honestly,
+it doesn't matter that much. Using semi-colons because most of the
+community does is a perfectly valid reason. I felt attacked in a
+personal way, and responded in kind. Not something I am proud of, but it
+is what it is.
 
 This weekend there was the latest of many outcries over the use of semi-colons. The problem came from twitter bootstrap breaking in jsmin due to a lack of semi-colons, fat saying that he wrote perfectly fine js, and that it is a bug in jsmin, followed by crockford declaring his code bad (in the way only crockford can), and that he wouldn't bring jsmin down to the level of supporting code that bad.
 
@@ -69,9 +79,9 @@ Now, getting `undefined is not a function` would be pretty confusing in that, an
 
 ## So, thats the problem, how do we deal with it?
 
-There are several schools of thought. 
+There are several schools of thought.
 
-- One is to not actually explain the real issue, and give some handwaving and muttering about the inconsistencies of ASI, and how you should never rely on it. 
+- One is to not actually explain the real issue, and give some handwaving and muttering about the inconsistencies of ASI, and how you should never rely on it.
 - Another is to learn the reason that bug occurs, and put a semi colon at the end of every line, whether it needs it or not
 - A third is to prefix a line when this issue will occur with a semi-colon, and omit them in all other instances, since you know it is safe to do so.
 

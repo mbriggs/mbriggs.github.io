@@ -4,7 +4,6 @@ title: "Understanding Angular Directives"
 author: Matt Briggs
 date: 2014-01-14 11:34
 comments: true
-published: false
 categories: [angular javascript]
 ---
 
@@ -22,11 +21,11 @@ In a more practical sense, directives are HTML artifacts which handle all DOM ma
 
 ## Comparisons to Backbone Views
 
-The idea of a directive sort of lines up with a Backbone view, in that it is the place that you put code that interacts with the DOM. 
+The idea of a directive sort of lines up with a Backbone view, in that it is the place that you put code that interacts with the DOM.
 
-A key difference, is that a Backbone view usually has a one to one relationship with a DOM element. In the case of Angular, it is quite common for multiple directives to be attached to the same DOM element. 
+A key difference, is that a Backbone view usually has a one to one relationship with a DOM element. In the case of Angular, it is quite common for multiple directives to be attached to the same DOM element.
 
-Another difference is that in Backbone, there is a substantial amount of code required to wire together, views, the DOM, and the models/collections. In Angular, the wiring up is done by the framework, according to HTML annotations and dependancy injection. 
+Another difference is that in Backbone, there is a substantial amount of code required to wire together, views, the DOM, and the models/collections. In Angular, the wiring up is done by the framework, according to HTML annotations and dependancy injection.
 
 This dramatically reduces the amount of code required to build a complex view. When people talk about writing less code in Angular, the majority of it comes from the lack of this code, which is pure boilerplate 90%+ of the time. However, it also means less flexibility in how to coordinate interactions between components. This is a double edged sword, having a single, well understood way of doing things makes the code easier to understand, but when you are doing something that pushes the framework, it means you have less tools at your disposal.
 
@@ -50,9 +49,9 @@ Now four choices in how to apply directives may seem to be a lot. In reality, it
 
 ## link function
 
-The next thing we will look at is the `link` function. To understand why it is named `link` only becomes clear after understanding the directive life cycle, but for now, think of it as the place where you put your DOM manipulation code. 
+The next thing we will look at is the `link` function. To understand why it is named `link` only becomes clear after understanding the directive life cycle, but for now, think of it as the place where you put your DOM manipulation code.
 
-You can see that we have three arguments being passed in -- `scope`, `element`, and `attrs` (there are an additional two arguments which can be used, but they are for more advanced situations, which we will explore in future posts). 
+You can see that we have three arguments being passed in -- `scope`, `element`, and `attrs` (there are an additional two arguments which can be used, but they are for more advanced situations, which we will explore in future posts).
 
 - `scope` is the current scope of the element. It is hard to list all the ways a scope reference can be used in Angular. But in the context of directives, the core use case is to translate what is in the DOM into JavaScript properties, and apply DOM changes based on JavaScript properties. The best way to think of scope is the glue between the world of the view (HTML) and the world of the rest of your application (JavaScript).
 
@@ -63,7 +62,7 @@ You can see that we have three arguments being passed in -- `scope`, `element`, 
 
 ## The Angular directive lifecycle
 
-If you have made it this far, you already understand how to use a directive in a simple fashion. However, to fully understand directives, you have to understand how Angular uses them. 
+If you have made it this far, you already understand how to use a directive in a simple fashion. However, to fully understand directives, you have to understand how Angular uses them.
 
 When you start your Angular application, you provide two pieces of information to the framework: A top level module, and a root element. The module is loaded, so that its dependancies can be registered for injections. The DOM node then gets passed to the `$compile` service for compilation.
 
@@ -73,7 +72,7 @@ To compile a node, Angular needs to know how to combine the world of HTML (the D
 
 Angular gets these linking functions by calling the `compile` function on each directive, in order of `priority`. `compile` defaults to whatever function is provided by the `link` property of the directive definition, if present. These linking functions are then combined into a composite linking function for that element.
 
-Once all the linking functions are gathered, Angular will start linking from the bottom of the tree going up. 
+Once all the linking functions are gathered, Angular will start linking from the bottom of the tree going up.
 
 ## compile vs link
 
@@ -86,12 +85,12 @@ The easy answer is that you should just use `link`, unless you need to do someth
 
 Let's take [the classic FizzBuzz interview question](http://c2.com/cgi/wiki?FizzBuzzTest), and modify it to be about directives.
 
-> Write a directive that will be applied to an element with 
+> Write a directive that will be applied to an element with
 > children, each containing a number. The directive will then
 > modify the child elements to apply a directive. When the
 > child element contains a number divisible by 3, apply a
 > `fizz` directive. When the number is divisible by 5, apply
-> a `buzz` directive. When it is divisible by both 3 and 5, 
+> a `buzz` directive. When it is divisible by both 3 and 5,
 > apply a `fizz-buzz` directive.
 >
 > Each of those directives will change the element to display
@@ -100,7 +99,7 @@ Let's take [the classic FizzBuzz interview question](http://c2.com/cgi/wiki?Fizz
 
 {% plunker src:fuCL1gTR0nQl5dYGsxU4 height:500px %}
 
-Directives are one of the most complex parts of Angular, but hopefully this post gives you a good foundation to build your knowledge on. There are more advanced properties and techniques available, but using what was described here will take you very far. 
+Directives are one of the most complex parts of Angular, but hopefully this post gives you a good foundation to build your knowledge on. There are more advanced properties and techniques available, but using what was described here will take you very far.
 
 
 

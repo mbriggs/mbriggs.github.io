@@ -4,7 +4,6 @@ title: "Code Organization in Angular"
 date: 2014-01-22 14:57
 comments: true
 author: Matt Briggs
-published: false
 categories:
 - angular
 - javascript
