@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Repository Pattern In Rails - Matt Briggs</title>
+  <meta name="author" content="Matt Briggs">
+
+  
+  <meta name="description" content="I have been working a lot on an app using MongoDB as the datastore, and Mongoid as the OR/M (or ODM to be more specific). In a relational database, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mattbriggs.net/blog/2012/02/23/repository-pattern-in-ruby">
+  <link href="/favicon.png?v=2" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Matt Briggs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-10813260-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Briggs</a></h1>
+  
+    <h2>"Not all code needs to be a factory, some of it can just be origami" -why, the lucky stiff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mattbriggs.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="subscription">
+  <li><a href="/.emacs.d" target="_blank" rel="emacs-config" title="Emacs Configuration"><i class="fa fa-code"></i></a></li>
+  <li><a href="http://github.com/mbriggs" target="_blank" rel="github" title="Github Profile"><i class="fa fa-github"></i></a></li>
+  <li><a href="https://twitter.com/intent/user?screen_name=googleninja" rel="follow-twitter" target="_blank" title="Follow on Twitter"><i class="fa fa-twitter"></i></a></li>
+  <li><a href="http://stackoverflow.com/users/10771/matt-briggs" rel="stackoverflow" target="_blank" title="StackOverflow Profile"><i class="fa fa-stack-overflow"></i></a></li>
+  <li><a href="/atom.xml" target="_blank" rel="subscribe-rss" title="Subscribe via RSS"><i class="fa fa-rss"></i></a></li>
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://careers.stackoverflow.com/mattbriggs" target="_blank">CV</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Repository Pattern in Rails</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-23T22:59:00-05:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I have been working a lot on an app using MongoDB as the datastore, and Mongoid as the OR/M (or ODM to be more specific). In a relational database, you keep your data as segregated as reasonably possible, and then join it together in appropriate ways when you need it. The up side to this is that it is incredibly flexible, and chances are you wont hit a situation where you need your data in a form that your datastore can&rsquo;t give to you. The down side is that often, your data has a &ldquo;natural&rdquo; way that is joined together, and even though 99.9% of the time you are joining it together in that way, you still pay the cost every time.</p>
+
+<p>In Mongo, your data is stored in that &ldquo;natural&rdquo; way in a json format. That means it is harder to shape the data in different ways, but it is free to get the data in the way it is intended to be used.</p>
+
+<h2>The Problem</h2>
+
+<p>This app was developed using a state-based testing approach, where every test sets up a situation, performs an action, and then asserts on the new state of the world. An interesting side effect of the Mongo way of storing data is that it makes it much harder to test smaller objects in isolation &mdash; if a comment is a hash in an array in a post, it is impossible to save without first saving the post. In more complex scenarios, the problem gets much worse, and I am finding that tests that should be rather simple are requiring far more setup then I would expect.</p>
+
+<h2>A Solution: The Repository</h2>
+
+<p>When it comes to data access, the book Domain Driven Design advocates using a repository layer that separates your domain objects from your data access strategy. This has several benefits:</p>
+
+<ul>
+<li>Your domain objects stay simple. Rails developers tend to follow the &ldquo;Thin controller, fat model&rdquo; heuristic fairly religiously. There is nothing wrong with that per se, but it sort of implies it is ok to have massive classes that do dozens (if not hundreds) of things, so long as it is the model. The problem with that is that as the complexity of the application grows, these &ldquo;God&rdquo; models tend to become harder and harder to maintain &mdash; everything interacts with them, and they interact with everything. That kind of situation is what causes even small changes to cause ripples through your entire applications, and makes even simple maintenance tasks become quite daunting.</li>
+<li>You segregate your interaction with third party code (ActiveRecord, or in my case Mongoid) from the rest of your application. You may say &ldquo;Why is that necessary when you rarely, if ever change your data storage strategy?&rdquo; The reason is that you don&rsquo;t have control over that code, it is managed by a third party. So if they change something, and you are calling their code directly all through your application, your entire application needs to change. I work on quite a large enterprise rails app, and the 2.x &ndash;> 3.x upgrade was a huge undertaking, mostly for this reason.</li>
+<li>By following the Single Responsibility Principal, mocking in tests is a joy. This is going to address the pain I am feeling doing state based testing with a document datastore, and I believe that mockist testing will directly address these problems (I also much prefer mocking, so it is not exactly a direction I am resisting)</li>
+</ul>
+
+
+<h2>First Challenge: Mapping</h2>
+
+<p>I have worked on systems in C# with manual object mapping in repositories, and it is a bit of a nightmare. You end up with hundreds of lines of <code>right_side.property = left_side.property</code> code, which apart from being horribly tedious to write, is actually a terrible source of hard to find bugs. Since we don&rsquo;t have a true data mapper library in ruby, the only way I will even attempt this is if I can automate the process through some clever meta-programming. The first part of that is that I need to be able to retrieve attributes from my domain objects in a simple way, without complicating the objects too much. I also need to be able to get the &ldquo;schema&rdquo; out of my model, so I am able to infer what it wants to save and retrieve.</p>
+
+<h2>This is going to be a lot of work</h2>
+
+<p>The app is currently ~1k loc on the server side, which means it is going to take some time, but is really not an insurmountable task yet. The first step will be figuring out how to tackle the domain model side of the mapping problem, and extracting a domain model out of the current mongoid model. Stay tuned for more!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Briggs</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-23T22:59:00-05:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/design-patterns/'>design-patterns</a>, <a class='category' href='/blog/categories/oop/'>oop</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattbriggs.net/blog/2012/02/23/repository-pattern-in-ruby/" data-via="googleninja" data-counturl="http://mattbriggs.net/blog/2012/02/23/repository-pattern-in-ruby/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/02/27/awesome-emacs-plugins-evil-mode/" title="Next Post: Awesome Emacs Plugins: Evil Mode">Awesome Emacs Plugins: Evil Mode &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/10/how-i-learned-to-stop-worrying/">How I Learned to Stop Worrying, and Love Dart</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/code-organization-in-angular/">Code Organization in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/transclusion-in-angular/">Transclusion in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/scope-in-angular/">Scope in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/14/understanding-angular-directives/">Understanding Angular Directives</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mbriggs">@mbriggs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mbriggs',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/105078754127788731088?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Matt Briggs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'mbriggs';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mattbriggs.net/blog/2012/02/23/repository-pattern-in-ruby/';
+        var disqus_url = 'http://mattbriggs.net/blog/2012/02/23/repository-pattern-in-ruby/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

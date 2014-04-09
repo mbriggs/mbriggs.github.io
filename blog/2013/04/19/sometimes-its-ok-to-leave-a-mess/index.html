@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Sometimes, It's OK to Leave a Mess - Matt Briggs</title>
+  <meta name="author" content="Matt Briggs">
+
+  
+  <meta name="description" content="Recently&hellip; we watched the excellent lunch and learn video from Hashrocket, where Sandi Metz talks about test design. While the whole video is &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mattbriggs.net/blog/2013/04/19/sometimes-its-ok-to-leave-a-mess">
+  <link href="/favicon.png?v=2" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Matt Briggs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-10813260-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Briggs</a></h1>
+  
+    <h2>"Not all code needs to be a factory, some of it can just be origami" -why, the lucky stiff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mattbriggs.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="subscription">
+  <li><a href="/.emacs.d" target="_blank" rel="emacs-config" title="Emacs Configuration"><i class="fa fa-code"></i></a></li>
+  <li><a href="http://github.com/mbriggs" target="_blank" rel="github" title="Github Profile"><i class="fa fa-github"></i></a></li>
+  <li><a href="https://twitter.com/intent/user?screen_name=googleninja" rel="follow-twitter" target="_blank" title="Follow on Twitter"><i class="fa fa-twitter"></i></a></li>
+  <li><a href="http://stackoverflow.com/users/10771/matt-briggs" rel="stackoverflow" target="_blank" title="StackOverflow Profile"><i class="fa fa-stack-overflow"></i></a></li>
+  <li><a href="/atom.xml" target="_blank" rel="subscribe-rss" title="Subscribe via RSS"><i class="fa fa-rss"></i></a></li>
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://careers.stackoverflow.com/mattbriggs" target="_blank">CV</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Sometimes, It's OK to Leave a Mess</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-19T15:18:00-04:00" pubdate data-updated="true">Apr 19<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Recently&hellip;</h2>
+
+<p>we watched the excellent lunch and learn video from <a href="http://hashrocket.com/">Hashrocket</a>, where <a href="http://sandimetz.com/">Sandi Metz</a> <a href="http://vimeo.com/48106365">talks about test design</a>. While the whole video is worth watching, one thing that stood out to me was her term &ldquo;Omega Mess&rdquo;.</p>
+
+<p>The first time I heard someone refer to this concept was pairing with <a href="http://victorsavkin.com/">Victor Savkin</a>, where he referred to parts of the code as his &ldquo;Dirty little secrets&rdquo;. While this is still my favourite name for the concept, I think Sandi&rsquo;s name of Omega Mess, meaning a mess that is at the end of everything, is far more apt, so I have used it ever since.</p>
+
+<h2>The Boyscout Rule</h2>
+
+<p><a href="https://twitter.com/unclebobmartin">Uncle Bob</a> tells us that as professional software developers, we need to practice the Boyscout Rule, meaning always leave things in a cleaner state then when you arrive.</p>
+
+<p>Imagine you are a developer, and you pick up a support task to fix a corner case bug in some crazy calculation. Now, this calculation is in a part of the application which is the stuff of legend on your team. It consists of a few thousand lines of code spread across a dozen different files with methods that have <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">cyclomatic complexities</a> reaching the levels of the national debt. You make a cup of coffee, put on some high energy music, and dig in.</p>
+
+<p>Several hours later, you are pretty sure you understand the problem, and the interactions in code around that problem. You write a unit test to expose the issue, and go about fixing it. All you really need to do is add another <code>if</code> (in code already indented twelve levels deep), so you do it, the tests go green, and you breath a sigh of relief.</p>
+
+<h2>The Choice</h2>
+
+<p>It is at this point the boyscout rule comes into play. You have a choice; close the task, go to a bar, and drink until you no longer remember the pain of the day, OR, using the understanding you have gained over your long day of work, try do something that will make this horror slightly less horrific.</p>
+
+<p>The programmer that believes the bar is the better option is putting his short term pain ahead of the long term maintainability of the application. They will say, &ldquo;I already wasted a whole day on this BS, time to move on to something new so that I can be productive!&rdquo;</p>
+
+<p>The wise programmer knows that typing keys is not the only measure of productivity, and by not utilizing the knowledge gained to chip away at the vital task of improving the maintainability of this core part of the application, they are basically wasting a hard days worth of work, and not moving forward on a task which could one day become so important that the business dies because of it.</p>
+
+<h2>The Omega Mess</h2>
+
+<p>That cautionary tale may seem like I am overly stating the importance of <a href="http://c2.com/cgi/wiki?RefactorMercilessly">constant refactoring</a>, but software shops fail all the time because they don&rsquo;t do it.</p>
+
+<p>Sometimes, the costs don&rsquo;t work out. Sometimes, it isn&rsquo;t worth putting in the time to clean things up. Those cases are when you are faced with code which a) basically works, and b) has a very low probability of change. Code that fits this profile is always at the end of a chain of method calls which is why &ldquo;Omega Mess&rdquo; is such a great name; it is a mess at the end of all the things.</p>
+
+<p>One day you will probably want to clean it up when you have the free time, but there is also a pretty good chance that the only reason this code will ever change is because it is being re-written. If you are working on a large enough app, this is a relatively common occurrence. In this situation, being a good boyscout is a bad thing; you are wasting your company&rsquo;s time for very little benefit, and you are introducing the possibility of regressions for very little reason.</p>
+
+<h2>How to determine probability of change</h2>
+
+<p>This is really an experiential thing, but I would recommend asking yourself the following three questions</p>
+
+<p><em>Is this code stable?</em> Some code gets written once, and then stays the same for years. While other code gets touched every few weeks or months. An omega mess is something that doesn&rsquo;t change much.</p>
+
+<p><em>Does this code touch other code?</em> If your code is executing other code, there is now two possible reasons for this code to change. If the code it calls invokes other code, this can be an exponential thing. If code is not at the &ldquo;end of the line&rdquo;, chances are, it is not an Omega Mess.</p>
+
+<p><em>How many places is this code called from?</em> An Omega Mess sits at the periphery of the system. If this code is called from 100 places in your application, it is important and needs to be fixed.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Briggs</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-19T15:18:00-04:00" pubdate data-updated="true">Apr 19<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/development/'>Development</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattbriggs.net/blog/2013/04/19/sometimes-its-ok-to-leave-a-mess/" data-via="googleninja" data-counturl="http://mattbriggs.net/blog/2013/04/19/sometimes-its-ok-to-leave-a-mess/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/08/10/data-attributes-are-an-anti-pattern/" title="Previous Post: data-attributes are an anti-pattern">&laquo; data-attributes are an anti-pattern</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/01/14/understanding-angular-directives/" title="Next Post: Understanding Angular Directives">Understanding Angular Directives &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/10/how-i-learned-to-stop-worrying/">How I Learned to Stop Worrying, and Love Dart</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/code-organization-in-angular/">Code Organization in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/transclusion-in-angular/">Transclusion in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/scope-in-angular/">Scope in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/14/understanding-angular-directives/">Understanding Angular Directives</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mbriggs">@mbriggs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mbriggs',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/105078754127788731088?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Matt Briggs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'mbriggs';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mattbriggs.net/blog/2013/04/19/sometimes-its-ok-to-leave-a-mess/';
+        var disqus_url = 'http://mattbriggs.net/blog/2013/04/19/sometimes-its-ok-to-leave-a-mess/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

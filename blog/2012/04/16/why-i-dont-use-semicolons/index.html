@@ -1,0 +1,477 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Why I Don't Use Semicolons - Matt Briggs</title>
+  <meta name="author" content="Matt Briggs">
+
+  
+  <meta name="description" content="Update I was looking at old posts on my blog, and ran across this
+one. It is more then a little angry, and takes a very hard line. If I
+were to write &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mattbriggs.net/blog/2012/04/16/why-i-dont-use-semicolons">
+  <link href="/favicon.png?v=2" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Matt Briggs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-10813260-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Briggs</a></h1>
+  
+    <h2>"Not all code needs to be a factory, some of it can just be origami" -why, the lucky stiff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mattbriggs.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="subscription">
+  <li><a href="/.emacs.d" target="_blank" rel="emacs-config" title="Emacs Configuration"><i class="fa fa-code"></i></a></li>
+  <li><a href="http://github.com/mbriggs" target="_blank" rel="github" title="Github Profile"><i class="fa fa-github"></i></a></li>
+  <li><a href="https://twitter.com/intent/user?screen_name=googleninja" rel="follow-twitter" target="_blank" title="Follow on Twitter"><i class="fa fa-twitter"></i></a></li>
+  <li><a href="http://stackoverflow.com/users/10771/matt-briggs" rel="stackoverflow" target="_blank" title="StackOverflow Profile"><i class="fa fa-stack-overflow"></i></a></li>
+  <li><a href="/atom.xml" target="_blank" rel="subscribe-rss" title="Subscribe via RSS"><i class="fa fa-rss"></i></a></li>
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://careers.stackoverflow.com/mattbriggs" target="_blank">CV</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Why I Don't Use Semicolons</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-16T18:00:00-04:00" pubdate data-updated="true">Apr 16<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><strong>Update</strong> I was looking at old posts on my blog, and ran across this
+one. It is more then a little angry, and takes a very hard line. If I
+were to write this today, it would come out very differently. It was
+written during a time when the JS community flamed each other very hard
+for about a month over this issue. Where I stand now is that honestly,
+it doesn&rsquo;t matter that much. Using semi-colons because most of the
+community does is a perfectly valid reason. I felt attacked in a
+personal way, and responded in kind. Not something I am proud of, but it
+is what it is.</p>
+
+<p>This weekend there was the latest of many outcries over the use of semi-colons. The problem came from twitter bootstrap breaking in jsmin due to a lack of semi-colons, fat saying that he wrote perfectly fine js, and that it is a bug in jsmin, followed by crockford declaring his code bad (in the way only crockford can), and that he wouldn&rsquo;t bring jsmin down to the level of supporting code that bad.</p>
+
+<p>The story hit hacker news, twitter, the irc, and probably other places I don&rsquo;t follow, and caused quite a big deal of nerd rage over how someone could justify not using semicolons in javascript. The next day, Brandon Eich weighed in, and basically said that automatic semi-colon insertion wasn&rsquo;t done properly, if he could go back in time he would have made them fully optional, but since they aren&rsquo;t optional in all circumstances, you should probably use them all the time. This basically threw fuel on the fire, and kept the rage going on for another day or so.</p>
+
+<h2>The Problem With ASI (Automatic Semicolon Insertion) in Javascript</h2>
+
+<p>It really depends on who you ask. If you talk to Crockford, he will say something about how the spec is mystifying and the rules are obtuse so you should just always use them. If you talk to someone else who has read the spec, they will tell you that the spec is pretty clear, and well implemented across browser versions. There is really one place where it does not work they way one would expect.</p>
+
+<p>Basically javascript treats whitespace and newlines for brackets the same across all the different types of brackets so that means both of the following are valid js syntax</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">foo</span> <span class="o">===</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">doSomething</span><span class="p">()</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">foo</span> <span class="o">===</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nx">doSomething</span><span class="p">()</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That is pretty much as one would expect right? The problem comes with the following</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">doSomething</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">// is the same as…</span>
+</span><span class='line'><span class="nx">doSomething</span>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// and…</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">listOfFoo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">// is the same as…</span>
+</span><span class='line'><span class="nx">listOfFoo</span>
+</span><span class='line'><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Why anyone would write that into a language is beyond me, because deliberately writing code like the previous examples is absolutely terrible. But apart from aesthetics, where this will get you into trouble is a case like this</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">wtf</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;this function doesn&#39;t actually return anything&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;So when you call it, it evaluates to undefined&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">wtf</span><span class="p">()</span>
+</span><span class='line'><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="c1">// this pattern is known as an immediately invoking function definition</span>
+</span><span class='line'> <span class="c1">// it is mostly used to introduce local state</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">SomeNamespace</span><span class="p">.</span><span class="nx">funcName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}())</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above is a semi-realistic scenario where asi will punch you in the face in javascript. Basically, the intent is to call <code>wtf()</code>, and then make your immediately invoking function. What actually happens is that <code>wtf</code> gets called, returns <code>undefined</code>, and js attempts to call <code>undefined</code> as a function, passing in that inner function as an argument.</p>
+
+<p>Now, getting <code>undefined is not a function</code> would be pretty confusing in that, and very hard to debug, especially if you don&rsquo;t know the js quirks around ASI.</p>
+
+<h2>So, thats the problem, how do we deal with it?</h2>
+
+<p>There are several schools of thought.</p>
+
+<ul>
+<li>One is to not actually explain the real issue, and give some handwaving and muttering about the inconsistencies of ASI, and how you should never rely on it.</li>
+<li>Another is to learn the reason that bug occurs, and put a semi colon at the end of every line, whether it needs it or not</li>
+<li>A third is to prefix a line when this issue will occur with a semi-colon, and omit them in all other instances, since you know it is safe to do so.</li>
+</ul>
+
+
+<p>The first is the attitude taken by the vast majority of the javascript community. The second and third are taken by a few, more advanced developers. The third however, is shunned, and causes terrible arguments by people who take the first way of dealing with it.</p>
+
+<h2>Why all the hate?</h2>
+
+<p>If you write java code all day, and are appending ; to the end of each line whether it needs it or not, I can totally see it making sense to carry that tradition of needless ceremony over in javascript. If you come from any other language that supports ASI properly, I cannot understand how, after learning the facts about what the issue is, come to the conclusion that appending a redundant character to the end of 99.999% of your code is the way to solve a problem that comes up 0.001% of the time.</p>
+
+<p>But my attitude is live and let live, if you want to do something I don&rsquo;t get, I really don&rsquo;t mind if it genuinely helps you avoid bugs. I would suggest wrapping all statements with parens, since sometimes they are needed and other times they are not (best to be safe!) and maybe append some <code>//</code>s to the end of your lines, just in case someone wants to add a comment later, it won&rsquo;t cause syntax errors. If I saw code that looked like this</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">(</span><span class="kd">var</span> <span class="nx">addStuff</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="p">(</span><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">//</span>
+</span><span class='line'>  <span class="p">(</span><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">//</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">(</span><span class="k">return</span> <span class="p">(</span><span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">););</span> <span class="c1">//</span>
+</span><span class='line'><span class="p">});</span> <span class="c1">//</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I would kind of be scratching my head, and wondering why the person did it that way. But at the end of the day, all of that other extraneous crap has exactly the same amount of reason to be there as the semicolons.</p>
+
+<h2>Whats so bad about a few semicolons?</h2>
+
+<p>I am going to talk about me, personally here, since there is a good chance that this stuff falls under the category of &ldquo;Thats just the way Matts brain works&rdquo;.</p>
+
+<p>First, they are just noise. They have no reason to be there, and noise for me tends to fade into the background. After working with semi-coloned javascript for awhile, I don&rsquo;t even notice the semicolons anymore. This is a really bad thing, because if I miss a semi-colon in the wrong place, I have a hard time linking the code I am looking at to that problem. By contrast, if I lead a line with a semi-colon in the one situation that matters, that stands out to me like a red flag. I can easily tell when its there and when it is not there.</p>
+
+<p>Second, javascript is the only language I use that people even think about using semi-colons in. I spend most of my time in ruby, clojure, sass, html, and javascript. JS is the one difference with regards to ASI. That just exacerbates the problem for me, and makes it more likely I will miss a semi colon.</p>
+
+<p>Third, I have zero problem remembering &ldquo;Lead lines that begin with brackets with a ;&rdquo;. This is a very simple rule, in a world where I have to remember that keypress is less consistent then keydown, hasLayout, how to vertically align things in css, and why onchange isn&rsquo;t working when I programmatically change something in i.e.. You could make an argument that &ldquo;Add a semi colon to the end of each line&rdquo; is an even easier rule, but for me its not (refer to the previous two points for why).</p>
+
+<p>Lastly, both in this post and in terms of importance, semicolons are ugly. They make an already verbose language just that much more verbose, and I actually care about things like aesthetics in code. This reason is far less important then the previous three, but for me it is just one more reason to not use redundant semi-colons</p>
+
+<h2>The hate</h2>
+
+<p>But hey, if you want to use them, I am totally fine with that. If I contribute to your project I will use them too, and if I  miss one and you let me know, I will happily fix it. I have a canned regexp replace in emacs for scanning a file for possible semi-colon omission, and I dutifully run it before committing to someone else&rsquo;s project.</p>
+
+<p>In my experience, this is pretty common for the no-semicolon crowd. But for some reason the attitude of the semi-colon mafia is that of violent and vitriolic hatred. It is not ok that I choose a different way then them to deal with this problem, it is not ok that I talk about it, and try to educate people as to why they are doing this practice in the first place, and it is really, really not ok for me to expect to be afforded the same courtesy I offer them.</p>
+
+<p>Why?</p>
+
+<p>I ask myself this every time one of these arguments happen. I genuinely think that it is a lack of knowledge that causes this knee-jerk reaction, but actually imparting that knowledge usually changes nothing. It is a very big mystery to me, and I have seen others in the js community express similar bafflement (including Isaac, one of the leaders of the node community, node developer and creator/maintainer of npm)</p>
+
+<h2>Can&rsquo;t we all just get along?</h2>
+
+<p>I would love, just absolutely love to hear a good reason why you need semi-colons everywhere. I don&rsquo;t buy that javascript developers can&rsquo;t remember that simple rule, because they deal with far more complex rules every day. I don&rsquo;t buy that it is a tool issue, because every tool of the current generation has no problems with ASI. I don&rsquo;t buy that it is a fundamental flaw in ASI, because I use many languages that I don&rsquo;t write semi colons in, and never seem to have issues with them.</p>
+
+<p>So please convince me. Politely, and in the spirit of coming to an understanding. I don&rsquo;t understand why you make the choice you make, but I don&rsquo;t think you are terrible for making it. Github has plenty of great developers, they ban semis. Thomas Fuches has been a community leader since before there really was a community, he doesn&rsquo;t use them. Isaac is one of the leaders in the node.js world, and a great js developer, he shares most (if not all) of these opinions. Even if you can&rsquo;t convince me, at least come to the same conclusion that I have on this issue, for whatever reason there are good developers who seem to completely abandon common sense around semi-colons, accept that and move on.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Briggs</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-16T18:00:00-04:00" pubdate data-updated="true">Apr 16<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/politics/'>politics</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattbriggs.net/blog/2012/04/16/why-i-dont-use-semicolons/" data-via="googleninja" data-counturl="http://mattbriggs.net/blog/2012/04/16/why-i-dont-use-semicolons/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/03/18/awesome-emacs-plugins-ctags/" title="Previous Post: Awesome Emacs Plugins: CTags">&laquo; Awesome Emacs Plugins: CTags</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/05/03/npm-style-javascript-is-the-conservative-choice/" title="Next Post: NPM style Javascript is the conservative choice">NPM style Javascript is the conservative choice &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/10/how-i-learned-to-stop-worrying/">How I Learned to Stop Worrying, and Love Dart</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/code-organization-in-angular/">Code Organization in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/transclusion-in-angular/">Transclusion in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/scope-in-angular/">Scope in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/14/understanding-angular-directives/">Understanding Angular Directives</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mbriggs">@mbriggs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mbriggs',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/105078754127788731088?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Matt Briggs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'mbriggs';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mattbriggs.net/blog/2012/04/16/why-i-dont-use-semicolons/';
+        var disqus_url = 'http://mattbriggs.net/blog/2012/04/16/why-i-dont-use-semicolons/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

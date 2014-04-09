@@ -1,0 +1,429 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Scope in Angular - Matt Briggs</title>
+  <meta name="author" content="Matt Briggs">
+
+  
+  <meta name="description" content="Angular goes in a different direction then most other frameworks, by having the html you write drive the composition of UI components. This allows &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mattbriggs.net/blog/2014/01/22/scope-in-angular">
+  <link href="/favicon.png?v=2" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Matt Briggs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-10813260-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Briggs</a></h1>
+  
+    <h2>"Not all code needs to be a factory, some of it can just be origami" -why, the lucky stiff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mattbriggs.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="subscription">
+  <li><a href="/.emacs.d" target="_blank" rel="emacs-config" title="Emacs Configuration"><i class="fa fa-code"></i></a></li>
+  <li><a href="http://github.com/mbriggs" target="_blank" rel="github" title="Github Profile"><i class="fa fa-github"></i></a></li>
+  <li><a href="https://twitter.com/intent/user?screen_name=googleninja" rel="follow-twitter" target="_blank" title="Follow on Twitter"><i class="fa fa-twitter"></i></a></li>
+  <li><a href="http://stackoverflow.com/users/10771/matt-briggs" rel="stackoverflow" target="_blank" title="StackOverflow Profile"><i class="fa fa-stack-overflow"></i></a></li>
+  <li><a href="/atom.xml" target="_blank" rel="subscribe-rss" title="Subscribe via RSS"><i class="fa fa-rss"></i></a></li>
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://careers.stackoverflow.com/mattbriggs" target="_blank">CV</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Scope in Angular</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-22T14:34:00-05:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Angular goes in a different direction then most other frameworks, by having the html you write drive the composition of UI components. This allows you to succinctly wire up components without boilerplate, but it also creates some issues. How do you share data? How to components get configured? How do components communicate with each other, or the outside world? The part of angular which answers these questions is scope.</p>
+
+<h2>What is scope?</h2>
+
+<p>The purpose of scope is to hold shared UI state of an element and it&rsquo;s descendants. Since the UI is defined as a tree of nodes, the scope of an element is visible to all descendants of that element. When a descendant introduces a new scope, the new scope inherits properties of it&rsquo;s parent scope.</p>
+
+<p>This is a very elegant solution to the problem, since the further you go down the DOM tree, the more specific the data requirements get.</p>
+
+<p>As an example, here is an extremely basic employee directory, which allows people to add contacts to their personal directories.</p>
+
+<iframe style='width: 100%; height: 500px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/AsGQlxSpdOOhIlG9wi4u/preview'></iframe>
+
+
+<p>There is 3 levels of scope in play here. The first is the root scope, which is defined automatically by the angular bootstrapping process. The second is the directory level, which is created by <code>ng-controller</code>. The third level is the employee elements, which are created by <code>ng-repeat</code>.</p>
+
+<p>Each level inherits from the previous level as illustrated here</p>
+
+<p><img src="/images/scopes/scope_tree.png" alt="scope tree" /></p>
+
+<p>This inheritance is very important, as you can see with what is happening with the &ldquo;add to my directory&rdquo; button. <code>currentUser</code> being on the root scope means it is available to all child scopes, so even though most of what needs to happen at the employee scope level is satisfied with the <code>employee</code> object, it is still able to see <code>currentUser</code> if needed.</p>
+
+<h4>ZOMG global state!</h4>
+
+<p>This may be a bit terrifying, especially for JavaScript developers. The difference between this and global state is that the scope tree is directly linked to the DOM tree.</p>
+
+<p>If two different nodes share a parent, usually there is a reason, and if you put state on that parent node, usually it is very applicable to both children. Those children don&rsquo;t make much sense without the parent, so it becomes unlikely they will be accidentally separated.</p>
+
+<p>As long as you keep your state as localized as possible, having state inheritance is a very elegant solution to the very tricky problem of sharing data.</p>
+
+<p>That being said, if you publish everything on <code>$rootScope</code>, yes that is global state, and yes, that is bad. Don&rsquo;t do that.</p>
+
+<h2>Using scope in directives</h2>
+
+<p>Using scope is pretty straight forward when using things like <code>ng-controller</code> and <code>ng-bind</code>. But how about a directive which interacts with the scope?</p>
+
+<p>Here is a directive which exposes a number from the scope, and whether or not the number is even or odd.</p>
+
+<iframe style='width: 100%; height: 300px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/SZ1VBX53EidtFEzV2SrD/preview'></iframe>
+
+
+<p>The way angular achieves its data binding, is by constantly checking values on scopes to see if they have changed. This is accomplished by <code>scope.$watch</code>. Angular will automatically create <code>$watch</code> expressions for any data binding you give it, but you can also add custom ones. Every time angular thinks something may have changed, it will call the <code>$digest</code> method on the appropriate scopes, which cycles through watch expressions looking for changes. If an expression is found to have changed, angular will execute whatever the callback is.</p>
+
+<p>Another interesting thing here is the <code>$parse</code> service. <code>$parse</code> is the way angular translates expressions (the things inside <code>{{}}</code>) into javascript. Angular will automatically wrap an expression passed into <code>scope.$watch</code> as a string, but since we are going to assign a value to the same expression, it makes more sense to wrap it ourselves.</p>
+
+<p>Most of the rest of the <code>link</code> function is around synchronizing the value of number from the outer scope to the inner scope. The reason for that is that this directive has a template which requires the number to be passed into it (via <code>ng-model</code>). Because of that, we need a fixed, known value for the scope.</p>
+
+<h2>Isolate scope</h2>
+
+<p>Now, what we have here works, but there is quite a bit of &ldquo;manual lifting&rdquo; going on. It would be nice if the framework could handle that two way scope synchronization for you, wouldn&rsquo;t it? Well it can, using a feature called isolate scope.</p>
+
+<p>Normally, scopes will inherit from their parent. But in the case of directives, this can be undesired. A directive is a generic piece of functionality, and the scope is full of application and context specific values. Isolate scope allows a directive to create a &ldquo;scope sandbox&rdquo;, cutting it off from the rest of the scope tree, except for specific values. Here is the previous example re-done using isolate scope.</p>
+
+<iframe style='width: 100%; height: 300px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/riMUgeMoOGbe7DW6QTnB/preview'></iframe>
+
+
+<p>It looks a lot nicer without the synchronization code. That is because we moved that into the <code>scope</code> part of the directive declaration.</p>
+
+<p>The way that the <code>scope</code> property works is the key is name you want to publish on the local scope, the value is a symbol that signifies how the local scope and the outer scope values will get linked.</p>
+
+<ul>
+<li><code>=</code> two way synchronization, by far the most common. This will link an outer scope property to an inner scope property, where the outer scope property is specified by what is in the attribute being referenced.</li>
+<li><code>@</code> one way, this will copy the literal value from the attribute into the isolated scope. If the attribute value changes, the isolated scope property will be updated to reflect the change, but if the isolated property changes it doesn&rsquo;t get copied to the attribute.</li>
+<li><code>&amp;</code> will wrap the expression in a function, which can then be called as needed. If the expression is a function, you can inject arguments into it by passing a context object at the point of invocation. This may not make much sense, but see the next plunk for an example.</li>
+</ul>
+
+
+<p>so for example, <code>scope: { foo: '=' }</code> means &ldquo;Isolate scope for this directive, and set up two way synchronization between a property on the local scope called foo, and whatever expression was entered into the property <code>foo</code> on this directives element&rdquo;.</p>
+
+<p>Often, it is fine to use the same name as the attribute, but if you want to use something different, you can name the key whatever you like, and put the attribute name after the symbol. So <code>scope: { foo: '=bar' }</code> would be synching between the expression in the attribute called <code>bar</code>, and the isolated scope property <code>foo</code>.</p>
+
+<p>Here is an example of all 3 types of isolate scope declarations</p>
+
+<iframe style='width: 100%; height: 800px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/Sjm7MsqXbJjcn00yANvl/preview'></iframe>
+
+
+<h2>Why would you ever not want to isolate scope in a directive?</h2>
+
+<p>The only reason you don&rsquo;t isolate all directives is that there can only be one scope per element, so only one directive per element can ask for scope isolation.</p>
+
+<p>In practice, this isn&rsquo;t as limiting as you would expect. Usually there is at most one directive per element which requires complex integration into the rest of the ui state. If there are other directives, they tend to just do things like configure 3rd party libraries.</p>
+
+<p>Unfortunately, you should only use this feature if you really need it. If you are writing library code, you should go to even greater lengths to avoid it, since it can potentially restrict situations where the directive can be used.</p>
+
+<p>This is one of the things I find frustrating about the framework, the properties of isolate scope are so incredibly useful when writing directives, they really should be always available (in my opinion).</p>
+
+<h2>A few words of warning</h2>
+
+<p>Scope enables most of the aspects that have made angular the most popular JavaScript framework today. But there are some gotchas that are good to be aware of</p>
+
+<h3>Beware complex $watch expressions</h3>
+
+<p>Angular takes a brute force approach to dirty checking (until ES6 anyways), which means that your watch expression can be run many, many times. Slow <code>$watch</code>s are the most common source of performance problems in angular apps.</p>
+
+<h3>If there isn&rsquo;t a &ldquo;.&rdquo; in your binding expression, you are doing something wrong</h3>
+
+<p>This is obvious if you understand how inheritance works, but comes up surprisingly often in issues by newbies. If you read from a property that is on ancestor scope, there is no problem. But if you write to a property on an ancestor scope, you will just end up adding the property to your local scope. By publishing objects on the scope instead of values, JavaScript will first have to find the object before writing, bypassing the problem.</p>
+
+<p>Here is an example of the problem</p>
+
+<iframe style='width: 100%; height: 500px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/zoGNvPsYHo5FnvS7OXn3/preview'></iframe>
+
+
+<p>In general, just stick with the rule of thumb that binding expressions always need a dot in them.</p>
+
+<h3>Think carefully before publishing on $rootScope</h3>
+
+<p>It is a quick way to make something globally accessible, but there are several tradeoffs.</p>
+
+<ul>
+<li>It will make it hard to change in the future, since it is not apparent what is using the variable (since any view code could potentially be using it)</li>
+<li>You are increasing the chance of a name collision. If something further down the page uses the same name, you could introduce a very subtle bug.</li>
+<li>When properties are referenced on the <code>$rootScope</code>, it is not terribly clear where they come from.</li>
+</ul>
+
+
+<p>There is a time and place for <code>$rootScope</code>, but publishing to it should be done with thought and care.</p>
+
+<h3>Debugging</h3>
+
+<p>The <a href="https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk?hl=en">Angular Batarang</a> is an incredibly helpful tool for exploring the current state of the scope on an element. It should be the first thing you reach for when scope isn&rsquo;t behaving the way you think it should</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Briggs</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-22T14:34:00-05:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/angular/'>angular</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattbriggs.net/blog/2014/01/22/scope-in-angular/" data-via="googleninja" data-counturl="http://mattbriggs.net/blog/2014/01/22/scope-in-angular/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/01/14/understanding-angular-directives/" title="Previous Post: Understanding Angular Directives">&laquo; Understanding Angular Directives</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/01/22/transclusion-in-angular/" title="Next Post: Transclusion in Angular">Transclusion in Angular &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/10/how-i-learned-to-stop-worrying/">How I Learned to Stop Worrying, and Love Dart</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/code-organization-in-angular/">Code Organization in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/transclusion-in-angular/">Transclusion in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/scope-in-angular/">Scope in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/14/understanding-angular-directives/">Understanding Angular Directives</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mbriggs">@mbriggs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mbriggs',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/105078754127788731088?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Matt Briggs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'mbriggs';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mattbriggs.net/blog/2014/01/22/scope-in-angular/';
+        var disqus_url = 'http://mattbriggs.net/blog/2014/01/22/scope-in-angular/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

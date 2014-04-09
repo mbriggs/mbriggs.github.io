@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Transclusion in Angular - Matt Briggs</title>
+  <meta name="author" content="Matt Briggs">
+
+  
+  <meta name="description" content="Transclusion is almost a gift to people criticizing Angular. It sounds incredibly complicated and computer-science-y. The spotty documentation around &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mattbriggs.net/blog/2014/01/22/transclusion-in-angular">
+  <link href="/favicon.png?v=2" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Matt Briggs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-10813260-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Briggs</a></h1>
+  
+    <h2>"Not all code needs to be a factory, some of it can just be origami" -why, the lucky stiff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mattbriggs.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="subscription">
+  <li><a href="/.emacs.d" target="_blank" rel="emacs-config" title="Emacs Configuration"><i class="fa fa-code"></i></a></li>
+  <li><a href="http://github.com/mbriggs" target="_blank" rel="github" title="Github Profile"><i class="fa fa-github"></i></a></li>
+  <li><a href="https://twitter.com/intent/user?screen_name=googleninja" rel="follow-twitter" target="_blank" title="Follow on Twitter"><i class="fa fa-twitter"></i></a></li>
+  <li><a href="http://stackoverflow.com/users/10771/matt-briggs" rel="stackoverflow" target="_blank" title="StackOverflow Profile"><i class="fa fa-stack-overflow"></i></a></li>
+  <li><a href="/atom.xml" target="_blank" rel="subscribe-rss" title="Subscribe via RSS"><i class="fa fa-rss"></i></a></li>
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://careers.stackoverflow.com/mattbriggs" target="_blank">CV</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Transclusion in Angular</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-22T14:54:00-05:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Transclusion is almost a gift to people criticizing Angular. It sounds incredibly complicated and computer-science-y. The spotty documentation around the topic and mysterious API only adds to the illusion of what a complicated concept this is. In practice, transclusion is a fairly simple concept, and one that is necessary if you are writing more advanced directives in angular.</p>
+
+<p>In this post, when I talk about the &ldquo;end user&rdquo;, I am referring to the developer using the directive (not the user who uses the application).</p>
+
+<h2>So WTF does it mean anyways?</h2>
+
+<p>The wikipedia definition of transclusion is really pretty simple.</p>
+
+<blockquote><p>In computer science, transclusion is the inclusion of a document or part of a document into another document by reference.</p></blockquote>
+
+<p>So in the context of angular, transclusion would be the embedding of an end user template into the directive template, or the directive template into the end user template. To put it more simply, have a directive (with a template) that either wraps, or is wrapped by end user code.</p>
+
+<h2>Basic Transclusion</h2>
+
+<p>Basic transclusion is when you are simply wrapping end user code. Let&rsquo;s say, for some reason, you are building a blog where each post needs to be programmed in (I know, kind of silly, but just work with me here :) The post would have meta information as attributes, and the content of the directive would become the post body.</p>
+
+<iframe style='width: 100%; height: 500px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/NSgVfO6PsgmeK9BO83TU/preview'></iframe>
+
+
+<p>There are two key pieces that make transclusion happen. First, <code>transclude: true</code> in the directive declaration tells angular we are performing transclusion.</p>
+
+<p>The second piece is the presence of the <code>ng-transclude</code> directive in the <code>post</code> template. This tells angular where to embed the end user template.</p>
+
+<h2>Gotcha: Transclusion and scope</h2>
+
+<p>A big thing to keep in mind is that since this is the end users code, it requires the context of the scope tree, not the isolated scope of the directive. Because of that, transcluded content scope is <strong>not</strong> the child of the directive scope, it is instead a child of the directives parent scope, effectively making it like the directive scope does not exist in the inheritance chain.</p>
+
+<h2>transclude: element</h2>
+
+<p><code>transclude: true</code> allows us to wrap a user&rsquo;s template with our template. But what about when we want to wrap <em>everything</em> in a template? For example, we are building a directive that displays a panel under an input box. The easiest way to do this sort of positioning is when you have a wrapper to position against. Here is a quick example</p>
+
+<iframe style='width: 100%; height: ; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/PwcrFh6OSpqwxQ7drpxe/preview'></iframe>
+
+
+<p>If you look at the compiled DOM, you will see something like this</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;drop-panel is-active&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">drop-panel=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;span</span> <span class="na">ng-transclude=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">drop-panel=</span><span class="s">&quot;&quot;</span> <span class="na">class=</span><span class="s">&quot;ng-scope&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/span&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;drop-panel-panel&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    This is some panel content
+</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>transclude: element</code> means that the entire element was transcluded into the <code>ng-transclude</code> placeholder (rather then just the elements children). <code>replace: true</code> allows us to define a new root node for the directive, so this is also necessary for wrapping to work.</p>
+
+<h2>Transclude linker function for ultimate power</h2>
+
+<p><code>transclude</code> gives a lot of power, but what happens when you need total control over the transclusion process? This is very rare, but can be needed if you need to transclude the end users template multiple times, or need to choose where to transclude based on some kind of logic (maybe as part of compile). For these cases, angular provides the transclude linker function, which lets you do pretty much anything you want.</p>
+
+<p>Let&rsquo;s say you were building a directive which duplicated it&rsquo;s content a specified amount of times. Each duplication will have access to an <code>$index</code> property on the scope, that will tell it what number it is in the list.</p>
+
+<iframe style='width: 100%; height: 500px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/eMCl0kygah7dPzqKP0W8/preview'></iframe>
+
+
+<p>If you understand this, you understand the core of how <code>ng-repeat</code> works, which is one of the most complex directives that ships with angular.</p>
+
+<p>For this one, since we aren&rsquo;t defining a new root element, we don&rsquo;t need <code>replace: true</code>. When <code>replace</code> is set to <code>false</code> (the default), and <code>transclude: 'element'</code> is set, what is actually inserted into the dom is a comment. The way this duplicate directive works is that each &ldquo;duplication&rdquo; is inserted after the previous one, and the first one is inserted after that comment.</p>
+
+<p>You may also notice that <code>priority</code> is set very high. This is because we want our duplication to happen before any other directive gets applied.</p>
+
+<p>Finally, since we are not using <code>ng-transclude</code>, we need to take care of what scope we want our duplication to link to. We do this by manually creating inherited scopes, and setting the <code>$index</code> property accordingly.</p>
+
+<h2>Keys to the City</h2>
+
+<p>Transclusion is considered an advanced topic, but as you can see, there is nothing to be scared of. Even at its most complex, as long as you understand how scope and linking works, transclusion is very easy to understand. This is what I believe to be one of the strengths in the design of angular, everything in the framework is built on top of a handful of core abstractions. If you have a good foundational understanding, advanced topics come very easily.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Briggs</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-22T14:54:00-05:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/angular/'>angular</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattbriggs.net/blog/2014/01/22/transclusion-in-angular/" data-via="googleninja" data-counturl="http://mattbriggs.net/blog/2014/01/22/transclusion-in-angular/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/01/22/scope-in-angular/" title="Previous Post: Scope in Angular">&laquo; Scope in Angular</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/01/22/code-organization-in-angular/" title="Next Post: Code Organization in Angular">Code Organization in Angular &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/10/how-i-learned-to-stop-worrying/">How I Learned to Stop Worrying, and Love Dart</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/code-organization-in-angular/">Code Organization in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/transclusion-in-angular/">Transclusion in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/scope-in-angular/">Scope in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/14/understanding-angular-directives/">Understanding Angular Directives</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mbriggs">@mbriggs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mbriggs',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/105078754127788731088?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Matt Briggs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'mbriggs';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mattbriggs.net/blog/2014/01/22/transclusion-in-angular/';
+        var disqus_url = 'http://mattbriggs.net/blog/2014/01/22/transclusion-in-angular/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

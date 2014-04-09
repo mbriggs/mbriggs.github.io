@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ruby | Matt Briggs]]></title>
+  <link href="http://mattbriggs.net/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://mattbriggs.net/"/>
+  <updated>2014-04-09T00:33:52-04:00</updated>
+  <id>http://mattbriggs.net/</id>
+  <author>
+    <name><![CDATA[Matt Briggs]]></name>
+    <email><![CDATA[matt@mattbriggs.net]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mixins are not always a refactoring anti-pattern]]></title>
+    <link href="http://mattbriggs.net/blog/2012/05/07/mixins-are-not-a-refactoring-anti-pattern/"/>
+    <updated>2012-05-07T17:59:00-04:00</updated>
+    <id>http://mattbriggs.net/blog/2012/05/07/mixins-are-not-a-refactoring-anti-pattern</id>
+    <content type="html"><![CDATA[<p>Steve Klabnik just posted an interesting <a href="http://blog.steveklabnik.com/posts/2012-05-07-mixins--a-refactoring-anti-pattern">post about mixins</a>. Steve is a really smart guy, and I usually agree with him, but I think his justification is a little bit weak in this case.</p>
+
+<h2>Mixin Refactoring through Class Gutting</h2>
+
+<p>Oh man, he is so right that this is an anti-pattern. It happens a lot in ruby, someone says &ldquo;Hey, this thing is doing too much. The only method of code reuse I really believe in is mixins, so I&rsquo;ll just take the implementation, and dump it into a mixin.&rdquo;</p>
+
+<p>By doing that, you haven&rsquo;t decreased complexity, you have actually increased it by breaking locality. Steve introduces the idea of reducing complexity through ecapsulation (right on), and talks about Data Mapper and Repository. Very OOP, and great solutions, especially in larger systems. Still diggin what Steve has to say.</p>
+
+<h2>Method Count as a metric of complexity</h2>
+
+<p>Here is where we part ways. Lets take the Enumerable module in the ruby standard library. It adds 94 methods on to a given thing, with the requirement that that &ldquo;thing&rdquo; provides an each method.</p>
+
+<p>But enumerable is an &ldquo;idea&rdquo;, and if something is enumerable, you sort of know how to work with it &mdash; through those 94 methods.</p>
+
+<p>Steve talks about how encapsulation reduces complexity of the implementation, well Enumerable encapsulates the &ldquo;idea&rdquo; of enumerating. So that means that when providing a public interface, a data structure can focus on its fairly simple implementation, and only provide the most low level and simplist of methods (each), while bringing in Enumerable and let it do the heavy lifting to give the rich interface that people expect from a ruby data structure.</p>
+
+<p>How is that increasing complexity? When I look at Enumerable, it is talking about a single concept. When I look at array, it is talking about a single concept. The only thing I can change to break the implicit protocol between the two is to break the each method at a fundamental level.</p>
+
+<p>Composition would have been a terrible choice here, I think providing 94 stub methods and an internal enumerator object would just increase the complexity, not reduce it. Providing an enumerator as an external thing would have made the api much more of a pain to work with. Inheritance would be better then composition or separation, but the problem is that Array is a datastructure, it is not an &ldquo;Enumerable&rdquo;. Enumeration is an ability, not the root of a concept. I think the best choice here is mixin, and that it is fairly obviously the best choice. And I think most people who have implemented data structures in ruby would agree.</p>
+
+<p>So what we have is something that is close to inheritance, but more of a &ldquo;vertical slice&rdquo; of functionality. An &ldquo;ability&rdquo; rather then a &ldquo;thing&rdquo;. This is what mixins give up, the ability to model &ldquo;abilities&rdquo; in a concise way.</p>
+
+<h2>What is complexity</h2>
+
+<p>Rich Hickey defines complexity as an interleaving of ideas. I think that is a great definition. In the case of Enumerable, you are providing significant functionality through providing a simple implementation, the only interleaving is that each method. Sure, the runtime method count is 94 methods higher, but who cares? When you are calling methods on array, you are thinking of it as a single thing. When you are maintaining array, you don&rsquo;t have to worry about any interations with enumerable outside of each.</p>
+
+<p>I think that the amount, and shape, of a mixins interaction with its containing class is a good measure of complexity. The amount and shape of a classes interactions with the internals of a mixin is a great metric of complexity. The only thing the number of runtime methods is telling you is that maybe you should be looking at those other things, which isn&rsquo;t that great a smell.</p>
+
+<h3>The important thing here is interactions.</h3>
+
+<p>Large classes often become complex. But it isn&rsquo;t a property of their runtime method count, or even inherant to their lines of code. It is because large classes and large methods tend to interact in ways that are hard to understand. Small classes can get complex too for the same reasons, but the larger the class, the easier it is to get to that place.</p>
+
+<h2>Why &ldquo;Gut the class and dump&rdquo; it into a mixin doesn&rsquo;t work</h2>
+
+<p>It doesn&rsquo;t work because you haven&rsquo;t tackled the complexity of the interactions in the code. Maybe it needs to get pulled into another class, maybe methods need to get merged together. Or maybe you are just talking about an inherantly complex thing, and doing the earlier things will make it worse. In any case it is not the runtime method count that will tell you this, it is analysis of how the class interacts with itself and others.</p>
+
+<h2>Complexity Smells</h2>
+
+<p>Steve wasn&rsquo;t writing about complexity smells in a general way, but since I have spent so much time talking about what isn&rsquo;t a smell, I sort of feel compelled to talk about what is. I am sure he would agree with most, if not all of the following</p>
+
+<ul>
+<li>When a mixin mucks with class internals.</li>
+<li>When a mixin mucks with other mixins.</li>
+<li>When you read the inheritor of a class, and can&rsquo;t understand it without reading its parent</li>
+<li>When you read an inherited class, but can&rsquo;t understand it without its children</li>
+<li>When there are so many interactions with other things that you have to read many classes to understand how a single thing works</li>
+<li>When classes do too many things</li>
+<li>When classes have too many dependancies</li>
+<li>When classes are aware of too many other objects</li>
+<li>When too many other objects are aware of a class</li>
+</ul>
+
+
+<p>And that is just the tip of the iceburg. I would say that a significant percentage of our job is managing complexity in code, it is a huge and nuanced topic. Mixins are also not a simple thing, and are extremely easy to use in the wrong ways.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Many Faces of Ruby Callables]]></title>
+    <link href="http://mattbriggs.net/blog/2012/05/05/the-many-faces-of-ruby-callables/"/>
+    <updated>2012-05-05T15:58:00-04:00</updated>
+    <id>http://mattbriggs.net/blog/2012/05/05/the-many-faces-of-ruby-callables</id>
+    <content type="html"><![CDATA[<p>One of the most valuable ideas from functional programming is the idea of <em>Higher Order Functions</em>, or functions that take functions as an argument. It is such a good idea that it has become part of pretty much every modern language, whether functional or not. Amoung the OO imperative languages that have embraced this idea, the ruby community has probably gone the furthest, where it is the first tool a library writer will reach for more often then not.</p>
+
+<p>The language feature required for this style of programming is known as <em>first class functions</em>, meaning functions that can be defined as a variable, passed around, and called by other parts of code. Ruby has four constructs for this, which are all similar, but have slight differences.</p>
+
+<h2>The Block</h2>
+
+<p>The idea behind blocks is sort of a way to implement really light weight strategy patterns. A block will define a coroutine on the function, which the function can delegate control to with the yield keyword. We use blocks for just about everything in ruby, including pretty much all the looping constructs. Anything outside the block is in scope for the block, however the inverse is not true, with the exception that return inside the block will return the outer scope. They look like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">foo</span>
+</span><span class='line'>  <span class="k">yield</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">called</span> <span class="n">foo</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span>
+</span><span class='line'><span class="k">end</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;h1&gt;usage&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;</span><span class="n">foo</span> <span class="p">{</span><span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">msg</span><span class="p">}</span> <span class="c1">#idiomatic for one liners&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;</span><span class="n">foo</span> <span class="k">do</span> <span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="c1">#idiomatic for multiline blocks</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">msg</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Proc</h2>
+
+<p>The best way to think of a proc is that it is the more general form of a block. A block is tied to a specifc function (the whole coroutine thing), while a proc is just a variable. This means that you can easily convert a block to a proc.</p>
+
+<p>An interesting use is that you can pass a proc in as a replacement for a block in another method. Ruby has a special character for proc coercion which is <code>&amp;</code>, and a special rule that if the last param in a method signature starts with an <code>&amp;</code>, it will be a proc representation of the block for the method call. Finally, there is a builtin method called <code>block_given?</code>, which will return <code>true</code> if the current method has a block defined. It looks like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="n">block</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">block</span>
+</span><span class='line'><span class="k">end</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;b = foo {puts &amp;lsquo;hi&amp;rsquo;}</span>
+</span><span class='line'><span class="sr">b.call # hi</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>To go a little further with this, there is a really neat trick that rails added to <code>Symbol</code> (and got merged into core ruby in 1.9). That <code>&amp;</code> coercion does its magic by calling <code>to_proc</code> on whatever it is next to. So adding a <code>Symbol#to_proc</code> that calls itself on whatever is passed in lets you write some really terse code for any aggregation style function that is just calling a method on every object in a list.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Foo</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">bar</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;pre&gt;&lt;code&gt;&#39;this is from bar&#39;</span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;</span><span class="sr">/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;  end</span>
+</span><span class='line'><span class="sr">end&lt;/</span><span class="nb">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;</span><span class="n">list</span> <span class="o">=</span> <span class="o">[</span><span class="no">Foo</span><span class="o">.</span><span class="n">new</span><span class="p">,</span> <span class="no">Foo</span><span class="o">.</span><span class="n">new</span><span class="p">,</span> <span class="no">Foo</span><span class="o">.</span><span class="n">new</span><span class="o">]&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;list.map {|foo| foo.bar} # returns [&amp;lsquo;this is from bar&amp;rsquo;, &amp;lsquo;this is from bar&amp;rsquo;, &amp;lsquo;this is from bar&amp;rsquo;]</span>
+</span><span class='line'><span class="sr">list.map &amp;amp;:bar # returns &lt;em&gt;exactly&lt;/em</span><span class="o">&gt;</span> <span class="n">the</span> <span class="n">same</span> <span class="n">thing</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>This is fairly advanced stuff, but I think it illustrates the power of this construct.</p>
+
+<h2>Lambdas</h2>
+
+<p>The purpose of a lambda is pretty much the same as the first class functions in other languages, a way to create an inline function to either pass around, or use internally. Like blocks and procs, lambdas are closures, but unlike the first two it enforces arity, and return from a lambda exits the lambda, not the containing scope. You create one by passing a block to the lambda method, or to &ndash;> in ruby 1.9</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">l</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">msg</span><span class="p">}</span> <span class="c1">#ruby 1.8</span>
+</span><span class='line'><span class="n">l</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">&gt;</span> <span class="p">{</span><span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">msg</span><span class="p">}</span> <span class="c1">#ruby 1.9&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;</span><span class="n">l</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">foo</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;)</span> <span class="c1"># =&gt; foo</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Methods</h2>
+
+<p>Only serious ruby geeks really understand this one :) A method is a way to turn an existing function into something you can put in a variable. You get a method by calling the <code>method</code> function, and passing in a symbol as the method name. You can re bind a method, or you can coerce it into a proc if you want to show off. A way to re-write the previous method would be</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">l</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="nb">method</span><span class="p">(</span><span class="ss">:puts</span><span class="p">)</span>
+</span><span class='line'><span class="n">l</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">foo</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>What is happening here is that you are creating a method for puts, coercing it into a proc, passing that in as a replacement for a block for the lambda method, which in turn returns you the lambda. One thing I often use this for is debugging in concert with tap.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">].</span><span class="n">map</span> <span class="p">{</span><span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span><span class="p">}</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="ss">:+</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>This code maps an array of integers to an array of integers that have been doubled, and then sums them. If you want to see the result of the map, you can do something like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">].</span><span class="n">map</span> <span class="p">{</span><span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span><span class="p">}</span><span class="o">.</span><span class="n">tap</span><span class="p">(</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="nb">method</span><span class="p">(</span><span class="ss">:puts</span><span class="p">))</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="ss">:+</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><code>tap</code> will yield the thing that it is called on to a block, and then return the original thing. So what I am doing is saying turn <code>puts</code> (which takes a single argument) into a method, coerce it into a block, and give it as the implementation for <code>tap</code>, meaning just puts out the value. Since tap returns the original thing, the rest of the method chain will be undisturbed.</p>
+
+<h2>Going Deeper with &amp;:symbol</h2>
+
+<p>Lets say you are really digging the trick of <code>&amp;:sym</code>, and you have a case where the block is going to yield additional arguments, but you actually WANT those arguments to be passed in as well when the <code>Obj.send :sym</code> happens. <code>Symbol#to_proc</code> is basically implemented like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Symbol</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">to_proc</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;pre&gt;&lt;code&gt;Proc.new { |obj, *args| obj.send(self, *args) }</span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;</span><span class="sr">/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;  end</span>
+</span><span class='line'><span class="sr">end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>So, <code>&amp;:sym</code> is going to make a new proc, that calls <code>.send :sym</code> on the first argument passed to it. If any additional args are passed, they are globbed up into an array called <code>args</code>, and then splatted into the <code>send</code> method call.</p>
+
+<h2>Ruby is pretty awesome</h2>
+
+<p>A lot of these capabilities exist in other languages, but very few imperative OO communities have run with them the way that rubyists have. A deep understanding of the tools available is an important part of any ruby developers journey to becoming an expert at the language. Back when I was looking for some new language to try and was trying to decide whether to roll with ruby or python first, rubys block obsession was what made me go ruby.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Why I like Object#tap]]></title>
+    <link href="http://mattbriggs.net/blog/2012/03/08/why-i-like-object-number-tap/"/>
+    <updated>2012-03-08T01:28:00-05:00</updated>
+    <id>http://mattbriggs.net/blog/2012/03/08/why-i-like-object-number-tap</id>
+    <content type="html"><![CDATA[<p>In a recent <a href="http://www.destroyallsoftware.com">Destroy All Software</a> screencast, Gary mentioned how he really doesn&rsquo;t like <code>Object#tap</code>. He was using it in this sort of context</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">StoreCache</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">for_term</span><span class="p">(</span><span class="n">term</span><span class="p">)</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;pre&gt;&lt;code&gt;begin</span>
+</span><span class='line'><span class="sr">CachedScore.for_term(term)</span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;</span><span class="sr">/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;  rescue CachedScore::NoScore&lt;/</span><span class="nb">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="no">RockScore</span><span class="o">.</span><span class="n">for_term</span><span class="p">(</span><span class="n">term</span><span class="p">)</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">score</span><span class="o">|</span>
+</span><span class='line'>  <span class="no">CachedScore</span><span class="o">.</span><span class="n">save_score</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="o">&lt;</span><span class="sr">/code&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;</span><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>He said he didn&rsquo;t understand why people like that syntax so much, when you could just as easily do</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">StoreCache</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">for_term</span><span class="p">(</span><span class="n">term</span><span class="p">)</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;pre&gt;&lt;code&gt;begin</span>
+</span><span class='line'><span class="sr">CachedScore.for_term(term)</span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;</span><span class="sr">/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;  rescue CachedScore::NoScore&lt;/</span><span class="nb">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="n">score</span> <span class="o">=</span> <span class="no">RockScore</span><span class="o">.</span><span class="n">for_term</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+</span><span class='line'><span class="no">CachedScore</span><span class="o">.</span><span class="n">save_score</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+</span><span class='line'><span class="n">score</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="o">&lt;</span><span class="sr">/code&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;</span><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>with the differences being that the name of the variable is on the left side, and the return is more explicit. I sort of get where he is coming from, but I would not use tap that way.</p>
+
+<h2>What <code>Object#tap</code> means to me</h2>
+
+<p>I think he (and many others) see <code>Object#tap</code> as meaning &ldquo;fancy method that give me a 1 character placeholder variable and implicit return&rdquo;. I see tap as meaning &ldquo;tap into the object initialization&rdquo;, or more practically &ldquo;This entire expression is related to object initialization.&rdquo;</p>
+
+<p>Typically, I wont use <code>tap</code> unless there is a high degree of locality, and you are talking about left-side = right-side type code. Something like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">build_foo</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;pre&gt;&lt;code&gt;f.bar = &quot;Hi&quot;</span>
+</span><span class='line'><span class="sr">f.baz = &quot;Baz&quot;</span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;</span><span class="sr">/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;  end</span>
+</span><span class='line'><span class="sr">end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Building out values on an object is an incredibly common pattern that is logically a single thing. Visually, tap is grouping the code for that pattern. Also, I find it reduces density in a place where the additional verbosity really doesn&rsquo;t add anything in terms of clarity. At work, we are still using 1.8.7 ree, so when we need ordered hashes (often as identifiers for keys on objects), we have a lot of code that looks like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">UNIT_OF_MEASURES</span> <span class="o">=</span> <span class="ss">ActiveSupport</span><span class="p">:</span><span class="ss">:OrderedHash</span>
+</span><span class='line'><span class="no">UNIT_OF_MEASURES</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="no">Eaches</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="no">UNIT_OF_MEASURES</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="no">Cases</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="no">UNIT_OF_MEASURES</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="no">Pallets</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>I think the move from that to tap style is a significant improvement</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">UNIT_OF_MEASURES</span> <span class="o">=</span> <span class="ss">ActiveSupport</span><span class="p">:</span><span class="ss">:OrderedHash</span><span class="o">.</span><span class="n">tap</span> <span class="o">|</span><span class="n">uom</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">uom</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="no">Eaches</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">uom</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="no">Cases</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">uom</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="no">Pallets</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>The last thing is the fact that its a single expression. I love implicit returns in ruby where your entire method is a single expression, it feels kind of lispy. Something like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>me likey </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">foo</span>
+</span><span class='line'>  <span class="n">some_predicate?</span> <span class="p">?</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="no">Hi</span><span class="o">!&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="no">Bye</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>However, I am really not a fan of implicit returns when you just end a function with a bare word. If you are writing imperative style of code, I think each statement should actually be a statement that says what it does. Something like this just sort of feels like a mis-use of a language feature.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>ugh </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">foo</span>
+</span><span class='line'>  <span class="n">thing</span> <span class="o">=</span> <span class="n">build_thing</span>
+</span><span class='line'>  <span class="n">thing</span><span class="o">.</span><span class="n">some_method</span>
+</span><span class='line'>  <span class="n">thing</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>This is something that I think falls squarely into personal style. But because of how I enjoy writing more expression oriented code, having an expression for a common pattern is a big plus for me.</p>
+
+<p>Another interesting thing to note is that in rails-land, it is very common to use hash initializers for this kind of thing. Something like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Post</span><span class="o">.</span><span class="n">create!</span> <span class="ss">author</span><span class="p">:</span> <span class="n">current_user</span><span class="p">,</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;pre&gt;&lt;code&gt;         published: true,</span>
+</span><span class='line'><span class="sr">         category: &quot;some-category&quot;</span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;</span><span class="sr">/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>While that syntax is very minimal, I actually prefer the <code>Object#tap</code> style of api, because I find it gives a clearer separation between plain old method arguments, and object initialization.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Post</span><span class="o">.</span><span class="n">create!</span> <span class="k">do</span> <span class="o">|</span><span class="nb">p</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">p</span><span class="o">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">current_user</span>
+</span><span class='line'>  <span class="nb">p</span><span class="o">.</span><span class="n">published</span> <span class="o">=</span> <span class="kp">true</span>
+</span><span class='line'>  <span class="nb">p</span><span class="o">.</span><span class="n">category</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">some</span><span class="o">-</span><span class="n">category</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Not Hatin On Gary</h2>
+
+<p>The dude is awesome, and everyone who is a professional ruby developer really should subscribe to his podcasts. IMO the guy is a master of OO, and his screencasts are far more valuable then 10$ and 15mins of your life per month.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Repository Pattern In Rails]]></title>
+    <link href="http://mattbriggs.net/blog/2012/02/23/repository-pattern-in-ruby/"/>
+    <updated>2012-02-23T22:59:00-05:00</updated>
+    <id>http://mattbriggs.net/blog/2012/02/23/repository-pattern-in-ruby</id>
+    <content type="html"><![CDATA[<p>I have been working a lot on an app using MongoDB as the datastore, and Mongoid as the OR/M (or ODM to be more specific). In a relational database, you keep your data as segregated as reasonably possible, and then join it together in appropriate ways when you need it. The up side to this is that it is incredibly flexible, and chances are you wont hit a situation where you need your data in a form that your datastore can&rsquo;t give to you. The down side is that often, your data has a &ldquo;natural&rdquo; way that is joined together, and even though 99.9% of the time you are joining it together in that way, you still pay the cost every time.</p>
+
+<p>In Mongo, your data is stored in that &ldquo;natural&rdquo; way in a json format. That means it is harder to shape the data in different ways, but it is free to get the data in the way it is intended to be used.</p>
+
+<h2>The Problem</h2>
+
+<p>This app was developed using a state-based testing approach, where every test sets up a situation, performs an action, and then asserts on the new state of the world. An interesting side effect of the Mongo way of storing data is that it makes it much harder to test smaller objects in isolation &mdash; if a comment is a hash in an array in a post, it is impossible to save without first saving the post. In more complex scenarios, the problem gets much worse, and I am finding that tests that should be rather simple are requiring far more setup then I would expect.</p>
+
+<h2>A Solution: The Repository</h2>
+
+<p>When it comes to data access, the book Domain Driven Design advocates using a repository layer that separates your domain objects from your data access strategy. This has several benefits:</p>
+
+<ul>
+<li>Your domain objects stay simple. Rails developers tend to follow the &ldquo;Thin controller, fat model&rdquo; heuristic fairly religiously. There is nothing wrong with that per se, but it sort of implies it is ok to have massive classes that do dozens (if not hundreds) of things, so long as it is the model. The problem with that is that as the complexity of the application grows, these &ldquo;God&rdquo; models tend to become harder and harder to maintain &mdash; everything interacts with them, and they interact with everything. That kind of situation is what causes even small changes to cause ripples through your entire applications, and makes even simple maintenance tasks become quite daunting.</li>
+<li>You segregate your interaction with third party code (ActiveRecord, or in my case Mongoid) from the rest of your application. You may say &ldquo;Why is that necessary when you rarely, if ever change your data storage strategy?&rdquo; The reason is that you don&rsquo;t have control over that code, it is managed by a third party. So if they change something, and you are calling their code directly all through your application, your entire application needs to change. I work on quite a large enterprise rails app, and the 2.x &ndash;> 3.x upgrade was a huge undertaking, mostly for this reason.</li>
+<li>By following the Single Responsibility Principal, mocking in tests is a joy. This is going to address the pain I am feeling doing state based testing with a document datastore, and I believe that mockist testing will directly address these problems (I also much prefer mocking, so it is not exactly a direction I am resisting)</li>
+</ul>
+
+
+<h2>First Challenge: Mapping</h2>
+
+<p>I have worked on systems in C# with manual object mapping in repositories, and it is a bit of a nightmare. You end up with hundreds of lines of <code>right_side.property = left_side.property</code> code, which apart from being horribly tedious to write, is actually a terrible source of hard to find bugs. Since we don&rsquo;t have a true data mapper library in ruby, the only way I will even attempt this is if I can automate the process through some clever meta-programming. The first part of that is that I need to be able to retrieve attributes from my domain objects in a simple way, without complicating the objects too much. I also need to be able to get the &ldquo;schema&rdquo; out of my model, so I am able to infer what it wants to save and retrieve.</p>
+
+<h2>This is going to be a lot of work</h2>
+
+<p>The app is currently ~1k loc on the server side, which means it is going to take some time, but is really not an insurmountable task yet. The first step will be figuring out how to tackle the domain model side of the mapping problem, and extracting a domain model out of the current mongoid model. Stay tuned for more!</p>
+]]></content>
+  </entry>
+  
+</feed>

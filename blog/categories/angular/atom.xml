@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: angular | Matt Briggs]]></title>
+  <link href="http://mattbriggs.net/blog/categories/angular/atom.xml" rel="self"/>
+  <link href="http://mattbriggs.net/"/>
+  <updated>2014-04-09T00:33:52-04:00</updated>
+  <id>http://mattbriggs.net/</id>
+  <author>
+    <name><![CDATA[Matt Briggs]]></name>
+    <email><![CDATA[matt@mattbriggs.net]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Code Organization in Angular]]></title>
+    <link href="http://mattbriggs.net/blog/2014/01/22/code-organization-in-angular/"/>
+    <updated>2014-01-22T14:57:00-05:00</updated>
+    <id>http://mattbriggs.net/blog/2014/01/22/code-organization-in-angular</id>
+    <content type="html"><![CDATA[<p>The number one question I see over and over with programmers new to angular is &ldquo;how do I organize my code?&rdquo;. I think that this is because the way you organize sample code is completely different then simple code, which again, is totally different then a complex application, and those transitions are not self-evident.</p>
+
+<h2>Sample Code &ndash; aka One Big File</h2>
+
+<p>This is how you see most code on the internet</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">foobar</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="p">[]).</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">controller</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">MyCoolController</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="c1">// controller</span>
+</span><span class='line'><span class="p">}).</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">directive</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">evenCoolerDirective</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'> <span class="c1">// directive</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>This makes a lot of sense when you are showing some sample code. But it will very quickly become unwieldy and difficult to work with if you are building anything even slightly complex. I would not recommend using this for anything you would check into source control.</p>
+
+<h2>Simple App &ndash; aka The Angular-Seed Method</h2>
+
+<p>The angular project published a sample &ldquo;boilerplate&rdquo; project called &ldquo;angular-seed&rdquo;, as a way to help developers new to angular get rolling without having to do a bunch of grunt work.</p>
+
+<p>The way angular-seed organizes it&rsquo;s files is by type. In a nutshell, it looks like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// in app.js</span>
+</span><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="p">[</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="p">.</span><span class="nx">directives</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="p">.</span><span class="nx">services</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="p">.</span><span class="nx">controllers</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="p">.</span><span class="nx">filters</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;]);</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">// in app.directives.js</span>
+</span><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="p">.</span><span class="nx">directives</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="p">[]).</span>
+</span><span class='line'><span class="nx">directive</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">myDirective</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'><span class="c1">// stuff</span>
+</span><span class='line'><span class="p">});</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">// in app.services.js</span>
+</span><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="p">.</span><span class="nx">services</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="p">[]).</span>
+</span><span class='line'><span class="nx">factory</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">myService</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'><span class="c1">// stuff</span>
+</span><span class='line'><span class="p">});</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">// in app.controllers.js</span>
+</span><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="p">.</span><span class="nx">controllers</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="p">[]).</span>
+</span><span class='line'><span class="nx">directive</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">myController</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'><span class="c1">// stuff</span>
+</span><span class='line'><span class="p">});</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">// in app.filters.js</span>
+</span><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="p">.</span><span class="nx">filters</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="p">[]).</span>
+</span><span class='line'><span class="nx">directive</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">myFilters</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'><span class="c1">// stuff</span>
+</span><span class='line'><span class="p">});</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>This has the advantage of at least giving you <em>some</em> precision when trying to locate a given piece of code. It will also scale up well enough so that it is still usable by the time you finish building a simple application.</p>
+
+<p>The problem here is what happens if you are not building a simple application? What happens if you have dozens of directives, and hundreds of controllers and services? At that point, 5 files won&rsquo;t help much.</p>
+
+<h2>Splitting your application up into modules</h2>
+
+<p>This is widely considered to be the best way to organize non-trivial angular code. The idea is instead of thinking of your application as one giant thing, think of it as a number of small, independent modules that come together to form a giant application.</p>
+
+<p>The benefit to structuring your code this way extends beyond being able to find things easily. People get into trouble when building large scale code bases by not thinking about dependancies. When everything in your app can &ldquo;talk to&rdquo; anything else in your app, those dependancies are everywhere. This means that even small, innocuous changes can impact things you couldn&rsquo;t foresee, causing bugs. It also means when you want to re-design something, it is extremely difficult, because it means changing how it is used everywhere in the rest of your application.</p>
+
+<p>This is a very large and complex topic, but as a general rule of thumb, thinking of your application as a group of small, self-contained modules with a limited API used to communicate with each other will go a long way towards the long term health and maintainability of your codebase.</p>
+
+<p>Thankfully, angular has a module construct. Unfortunately, it is extremely primitive, and most of this &ldquo;encapsulation&rdquo; will have to exist in your own head.</p>
+
+<p>When splitting your application apart this way, every module is given its own folder, which contains all the code required for that section of the codebase. These modules should be as small as possible, and should be as self contained as possible. It helps a lot with the containment if you use require.js.</p>
+
+<h2>Angular and Require.js</h2>
+
+<p>Do you even need require if you have angular? There is a lot of division on this topic, many people feel that since angular takes care of most application dependancy issues for you, that you can use a simpler build system and punt on require all together.</p>
+
+<p>I think the real power in require (compared to other module loaders) comes from how you are divorcing dev-time file loading from production-time loading. Since angular has no story at all on file loading (only dependancy management), I think the need for that power is inevitable. You can embrace it immediately, or wait until you feel the pain, but hundreds of files coming down at the same time when the application loads will be brutal to develop against.</p>
+
+<p>But beyond that, since there is no such thing as a module level injectable in angular (all dependancy injection draws from the same pool), it means if you want to have a module level model or service, it is impossible to control visibility. When you use require, you can have source level dependancies which are not published to the rest of the system, and use the angular dependancy injection for exposing an API.</p>
+
+<p>This has worked great for me so far, with the sole exception that it is fairly common that I want to use <code>$http</code> for repository classes (would be the same issue if you wanted to use <code>$resource</code>). In these cases, I will pull that dependancy out of angular, and keep a reference in some sort of shared utility file (or base class). This can be done fairly easily</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">injector</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">injector</span><span class="p">([</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">ng</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;]);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">injector</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">$http</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;);</span>
+</span><span class='line'><span class="c1">// .instanciate can also be used if you want it to &amp;ldquo;new&amp;rdquo; something for you</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>The main purpose of dependancy injection in angular is so that you can wire up UI code declaratively, while keeping everything easy to test. Since services like <code>$http</code> are on the edges of the system, I don&rsquo;t think it is going against the spirit of the framework to pull them out. Hopefully, the angular team will add module level visibility in the future, and the whole issue will just go away.</p>
+
+<h2>Choosing what is right for your project</h2>
+
+<p>Since angular has taken such a hands off approach to the subject of code organization, there really is no &ldquo;right&rdquo; answer on what you should use. I have described some common (and less common) ways that people have found work for them, but it really comes down to a project by project choice.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Transclusion in Angular]]></title>
+    <link href="http://mattbriggs.net/blog/2014/01/22/transclusion-in-angular/"/>
+    <updated>2014-01-22T14:54:00-05:00</updated>
+    <id>http://mattbriggs.net/blog/2014/01/22/transclusion-in-angular</id>
+    <content type="html"><![CDATA[<p>Transclusion is almost a gift to people criticizing Angular. It sounds incredibly complicated and computer-science-y. The spotty documentation around the topic and mysterious API only adds to the illusion of what a complicated concept this is. In practice, transclusion is a fairly simple concept, and one that is necessary if you are writing more advanced directives in angular.</p>
+
+<p>In this post, when I talk about the &ldquo;end user&rdquo;, I am referring to the developer using the directive (not the user who uses the application).</p>
+
+<h2>So WTF does it mean anyways?</h2>
+
+<p>The wikipedia definition of transclusion is really pretty simple.</p>
+
+<blockquote><p>In computer science, transclusion is the inclusion of a document or part of a document into another document by reference.</p></blockquote>
+
+<p>So in the context of angular, transclusion would be the embedding of an end user template into the directive template, or the directive template into the end user template. To put it more simply, have a directive (with a template) that either wraps, or is wrapped by end user code.</p>
+
+<h2>Basic Transclusion</h2>
+
+<p>Basic transclusion is when you are simply wrapping end user code. Let&rsquo;s say, for some reason, you are building a blog where each post needs to be programmed in (I know, kind of silly, but just work with me here :) The post would have meta information as attributes, and the content of the directive would become the post body.</p>
+
+<p><iframe style='width: 100%; height: 500px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/NSgVfO6PsgmeK9BO83TU/preview'></iframe></p>
+
+<p>There are two key pieces that make transclusion happen. First, <code>transclude: true</code> in the directive declaration tells angular we are performing transclusion.</p>
+
+<p>The second piece is the presence of the <code>ng-transclude</code> directive in the <code>post</code> template. This tells angular where to embed the end user template.</p>
+
+<h2>Gotcha: Transclusion and scope</h2>
+
+<p>A big thing to keep in mind is that since this is the end users code, it requires the context of the scope tree, not the isolated scope of the directive. Because of that, transcluded content scope is <strong>not</strong> the child of the directive scope, it is instead a child of the directives parent scope, effectively making it like the directive scope does not exist in the inheritance chain.</p>
+
+<h2>transclude: element</h2>
+
+<p><code>transclude: true</code> allows us to wrap a user&rsquo;s template with our template. But what about when we want to wrap <em>everything</em> in a template? For example, we are building a directive that displays a panel under an input box. The easiest way to do this sort of positioning is when you have a wrapper to position against. Here is a quick example</p>
+
+<p><iframe style='width: 100%; height: ; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/PwcrFh6OSpqwxQ7drpxe/preview'></iframe></p>
+
+<p>If you look at the compiled DOM, you will see something like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;drop-panel is-active&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">drop-panel=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;span</span> <span class="na">ng-transclude=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">drop-panel=</span><span class="s">&quot;&quot;</span> <span class="na">class=</span><span class="s">&quot;ng-scope&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/span&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;drop-panel-panel&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    This is some panel content
+</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><code>transclude: element</code> means that the entire element was transcluded into the <code>ng-transclude</code> placeholder (rather then just the elements children). <code>replace: true</code> allows us to define a new root node for the directive, so this is also necessary for wrapping to work.</p>
+
+<h2>Transclude linker function for ultimate power</h2>
+
+<p><code>transclude</code> gives a lot of power, but what happens when you need total control over the transclusion process? This is very rare, but can be needed if you need to transclude the end users template multiple times, or need to choose where to transclude based on some kind of logic (maybe as part of compile). For these cases, angular provides the transclude linker function, which lets you do pretty much anything you want.</p>
+
+<p>Let&rsquo;s say you were building a directive which duplicated it&rsquo;s content a specified amount of times. Each duplication will have access to an <code>$index</code> property on the scope, that will tell it what number it is in the list.</p>
+
+<p><iframe style='width: 100%; height: 500px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/eMCl0kygah7dPzqKP0W8/preview'></iframe></p>
+
+<p>If you understand this, you understand the core of how <code>ng-repeat</code> works, which is one of the most complex directives that ships with angular.</p>
+
+<p>For this one, since we aren&rsquo;t defining a new root element, we don&rsquo;t need <code>replace: true</code>. When <code>replace</code> is set to <code>false</code> (the default), and <code>transclude: 'element'</code> is set, what is actually inserted into the dom is a comment. The way this duplicate directive works is that each &ldquo;duplication&rdquo; is inserted after the previous one, and the first one is inserted after that comment.</p>
+
+<p>You may also notice that <code>priority</code> is set very high. This is because we want our duplication to happen before any other directive gets applied.</p>
+
+<p>Finally, since we are not using <code>ng-transclude</code>, we need to take care of what scope we want our duplication to link to. We do this by manually creating inherited scopes, and setting the <code>$index</code> property accordingly.</p>
+
+<h2>Keys to the City</h2>
+
+<p>Transclusion is considered an advanced topic, but as you can see, there is nothing to be scared of. Even at its most complex, as long as you understand how scope and linking works, transclusion is very easy to understand. This is what I believe to be one of the strengths in the design of angular, everything in the framework is built on top of a handful of core abstractions. If you have a good foundational understanding, advanced topics come very easily.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Scope in Angular]]></title>
+    <link href="http://mattbriggs.net/blog/2014/01/22/scope-in-angular/"/>
+    <updated>2014-01-22T14:34:00-05:00</updated>
+    <id>http://mattbriggs.net/blog/2014/01/22/scope-in-angular</id>
+    <content type="html"><![CDATA[<p>Angular goes in a different direction then most other frameworks, by having the html you write drive the composition of UI components. This allows you to succinctly wire up components without boilerplate, but it also creates some issues. How do you share data? How to components get configured? How do components communicate with each other, or the outside world? The part of angular which answers these questions is scope.</p>
+
+<h2>What is scope?</h2>
+
+<p>The purpose of scope is to hold shared UI state of an element and it&rsquo;s descendants. Since the UI is defined as a tree of nodes, the scope of an element is visible to all descendants of that element. When a descendant introduces a new scope, the new scope inherits properties of it&rsquo;s parent scope.</p>
+
+<p>This is a very elegant solution to the problem, since the further you go down the DOM tree, the more specific the data requirements get.</p>
+
+<p>As an example, here is an extremely basic employee directory, which allows people to add contacts to their personal directories.</p>
+
+<p><iframe style='width: 100%; height: 500px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/AsGQlxSpdOOhIlG9wi4u/preview'></iframe></p>
+
+<p>There is 3 levels of scope in play here. The first is the root scope, which is defined automatically by the angular bootstrapping process. The second is the directory level, which is created by <code>ng-controller</code>. The third level is the employee elements, which are created by <code>ng-repeat</code>.</p>
+
+<p>Each level inherits from the previous level as illustrated here</p>
+
+<p><img src="/images/scopes/scope_tree.png" alt="scope tree" /></p>
+
+<p>This inheritance is very important, as you can see with what is happening with the &ldquo;add to my directory&rdquo; button. <code>currentUser</code> being on the root scope means it is available to all child scopes, so even though most of what needs to happen at the employee scope level is satisfied with the <code>employee</code> object, it is still able to see <code>currentUser</code> if needed.</p>
+
+<h4>ZOMG global state!</h4>
+
+<p>This may be a bit terrifying, especially for JavaScript developers. The difference between this and global state is that the scope tree is directly linked to the DOM tree.</p>
+
+<p>If two different nodes share a parent, usually there is a reason, and if you put state on that parent node, usually it is very applicable to both children. Those children don&rsquo;t make much sense without the parent, so it becomes unlikely they will be accidentally separated.</p>
+
+<p>As long as you keep your state as localized as possible, having state inheritance is a very elegant solution to the very tricky problem of sharing data.</p>
+
+<p>That being said, if you publish everything on <code>$rootScope</code>, yes that is global state, and yes, that is bad. Don&rsquo;t do that.</p>
+
+<h2>Using scope in directives</h2>
+
+<p>Using scope is pretty straight forward when using things like <code>ng-controller</code> and <code>ng-bind</code>. But how about a directive which interacts with the scope?</p>
+
+<p>Here is a directive which exposes a number from the scope, and whether or not the number is even or odd.</p>
+
+<p><iframe style='width: 100%; height: 300px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/SZ1VBX53EidtFEzV2SrD/preview'></iframe></p>
+
+<p>The way angular achieves its data binding, is by constantly checking values on scopes to see if they have changed. This is accomplished by <code>scope.$watch</code>. Angular will automatically create <code>$watch</code> expressions for any data binding you give it, but you can also add custom ones. Every time angular thinks something may have changed, it will call the <code>$digest</code> method on the appropriate scopes, which cycles through watch expressions looking for changes. If an expression is found to have changed, angular will execute whatever the callback is.</p>
+
+<p>Another interesting thing here is the <code>$parse</code> service. <code>$parse</code> is the way angular translates expressions (the things inside <code>{{}}</code>) into javascript. Angular will automatically wrap an expression passed into <code>scope.$watch</code> as a string, but since we are going to assign a value to the same expression, it makes more sense to wrap it ourselves.</p>
+
+<p>Most of the rest of the <code>link</code> function is around synchronizing the value of number from the outer scope to the inner scope. The reason for that is that this directive has a template which requires the number to be passed into it (via <code>ng-model</code>). Because of that, we need a fixed, known value for the scope.</p>
+
+<h2>Isolate scope</h2>
+
+<p>Now, what we have here works, but there is quite a bit of &ldquo;manual lifting&rdquo; going on. It would be nice if the framework could handle that two way scope synchronization for you, wouldn&rsquo;t it? Well it can, using a feature called isolate scope.</p>
+
+<p>Normally, scopes will inherit from their parent. But in the case of directives, this can be undesired. A directive is a generic piece of functionality, and the scope is full of application and context specific values. Isolate scope allows a directive to create a &ldquo;scope sandbox&rdquo;, cutting it off from the rest of the scope tree, except for specific values. Here is the previous example re-done using isolate scope.</p>
+
+<p><iframe style='width: 100%; height: 300px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/riMUgeMoOGbe7DW6QTnB/preview'></iframe></p>
+
+<p>It looks a lot nicer without the synchronization code. That is because we moved that into the <code>scope</code> part of the directive declaration.</p>
+
+<p>The way that the <code>scope</code> property works is the key is name you want to publish on the local scope, the value is a symbol that signifies how the local scope and the outer scope values will get linked.</p>
+
+<ul>
+<li><code>=</code> two way synchronization, by far the most common. This will link an outer scope property to an inner scope property, where the outer scope property is specified by what is in the attribute being referenced.</li>
+<li><code>@</code> one way, this will copy the literal value from the attribute into the isolated scope. If the attribute value changes, the isolated scope property will be updated to reflect the change, but if the isolated property changes it doesn&rsquo;t get copied to the attribute.</li>
+<li><code>&amp;</code> will wrap the expression in a function, which can then be called as needed. If the expression is a function, you can inject arguments into it by passing a context object at the point of invocation. This may not make much sense, but see the next plunk for an example.</li>
+</ul>
+
+
+<p>so for example, <code>scope: { foo: '=' }</code> means &ldquo;Isolate scope for this directive, and set up two way synchronization between a property on the local scope called foo, and whatever expression was entered into the property <code>foo</code> on this directives element&rdquo;.</p>
+
+<p>Often, it is fine to use the same name as the attribute, but if you want to use something different, you can name the key whatever you like, and put the attribute name after the symbol. So <code>scope: { foo: '=bar' }</code> would be synching between the expression in the attribute called <code>bar</code>, and the isolated scope property <code>foo</code>.</p>
+
+<p>Here is an example of all 3 types of isolate scope declarations</p>
+
+<p><iframe style='width: 100%; height: 800px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/Sjm7MsqXbJjcn00yANvl/preview'></iframe></p>
+
+<h2>Why would you ever not want to isolate scope in a directive?</h2>
+
+<p>The only reason you don&rsquo;t isolate all directives is that there can only be one scope per element, so only one directive per element can ask for scope isolation.</p>
+
+<p>In practice, this isn&rsquo;t as limiting as you would expect. Usually there is at most one directive per element which requires complex integration into the rest of the ui state. If there are other directives, they tend to just do things like configure 3rd party libraries.</p>
+
+<p>Unfortunately, you should only use this feature if you really need it. If you are writing library code, you should go to even greater lengths to avoid it, since it can potentially restrict situations where the directive can be used.</p>
+
+<p>This is one of the things I find frustrating about the framework, the properties of isolate scope are so incredibly useful when writing directives, they really should be always available (in my opinion).</p>
+
+<h2>A few words of warning</h2>
+
+<p>Scope enables most of the aspects that have made angular the most popular JavaScript framework today. But there are some gotchas that are good to be aware of</p>
+
+<h3>Beware complex $watch expressions</h3>
+
+<p>Angular takes a brute force approach to dirty checking (until ES6 anyways), which means that your watch expression can be run many, many times. Slow <code>$watch</code>s are the most common source of performance problems in angular apps.</p>
+
+<h3>If there isn&rsquo;t a &ldquo;.&rdquo; in your binding expression, you are doing something wrong</h3>
+
+<p>This is obvious if you understand how inheritance works, but comes up surprisingly often in issues by newbies. If you read from a property that is on ancestor scope, there is no problem. But if you write to a property on an ancestor scope, you will just end up adding the property to your local scope. By publishing objects on the scope instead of values, JavaScript will first have to find the object before writing, bypassing the problem.</p>
+
+<p>Here is an example of the problem</p>
+
+<p><iframe style='width: 100%; height: 500px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/zoGNvPsYHo5FnvS7OXn3/preview'></iframe></p>
+
+<p>In general, just stick with the rule of thumb that binding expressions always need a dot in them.</p>
+
+<h3>Think carefully before publishing on $rootScope</h3>
+
+<p>It is a quick way to make something globally accessible, but there are several tradeoffs.</p>
+
+<ul>
+<li>It will make it hard to change in the future, since it is not apparent what is using the variable (since any view code could potentially be using it)</li>
+<li>You are increasing the chance of a name collision. If something further down the page uses the same name, you could introduce a very subtle bug.</li>
+<li>When properties are referenced on the <code>$rootScope</code>, it is not terribly clear where they come from.</li>
+</ul>
+
+
+<p>There is a time and place for <code>$rootScope</code>, but publishing to it should be done with thought and care.</p>
+
+<h3>Debugging</h3>
+
+<p>The <a href="https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk?hl=en">Angular Batarang</a> is an incredibly helpful tool for exploring the current state of the scope on an element. It should be the first thing you reach for when scope isn&rsquo;t behaving the way you think it should</p>
+]]></content>
+  </entry>
+  
+</feed>

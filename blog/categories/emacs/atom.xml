@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: emacs | Matt Briggs]]></title>
+  <link href="http://mattbriggs.net/blog/categories/emacs/atom.xml" rel="self"/>
+  <link href="http://mattbriggs.net/"/>
+  <updated>2014-04-09T00:33:52-04:00</updated>
+  <id>http://mattbriggs.net/</id>
+  <author>
+    <name><![CDATA[Matt Briggs]]></name>
+    <email><![CDATA[matt@mattbriggs.net]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Awesome Emacs Plugins: CTags]]></title>
+    <link href="http://mattbriggs.net/blog/2012/03/18/awesome-emacs-plugins-ctags/"/>
+    <updated>2012-03-18T00:18:00-04:00</updated>
+    <id>http://mattbriggs.net/blog/2012/03/18/awesome-emacs-plugins-ctags</id>
+    <content type="html"><![CDATA[<p>I wanted to write a series of posts on awesome emacs plugins I use, since I have put a lot of time and effort into <a href="http://github.com/mbriggs/.emacs.d">my emacs configs</a>. The funny thing I find about emacs though is that there is such a massive amount of functionality already provided, most neat things plugins do is augment stuff that is already there. So I think most of these posts are going to be a third about emacs, a third about a plugin, and a third about the glue code tying them together :)</p>
+
+<h2>Code Tags</h2>
+
+<p>The purpose of tags is to parse a codebase, and provide information about its structure (mostly for the purposes of navigation). There are many tools used to create tag index files, emacs even ships with one called etags.</p>
+
+<h2>Tags in Emacs</h2>
+
+<p>Coming from vim, one of the things I found was that emacs tag handling was inferior to vims for some reason. Most of the time, when I would do a <code>c-]</code> in vim I would land exactly where I would expect to. In emacs, I would find I needed to jump through the matches far more often to find what I wanted.</p>
+
+<h2>CTags</h2>
+
+<p>One difference was the tagging program. Vim uses something called exuberant-ctags, while emacs uses something called etags. From what I can tell, for the languages I use (javascript and ruby mostly), exuberant-tags does a noticeably better job.</p>
+
+<p>Thankfully, ctags actually supports the format emacs is expecting, you just have to pass a -e argument. I only had to slightly modify my normal ctags command, and I had</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ctags -e -R &amp;mdash;extra<span class="o">=</span>+fq &amp;mdash;exclude<span class="o">=</span>db &amp;mdash;exclude<span class="o">=</span><span class="nb">test</span> &amp;mdash;exclude<span class="o">=</span>.git &amp;mdash;exclude<span class="o">=</span>public -f TAGS
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>The last thing I want to do is have to jump to a terminal and type that out, so I wrote this quick little function in elisp to do the heavy lifting for me</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>build-ctags </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">build-ctags</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">message</span> <span class="nv">&amp;ldquo</span><span class="c1">;building project tags&amp;rdquo;)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">root</span> <span class="p">(</span><span class="nf">eproject-root</span><span class="p">)))</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span><span class="p">(</span><span class="nf">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&quot;ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f &quot;</span> <span class="nv">root</span> <span class="s">&quot;TAGS &quot;</span> <span class="nv">root</span><span class="p">)))</span>
+</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;p&gt;</span>  <span class="p">(</span><span class="nf">visit-project-tags</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">message</span> <span class="nv">&amp;ldquo</span><span class="c1">;tags built successfully&amp;rdquo;))&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">defun</span> <span class="nv">visit-project-tags</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">tags-file</span> <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nf">eproject-root</span><span class="p">)</span> <span class="nv">&amp;ldquo</span><span class="c1">;TAGS&amp;rdquo;)))&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span><span class="p">(</span><span class="nf">visit-tags-table</span> <span class="nv">tags-file</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">message</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&quot;Loaded &quot;</span> <span class="nv">tags-file</span><span class="p">))))</span>
+</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>That may be a bit confusing to people unfamiliar with elisp, so I&rsquo;ll walk through it</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">build-ctags</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>This part means &ldquo;Make an elisp function called build-ctags, and mark it as interactive so that it can be invoked via m-x&rdquo;</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">root</span> <span class="p">(</span><span class="nf">eproject-root</span><span class="p">)))</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span><span class="p">(</span><span class="nf">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&quot;ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f &quot;</span> <span class="nv">root</span> <span class="s">&quot;TAGS &quot;</span> <span class="nv">root</span><span class="p">)))</span>
+</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>This means &ldquo;Make a variable called root that is the result of the eproject-root function&rdquo; <code>eproject</code> is another library I will cover some other time, but one thing it gives you is a function that returns the root path of the current project. You could just as easily replace it with <code>(rinari-root)</code> (if you use rinari for rails projects) and it would work just as well. I will assume <code>shell-command</code> is self explanitory :)</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">visit-tags-table</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>The last piece just means replace the currently loaded tag file with whats on the disk.</p>
+
+<p>With that function, my navigation became a bit more comfortable in emacs, but I still found sometimes emacs would bring me to really strange places. After a bit of research, I found the incredibly obscurely named <code>tags-case-fold-search</code> variable. From the docs:</p>
+
+<blockquote><blockquote><p>Documentation:
+*Whether tags operations should be case-sensitive.
+A value of t means case-insensitive, a value of nil means case-sensitive.
+Any other value means use the setting of `case-fold-search'.</p></blockquote></blockquote>
+
+<p>Setting that to <code>nil</code> helped immensely.</p>
+
+<h2>etags-select</h2>
+
+<p>Now for the actual plugin :) <a href="http://www.emacswiki.org/emacs/EtagsSelect">etags-select</a> If there is a single result, you jump straight to it, but if there are multiple results, it will pop up a window showing them all. n will go to the next match, p to the previous, and enter will select the current result and jump to that line.</p>
+
+<p>I made another small command that I could bind to</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">my-find-tag</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">file-exists-p</span> <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nf">eproject-root</span><span class="p">)</span> <span class="nv">&amp;ldquo</span><span class="c1">;TAGS&amp;rdquo;))&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>  <span class="p">(</span><span class="nf">visit-project-tags</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">build-ctags</span><span class="p">))</span>
+</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;p&gt;</span>  <span class="p">(</span><span class="nf">etags-select-find-tag-at-point</span><span class="p">))</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="nv">&amp;ldquo</span><span class="c1">;M-.&amp;rdquo;) &amp;lsquo;my-find-tag)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>That function will check if the tags file is there, if it is, read it, if not, build it, then run that plugin function <code>etags-select-find-tag-at-point</code>.</p>
+
+<p>To invoke it, put the point on a symbol and hit M-.</p>
+
+<h2>.ctags</h2>
+
+<p>Last thing, for some better ctags support for rails, and support for OO javascript, add this to your <code>~/.ctags</code></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&mdash;regex-ruby=/(^|[:;])[ \t]&lt;em>([A-Z][[:alnum:]_]+) &lt;/em>=/\2/c,class,constant/
+</span><span class='line'>&mdash;regex-ruby=/(^|;)[ \t]&lt;em>(has_many|belongs_to|has_one|has_and_belongs_to_many)(? &lt;/em>:([[:alnum:]&lt;em>]+)/\3/f,function,association/
+</span><span class='line'>&mdash;regex-ruby=/(^|;)[ \t]*(named&lt;/em>)?scope(? &lt;em>:([[:alnum:]_]+)/\3/f,function,named_scope/
+</span><span class='line'>&mdash;regex-ruby=/(^|;)[ \t]&lt;/em>expose(? &lt;em>:([[:alnum:]_]+)/\2/f,function,exposure/
+</span><span class='line'>&mdash;regex-ruby=/(^|;)[ \t]&lt;/em>event(? &lt;em>:([[:alnum:]_]+)/\2/f,function,aasm_event/
+</span><span class='line'>&mdash;regex-ruby=/(^|;)[ \t]&lt;/em>event(? &lt;em>:([[:alnum:]_]+)/\2!/f,function,aasm_event/
+</span><span class='line'>&mdash;regex-ruby=/(^|;)[ \t]&lt;/em>event(? *:([[:alnum:]_]+)/\2?/f,function,aasm_event/&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;p>&mdash;langdef=js
+</span><span class='line'>&mdash;langmap=js:.js
+</span><span class='line'>&mdash;regex-js=/([A-Za-z0-9.&lt;em>$]+)[ \t]&lt;em>[:=][ \t]&lt;/em>{/\1/,object/
+</span><span class='line'>&mdash;regex-js=/([A-Za-z0-9.&lt;/em>$()]+)[ \t]&lt;em>[:=][ \t]&lt;/em>function[ \t]&lt;em>(/\1/,function/
+</span><span class='line'>&mdash;regex-js=/function[ \t]+([A-Za-z0-9._$]+)[ \t]&lt;/em>(([^)]))/\1/,function/
+</span><span class='line'>&mdash;regex-js=/([A-Za-z0-9._$]+)[ \t]&lt;em>[:=][ \t]&lt;/em>[/\1/,array/
+</span><span class='line'>&mdash;regex-js=/([^= ]+)[ \t]&lt;em>=[ \t]&lt;/em>[^&ldquo;]&lsquo;[^&rsquo;]&lt;em>/\1/,string/
+</span><span class='line'>&mdash;regex-js=/([^= ]+)[ \t]&lt;/em>=[ \t]&lt;em>[^&lsquo;]&rdquo;[^&ldquo;]&lt;/em>/\1/,string/&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;p>&mdash;exclude=*.min.js
+</span><span class='line'>&mdash;exclude=.git</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Navigating with Emacs</h2>
+
+<p>I find my experience now much better then it was before, but there is always room for improvement. Any comments, criticisms, or tips that I am missing would be hugely appreciated :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Awesome Emacs Plugins: Evil Mode]]></title>
+    <link href="http://mattbriggs.net/blog/2012/02/27/awesome-emacs-plugins-evil-mode/"/>
+    <updated>2012-02-27T15:58:00-05:00</updated>
+    <id>http://mattbriggs.net/blog/2012/02/27/awesome-emacs-plugins-evil-mode</id>
+    <content type="html"><![CDATA[<p>I want to do a series of posts on some of the cool emacs plugins I use. Before I do that though, I want to talk a bit about why I use and love emacs. The saying &ldquo;Care about the code, not the tools&rdquo; is an anathama to me, it is like &ldquo;Care about breathing, but don&rsquo;t worry about drinking&rdquo;. Breathing is incredibly important, I agree, but consuming liquid regularily is pretty high up there on the list too! Anyways, this is my journey through tooling with working with code. This post is going to be a story of epic proportions, with very little &ldquo;hard&rdquo; content, but I plan on doing more posts that are more focused on the awesomeness of emacs plugins.</p>
+
+<h2>The Dark Years: Integrated Development Enviornments</h2>
+
+<p>I used IDEs for years, and while I appreciated the power, there was some things missing. The first thing was even with plugins, the barrier to customization was quite high. I love solving problems with code, and while solving other peoples problems is a fun and interesting (and profitable) endevour, solving your own problems is usually far more satisfying. Second, they are by their nature, built for a specific language and platform. Lastly, they are quite slow, and require quite a bit of resources. At my last job, it would take almost 7 minutes to go from a reboot to everything up and pointing to the right things. Now, even with a boatload of scripts, emacs loads in about 1s.</p>
+
+<h2>The Cult of Vim</h2>
+
+<p>When I started doing rails work, I started taking vim more seriously. Vim gave me the speed, and the custommizability. I quickly crafted a set of fairly elaborate configs where everything was exactly how I liked it. But beyond that, I discovered what a joy modal editing is. The best way I can describe it is a programming language for editing. The ability to think of fragments of code as objects that i can perform functions on is a wonderful and freeing thing. Once it becomes second nature, it feels like I am talking to my editor in a high level way with my fingers. A nice side effect is that my hands <em>never</em> leave the keyboard. It is highly efficient, but efficiency isn&rsquo;t even the biggest benefit, it is a joy thing. I find it much more enjoyable to edit code with modal editing.</p>
+
+<p>Eventually you reach a point where you want to be writing your own stuff in vim as well, and you have to start learning vimscript, which is possibly the most terrible language ever conceived of. Vim is awesome, vim plugins are awesome, but vimscript is just one big WTF. More then that, I was starting to get into lisp in a pretty big way, and you can&rsquo;t compare vim experience to the emacs experience. I also was sort of frustrated by the lack of ability to show the output of an external process in a seperate buffer, especially since I do TDD.</p>
+
+<h2>The Light of Emacs</h2>
+
+<p>The old arguments between vim and emacs focused on speed, but when you are comparing either to eclipse, the amount of speed difference beween vim and emacs now is unnoticable. Same deal with resources, emacs is sitting at 250megs right now, which is more then vim, but a small fraction of chrome. That brings us to the strengths, which for emacs is it does pretty much everything vim does, but better, except for the act of actually editing text. It also does way more then vim can do, some of it quite unique (org mode) useful (regexp-builder) or suprisingly powerful (calc).</p>
+
+<p>The other major thing is elisp vs vimscript. I have a strongly passionate (bordering on irrational) love of lisp, so for me it was not even worth talking about, something lispy vs a really terrible dynamic imperative language, I will choose the lispy thing every time. elisp is far from the greatest lisp out there, but compared to vimscript it is wonderful. There is also a philsophy in emacs that emacs is a platform, with an editor implemented in it. Vim philosphy is vim is an editor that you can script if that makes you happy. Very different, and since I have such a dedication to my tooling, I definately appreciate the emacs side.</p>
+
+<p>The thing that was always a sticking point for me was modal editing. As much as I love modal editing, I hate emacs editing. There is something about the way my brain works that makes it extremely hard to remember key chords. I can happy do &ldquo;<code>ci'blahfT;;.</code>&rdquo; and have no problems, but <code>c-c</code> <code>m-x t</code> will leave my brain after about 10 minutes of not using it.</p>
+
+<p>After some time lusting over emacs and being defeated by its keybindings, I read about viper-mode, which was a vim emulator. I tried it out, but after trying <code>ci"</code> and having it not work, I realized it wasn&rsquo;t enough. I poked around the internet a bit, and found out about vimpulse, which promised much more in terms of vim emulation. I actually went a day on vimpulse before switching back, there were just too many inconsistancies and other small things that were missing, or not working the way they should.</p>
+
+<h2>Evil.</h2>
+
+<p>I went a few months, sort of keeping taps on emacs, but not really expecting to be able to switch. Eventually I heard about evil, and I eagerly installed it. Wow. After trying vim emulators in many other editors, which range from the level of viper mode to a bit under vimpulse, evil was like a light in the darkness. These guys really &ldquo;get&rdquo; vim, and are serious about re-implementing it. I have been using it for a few months every day, and there are only a few things missing.</p>
+
+<ul>
+<li>it ignores punctuation. if you have <code>function foo(){}</code>, and your cursor is at the end of the line, in vim db will leave you with <code>function foo</code>, in evil, it leaves you with <code>function</code>. This is because vim will treat punction as a word, while evil does not. I still find this regularly frustes me.</li>
+<li>there is no <code>:g</code>. There are a ton of <code>:</code> commands missing, but I find the lack of <code>:g</code> the thing I really miss, since most of the other stuff is covered by emacs functions</li>
+<li>the <code>b</code> text object is broken in js2 mode. I use js2 a lot, love it, and consider it one of the reasons as a web developer to switch from vim to emacs.</li>
+</ul>
+
+
+<h2>Evil for Vim users</h2>
+
+<p>First, in emacs, next line/prev line is <code>c-n</code>, <code>c-p</code>. The reason you need to know this is because there are other emacs major modes that have nothing to do with editing, but will usually use <code>c-n</code>/<code>c-p</code> or <code>n</code>/<code>p</code> as the method to navigate from the next and previous item.</p>
+
+<p>In vim, it applies scripts via various events. Combing two things together means running one event, followed by the other event. In emacs, you are composing modes. Every buffer in emacs has a single major mode, that defines what type of thing you are doing. A major mode could be &ldquo;ruby&rdquo;, but it could also be an email client. Emacs is the platform, and a major mode is the application. You also have minor modes, which add additional features to a major mode. I have a plugin called autopair, that will keep delimiters balanced (I use delimMate to do the same thing in vim), that is a minor mode. So your editing experience is basically defined by composing a major mode with multiple minor modes.</p>
+
+<p>This is a really cool thing, if you write vim plugins, usually you see a block where they have to unregister all sorts of things they registered if the filetype changes, that is a non issue in emacs, because nodes are self-contained entities. The bad thing is in the age of web development, we have to deal with files that have multiple major modes (like erb, which can have html, css, ruby, and javascript). This is probably the biggest weakness of emacs at the moment, it was designed with a single major mode per buffer, so you cannot compose major modes. There are many attempted hacks around this, but IMO they are all terrible.</p>
+
+<p><code>M-x</code> in emacs means &ldquo;Execute command&rdquo;. All the commands will be available there. <code>M-x describe-key</code> is extremely useful, you type that then hit a key, and it will tell you what function it is bound to. Once you have that, you can do <code>M-x describe-function</code> and enter that function name to view its documentation.</p>
+
+<p>Lastly, if you are a vim user, you need to know how to bind keys. The idea in emacs is instead of registering keys at a global level, each mode has a keymap that is self contained. So when you compose your modes, you are also composing keymaps. the syntax for keymaps is</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>keymaps </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">&lt;keymap&gt;</span> <span class="nv">key</span> <span class="nv">&amp;lsquo</span><span class="c1">;function)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">; evil defines 3 maps for the various states, so to</span>
+</span><span class='line'><span class="c1">; replicate a mapping I had in vim &amp;ndash; nmap Y y$&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">defun</span> <span class="nv">copy-to-end-of-line</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">evil-yank</span> <span class="p">(</span><span class="nf">point</span><span class="p">)</span> <span class="p">(</span><span class="nf">point-at-eol</span><span class="p">)))</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="nv">&amp;ldquo</span><span class="c1">;Y&amp;rdquo; &amp;lsquo;copy-to-end-of-line)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>That was a custom function definition, but you can also use any built in function after the <code>'</code>.</p>
+
+<p>Everything in emacs I know, I know by its function name. If I use it a lot, I will map it to a key, so I have pretty much completely ignored the real keybinds.</p>
+
+<h2>Evil for Emacs Users</h2>
+
+<p>I honestly don&rsquo;t think I am qualified to write this, because I was never a real emacs user. But if you were ever curious about why people go on and on about how awesome vim is, evil will pretty much give you that experience, and you can have it without leaving the editor you already know and love. I believe evil mode is more effective then traditional emacs, but even if it isn&rsquo;t I am pretty sure it is more enjoyable. I would strongly encourage people to give it a chance for a month or so with a &ldquo;Learn vim&rdquo; tutorial, and see how they find thinking in text objects. We are definately in YMMV territory, but I find it a joy. <a href="http://dnquark.com/blog/2012/02/emacs-evil-ecumenicalism/">You may find this post more tailored to your point of view</a></p>
+]]></content>
+  </entry>
+  
+</feed>

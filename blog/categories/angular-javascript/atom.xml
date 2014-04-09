@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: angular javascript | Matt Briggs]]></title>
+  <link href="http://mattbriggs.net/blog/categories/angular-javascript/atom.xml" rel="self"/>
+  <link href="http://mattbriggs.net/"/>
+  <updated>2014-04-09T00:33:52-04:00</updated>
+  <id>http://mattbriggs.net/</id>
+  <author>
+    <name><![CDATA[Matt Briggs]]></name>
+    <email><![CDATA[matt@mattbriggs.net]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Understanding Angular Directives]]></title>
+    <link href="http://mattbriggs.net/blog/2014/01/14/understanding-angular-directives/"/>
+    <updated>2014-01-14T11:34:00-05:00</updated>
+    <id>http://mattbriggs.net/blog/2014/01/14/understanding-angular-directives</id>
+    <content type="html"><![CDATA[<p>Angular is the hottest JavaScript framework out there right now, and for good reason. It is a very powerful, flexible, and well designed framework for building web applications. However, like many projects, one of its major weaknesses is both the quantity, and quality, of its documentation. Because of that, Angular can be exceptionally difficult to learn.</p>
+
+<p>Thankfully, a lot of Angular is pretty straightforward once you have a basic understanding of the concepts and some of the pitfalls. However, there is one topic that is definitely <em>not</em> straight forward at all, and is essential for any non trivial Angular work. That is directives.</p>
+
+<p>This blog post is written with the assumption that you know basic Angular knowledge (things like <code>ng-if</code>, what a service is, what scope is). Also, when I talk about HTML, I am referring to the markup language, when I talk about the DOM, I am referring to an active, living tree of UI elements that is running in a browser.</p>
+
+<h2>What is a directive?</h2>
+
+<p>The tagline of Angular is &ldquo;Teach HTML New Tricks&rdquo;, and directives are the mechanism you use to make that happen. I would even go so far as to say that directives <em>are</em> Angular, the rest of the framework (with very few exceptions) is there to support the usage of directives.</p>
+
+<p>In a more practical sense, directives are HTML artifacts which handle all DOM manipulation and interaction. This can be everything from jQuery style &ldquo;DOM enhancement&rdquo; code, to HTML control flow (like <code>ng-if</code> or <code>ng-switch</code>), to data binding (<code>ng-bind</code> / <code>ng-model</code>). Unfortunately, with that power and flexibility comes a substantial amount of complexity.</p>
+
+<h2>Comparisons to Backbone Views</h2>
+
+<p>The idea of a directive sort of lines up with a Backbone view, in that it is the place that you put code that interacts with the DOM.</p>
+
+<p>A key difference, is that a Backbone view usually has a one to one relationship with a DOM element. In the case of Angular, it is quite common for multiple directives to be attached to the same DOM element.</p>
+
+<p>Another difference is that in Backbone, there is a substantial amount of code required to wire together, views, the DOM, and the models/collections. In Angular, the wiring up is done by the framework, according to HTML annotations and dependancy injection.</p>
+
+<p>This dramatically reduces the amount of code required to build a complex view. When people talk about writing less code in Angular, the majority of it comes from the lack of this code, which is pure boilerplate 90%+ of the time. However, it also means less flexibility in how to coordinate interactions between components. This is a double edged sword, having a single, well understood way of doing things makes the code easier to understand, but when you are doing something that pushes the framework, it means you have less tools at your disposal.</p>
+
+<h2>Simple directives</h2>
+
+<p>Let&rsquo;s look at what goes into building a simple directive. This directive will make an alert box pop up when you click on an element, which will say &ldquo;Hello, world!&rdquo;. If a name is provided when applying the directive, it will use that instead of &ldquo;world&rdquo;.</p>
+
+<p><iframe style='width: 100%; height: 500px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/QExEdgNZkEDcwcJwkpuN/preview'></iframe></p>
+
+<p>It is important to note that Angular will translate the name <code>myGreeting</code> which is properly cased JavaScript, into dashed case <code>my-greeting</code>, which is proper for html/css.</p>
+
+<p>The first thing to look at is <code>restrict</code>, which determines how your directive will be used. This can be a combination of the following codes</p>
+
+<ul>
+<li><code>A</code>: restrict to attributes. <code>&lt;input type="text" my-greeting/&gt;</code></li>
+<li><code>E</code>: restrict to elements. <code>&lt;my-greeting&gt;&lt;/my-greeting&gt;</code></li>
+<li><code>C</code>: restrict to class. <code>&lt;button class="my-greeting"&gt;Greet!&lt;/button&gt;</code></li>
+<li><code>M</code>: restrict to comment. <code>&lt;!-- directive: my-greeting --&gt;</code></li>
+</ul>
+
+
+<p>Now four choices in how to apply directives may seem to be a lot. In reality, it is considered to be a best practice to use the first two, since comments and classes are there for edge cases which very rarely occur. Typically, you will have more attribute directives then elements, since those are easier to compose.</p>
+
+<h2>link function</h2>
+
+<p>The next thing we will look at is the <code>link</code> function. To understand why it is named <code>link</code> only becomes clear after understanding the directive life cycle, but for now, think of it as the place where you put your DOM manipulation code.</p>
+
+<p>You can see that we have three arguments being passed in &mdash; <code>scope</code>, <code>element</code>, and <code>attrs</code> (there are an additional two arguments which can be used, but they are for more advanced situations, which we will explore in future posts).</p>
+
+<ul>
+<li><p><code>scope</code> is the current scope of the element. It is hard to list all the ways a scope reference can be used in Angular. But in the context of directives, the core use case is to translate what is in the DOM into JavaScript properties, and apply DOM changes based on JavaScript properties. The best way to think of scope is the glue between the world of the view (HTML) and the world of the rest of your application (JavaScript).</p></li>
+<li><p><code>element</code> is the DOM node on which the directive is applied, wrapped in jQuery. You can do anything to it that you would otherwise be able to do with jQuery. A good rule of thumb is that a directive should only ever really be modifying its own element. I would consider it a very strong code smell if a directive was doing DOM traversal to change other elements, or even worse, looking up other parts of the DOM by id or css.</p></li>
+<li><p><code>attrs</code> is an instance of <code>ng.Attributes</code>. This is primarily useful for reading the properties of other attributes on <code>element</code>. It can also be used to react to an attribute changing (<code>attrs.$observe</code>), or to set a value on an attribute (<code>attrs.$set</code>). A nice property of <code>attrs</code> is that it will do the same casing normalization as what happens with directives &mdash; so if you were looking up the value of <code>my-attr="foo"</code> on an element, you would do it by checking <code>attrs.myAttr</code>.</p></li>
+</ul>
+
+
+<h2>The Angular directive lifecycle</h2>
+
+<p>If you have made it this far, you already understand how to use a directive in a simple fashion. However, to fully understand directives, you have to understand how Angular uses them.</p>
+
+<p>When you start your Angular application, you provide two pieces of information to the framework: A top level module, and a root element. The module is loaded, so that its dependancies can be registered for injections. The DOM node then gets passed to the <code>$compile</code> service for compilation.</p>
+
+<p><code>$compile</code> walks the DOM tree, looking for nodes which have directives it knows about. Once it has this list built, it begins processing each one in turn.</p>
+
+<p>To compile a node, Angular needs to know how to combine the world of HTML (the DOM node) with the world of Angular. When you provide a <code>link</code> function in a directive definition, you are telling Angular how to accomplish that task &mdash; how to link the two worlds together. This is also the point at which directive templates are compiled and inlined into the DOM.</p>
+
+<p>Angular gets these linking functions by calling the <code>compile</code> function on each directive, in order of <code>priority</code>. <code>compile</code> defaults to whatever function is provided by the <code>link</code> property of the directive definition, if present. These linking functions are then combined into a composite linking function for that element.</p>
+
+<p>Once all the linking functions are gathered, Angular will start linking from the bottom of the tree going up.</p>
+
+<h2>compile vs link</h2>
+
+<p>So that begs the question, when should you use <code>compile</code>, and when should you use <code>link</code>?</p>
+
+<p>The easy answer is that you should just use <code>link</code>, unless you need to do something (like manipulate the child DOM nodes) before the linking process starts. Since <code>compile</code> happens before the scope really comes into play, its uses are dramatically limited to cases where you need control over the DOM <em>template</em> rather then the fully realized directive. If you are in a case where you do need <code>compile</code>, you must return your own linking function, since the <code>link</code> property of the directive definition will be ignored.</p>
+
+<h2>Putting it all together</h2>
+
+<p>Let&rsquo;s take <a href="http://c2.com/cgi/wiki?FizzBuzzTest">the classic FizzBuzz interview question</a>, and modify it to be about directives.</p>
+
+<blockquote><p>Write a directive that will be applied to an element with
+children, each containing a number. The directive will then
+modify the child elements to apply a directive. When the
+child element contains a number divisible by 3, apply a
+<code>fizz</code> directive. When the number is divisible by 5, apply
+a <code>buzz</code> directive. When it is divisible by both 3 and 5,
+apply a <code>fizz-buzz</code> directive.</p>
+
+<p>Each of those directives will change the element to display
+the appropriate text (&lsquo;Fizz&rsquo;, &lsquo;Buzz&rsquo;, or &lsquo;FizzBuzz&rsquo;), and
+increment a counter on the page.</p></blockquote>
+
+<p><iframe style='width: 100%; height: 500px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/fuCL1gTR0nQl5dYGsxU4/preview'></iframe></p>
+
+<p>Directives are one of the most complex parts of Angular, but hopefully this post gives you a good foundation to build your knowledge on. There are more advanced properties and techniques available, but using what was described here will take you very far.</p>
+]]></content>
+  </entry>
+  
+</feed>

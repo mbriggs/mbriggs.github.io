@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>data-attributes are an anti-pattern - Matt Briggs</title>
+  <meta name="author" content="Matt Briggs">
+
+  
+  <meta name="description" content="HTML5 has a lot of cool things in it, but the one thing I wish I could remove are data-attributes, because of the crimes against clean front-end code &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mattbriggs.net/blog/2012/08/10/data-attributes-are-an-anti-pattern">
+  <link href="/favicon.png?v=2" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Matt Briggs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-10813260-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Briggs</a></h1>
+  
+    <h2>"Not all code needs to be a factory, some of it can just be origami" -why, the lucky stiff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mattbriggs.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="subscription">
+  <li><a href="/.emacs.d" target="_blank" rel="emacs-config" title="Emacs Configuration"><i class="fa fa-code"></i></a></li>
+  <li><a href="http://github.com/mbriggs" target="_blank" rel="github" title="Github Profile"><i class="fa fa-github"></i></a></li>
+  <li><a href="https://twitter.com/intent/user?screen_name=googleninja" rel="follow-twitter" target="_blank" title="Follow on Twitter"><i class="fa fa-twitter"></i></a></li>
+  <li><a href="http://stackoverflow.com/users/10771/matt-briggs" rel="stackoverflow" target="_blank" title="StackOverflow Profile"><i class="fa fa-stack-overflow"></i></a></li>
+  <li><a href="/atom.xml" target="_blank" rel="subscribe-rss" title="Subscribe via RSS"><i class="fa fa-rss"></i></a></li>
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://careers.stackoverflow.com/mattbriggs" target="_blank">CV</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Data-attributes Are an Anti-pattern</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-10T10:32:00-04:00" pubdate data-updated="true">Aug 10<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>HTML5 has a lot of cool things in it, but the one thing I wish I could remove are data-attributes, because of the crimes against clean front-end code that it seems to encourage.</p>
+
+<h2>What is this clean web code you speak of?</h2>
+
+<p>We have 3 technologies that go into building a web app, HTML, CSS, and JavaScript. All three operate on an abstract concept called the DOM, in their own ways.</p>
+
+<ul>
+<li><p><em>css</em><br/>
+This is the language we use to declaratively set the visual properties of our UI. It consists of a path matching syntax, and a series of rules. Clean css is a) readable, b) doesn&rsquo;t repeat itself too much, and c) is modular (i.e. you shouldn&rsquo;t have styles intended for one thing leak into another thing) CSS is very hard (and frustrating) to learn, and even harder to write well.</p></li>
+<li><p><em>javascript</em><br/>
+This is the language we use to specify the behaviour of our application. Up until the last 2 years there wasn&rsquo;t a lot of guidance on how to do this properly, but nowadays there is a tonne. Clean javascript is worthy of a book rather then a half paragraph, but for the purpose of this blog post, clean javascript is keeping your behaviour in javascript and your javascript out of the html. Also, that your DOM centric code should be segregated from the more abstract code.</p></li>
+<li><p><em>html</em><br/>
+Html is the language we use to form the base structure of the DOM. Many people confuse HTML with being the DOM, but that usually comes from not much javascript experience. The HTML should be expressing the structure of your interface in a very abstract way. For example, if you have a navigation sidebar, it may look something like this</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;nav&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;header&gt;</span>Pages<span class="nt">&lt;/header&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;foo.html&quot;</span><span class="nt">&gt;</span>foo<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;foo.html&quot;</span><span class="nt">&gt;</span>foo<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;foo.html&quot;</span><span class="nt">&gt;</span>foo<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;foo.html&quot;</span><span class="nt">&gt;</span>foo<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/nav&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There is nothing talking about whether this sits at the left, right, or bottom of the page. There is nothing that talks about how the links should be pjaxing the main content div of the app. All it describes is a navigation widget at a very high level.</p>
+
+<ul>
+<li><em>the DOM</em><br/>
+This is where all of those things come together. The DOM is the in memory representation of your UI. It has event handlers bound to elements, it has styles, and it changes dynamically. When you hit view source in your browser, you are looking at the html. When you open the web inspector, you are looking at the DOM (made to look html, due to how confused people are about these things).</li>
+</ul>
+
+
+<h2>The role of data attributes</h2>
+
+<p>Data attributes are a new way of serializing information into a DOM node about what it represents, so that you are not forced to use the class attribute improperly. For example, a blog post could look like this</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;article</span> <span class="na">class=</span><span class="s">&#39;video&#39;</span> <span class="na">data-publish-date=</span><span class="s">&quot;2012-08-10&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;/article&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We are using an article tag to represent the post, its class tells us what type of post it is (a video), and the data attribute is used to tell us something about it. This seems pretty obvious to me, class is for type of thing being represented, data is for that things data.</p>
+
+<p>Now, with the rails 3 javascript helpers, to send some data to the server via AJAX, you do something like this</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;/posts&quot;</span> <span class="na">method=</span><span class="s">&quot;POST&quot;</span> <span class="na">data-remote=</span><span class="s">&quot;true&quot;</span> <span class="na">data-confirm=</span><span class="s">&quot;are you sure you want to post this?&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;[post]title&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;textarea</span> <span class="na">name=</span><span class="s">&quot;[post]body&quot;</span><span class="nt">&gt;&lt;/textarea&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">data-disable-with=</span><span class="s">&quot;Loading…&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;/form&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, this looks like a very elegant solution to a common problem. But it&rsquo;s not really using data attributes the way they are intended to be used.</p>
+
+<p>First we have the <code>data-remote="true"</code>. Why would you use a data attribute for something that obviously should be a class? <code>data-disable-with</code> and <code>data-confirm</code> are even worse, since they have a) nothing to do with data, and b) have no business being in the HTML.</p>
+
+<h2>Why does it matter that rails co-opts data attributes?</h2>
+
+<p>In the small scale, it really doesn&rsquo;t matter at all. More then that, it works very well. You can make arguments about purity and aesthetics, but at the end of the day, we are co-opting technology that was intended to model papers and blog posts, and using it to build applications. Rails as a whole is meant to build things like base camp, which is the smaller end of mid-sized application, so if you are building that kind of app then they will serve you well (just like the rest of the default rails stack).</p>
+
+<p>If you are building highly dynamic apps, or larger scale apps, things start to break down. When people are taught by rails that data attributes are a way to configure javascript libraries, you end up with stuff like this</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='erb'><span class='line'><span class="cp">&lt;%=</span> <span class="n">text_field_tag</span> <span class="s2">&quot;text_field_import_scenario_</span><span class="si">#{</span><span class="n">scenario</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="ss">:style</span> <span class="o">=&gt;</span> <span class="s2">&quot;width:346px;&quot;</span><span class="p">,</span> <span class="ss">:size</span> <span class="o">=&gt;</span> <span class="mi">24</span><span class="p">,</span> <span class="ss">:&#39;data-autocomplete-path&#39;</span> <span class="o">=&gt;</span> <span class="n">search_scenarios_quote_scenario_path</span><span class="p">(</span><span class="n">scenario</span><span class="o">.</span><span class="n">quote</span><span class="p">,</span> <span class="n">scenario</span><span class="p">),</span> <span class="ss">:&#39;data-autocomplete-raw-html&#39;</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">:&#39;data-autocomplete-send-form&#39;</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">:&#39;data-autocomplete-select&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;$j(&#39;#import_error_message&#39;).html(&#39;&#39;);$j(&#39;#text_field_import_scenario_</span><span class="si">#{</span><span class="n">scenario</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#39;).val(ui.item.name); $j(&#39;#object_id_</span><span class="si">#{</span><span class="n">scenario</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#39;).val(ui.item.value);&quot;</span><span class="p">,</span> <span class="ss">:&#39;data-autocomplete-after-update-bad&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;$j(&#39;#import_link_</span><span class="si">#{</span><span class="n">scenario</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#39;).show(); resizePopup(&#39;import_pop_up_</span><span class="si">#{</span><span class="n">scenario</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#39;);&quot;</span> <span class="cp">%&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>or completely baffling things, like this</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>data-print-action=&quot;check_sku:selected_skus:Item&quot;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>One reason we strive for clean code is because it is easy to read. Since HTML is already a very verbose language, this becomes more important. Keeping things simple and focused is the heart of clean HTML, and the previous two examples are almost the antitheses of that. After 10 years we have finally gotten people to stop using inline styles, and the rails community is replacing that with something much worse to maintainable html, inline behaviour.</p>
+
+<h2>Ok fine, rails is doing it wrong, but there are still valid use cases, right?</h2>
+
+<p>The valid use case for data attributes are when you are doing relatively simple front end work, and jQuerying your way to victory. The javascript community has found that jQuerys DOM centric approach to code structure is a nightmare passed small scale, but if you are in the jQuery sweet spot, then you are also in the data-attribute sweet spot.</p>
+
+<p>If you are doing more complex behaviours and interactions, making the DOM the source of truth is a bad idea. Your source of truth should be objects that wrap data structures and handle synching those data structures to a server. Beyond that, most of your UI will be rendered by javascript anyways, so you duplicating information that will not stay in synch.</p>
+
+<h2>TL;DR;</h2>
+
+<p>Data attributes are data, not javascript configuration. The rails way of using them works well in trivial cases, but gets exponentially worse the more complex your use cases get.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Briggs</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-10T10:32:00-04:00" pubdate data-updated="true">Aug 10<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/design/'>design</a>, <a class='category' href='/blog/categories/html/'>html</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattbriggs.net/blog/2012/08/10/data-attributes-are-an-anti-pattern/" data-via="googleninja" data-counturl="http://mattbriggs.net/blog/2012/08/10/data-attributes-are-an-anti-pattern/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/05/07/mixins-are-not-a-refactoring-anti-pattern/" title="Previous Post: Mixins are not always a refactoring anti-pattern">&laquo; Mixins are not always a refactoring anti-pattern</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/04/19/sometimes-its-ok-to-leave-a-mess/" title="Next Post: Sometimes, It's OK to Leave a Mess">Sometimes, It's OK to Leave a Mess &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/10/how-i-learned-to-stop-worrying/">How I Learned to Stop Worrying, and Love Dart</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/code-organization-in-angular/">Code Organization in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/transclusion-in-angular/">Transclusion in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/scope-in-angular/">Scope in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/14/understanding-angular-directives/">Understanding Angular Directives</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mbriggs">@mbriggs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mbriggs',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/105078754127788731088?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Matt Briggs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'mbriggs';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mattbriggs.net/blog/2012/08/10/data-attributes-are-an-anti-pattern/';
+        var disqus_url = 'http://mattbriggs.net/blog/2012/08/10/data-attributes-are-an-anti-pattern/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

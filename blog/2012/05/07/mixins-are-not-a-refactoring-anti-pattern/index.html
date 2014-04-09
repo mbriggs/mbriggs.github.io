@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Mixins are not always a refactoring anti-pattern - Matt Briggs</title>
+  <meta name="author" content="Matt Briggs">
+
+  
+  <meta name="description" content="Steve Klabnik just posted an interesting post about mixins. Steve is a really smart guy, and I usually agree with him, but I think his justification &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mattbriggs.net/blog/2012/05/07/mixins-are-not-a-refactoring-anti-pattern">
+  <link href="/favicon.png?v=2" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Matt Briggs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-10813260-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Briggs</a></h1>
+  
+    <h2>"Not all code needs to be a factory, some of it can just be origami" -why, the lucky stiff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mattbriggs.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="subscription">
+  <li><a href="/.emacs.d" target="_blank" rel="emacs-config" title="Emacs Configuration"><i class="fa fa-code"></i></a></li>
+  <li><a href="http://github.com/mbriggs" target="_blank" rel="github" title="Github Profile"><i class="fa fa-github"></i></a></li>
+  <li><a href="https://twitter.com/intent/user?screen_name=googleninja" rel="follow-twitter" target="_blank" title="Follow on Twitter"><i class="fa fa-twitter"></i></a></li>
+  <li><a href="http://stackoverflow.com/users/10771/matt-briggs" rel="stackoverflow" target="_blank" title="StackOverflow Profile"><i class="fa fa-stack-overflow"></i></a></li>
+  <li><a href="/atom.xml" target="_blank" rel="subscribe-rss" title="Subscribe via RSS"><i class="fa fa-rss"></i></a></li>
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://careers.stackoverflow.com/mattbriggs" target="_blank">CV</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Mixins Are Not Always a Refactoring Anti-pattern</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-07T17:59:00-04:00" pubdate data-updated="true">May 7<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Steve Klabnik just posted an interesting <a href="http://blog.steveklabnik.com/posts/2012-05-07-mixins--a-refactoring-anti-pattern">post about mixins</a>. Steve is a really smart guy, and I usually agree with him, but I think his justification is a little bit weak in this case.</p>
+
+<h2>Mixin Refactoring through Class Gutting</h2>
+
+<p>Oh man, he is so right that this is an anti-pattern. It happens a lot in ruby, someone says &ldquo;Hey, this thing is doing too much. The only method of code reuse I really believe in is mixins, so I&rsquo;ll just take the implementation, and dump it into a mixin.&rdquo;</p>
+
+<p>By doing that, you haven&rsquo;t decreased complexity, you have actually increased it by breaking locality. Steve introduces the idea of reducing complexity through ecapsulation (right on), and talks about Data Mapper and Repository. Very OOP, and great solutions, especially in larger systems. Still diggin what Steve has to say.</p>
+
+<h2>Method Count as a metric of complexity</h2>
+
+<p>Here is where we part ways. Lets take the Enumerable module in the ruby standard library. It adds 94 methods on to a given thing, with the requirement that that &ldquo;thing&rdquo; provides an each method.</p>
+
+<p>But enumerable is an &ldquo;idea&rdquo;, and if something is enumerable, you sort of know how to work with it &mdash; through those 94 methods.</p>
+
+<p>Steve talks about how encapsulation reduces complexity of the implementation, well Enumerable encapsulates the &ldquo;idea&rdquo; of enumerating. So that means that when providing a public interface, a data structure can focus on its fairly simple implementation, and only provide the most low level and simplist of methods (each), while bringing in Enumerable and let it do the heavy lifting to give the rich interface that people expect from a ruby data structure.</p>
+
+<p>How is that increasing complexity? When I look at Enumerable, it is talking about a single concept. When I look at array, it is talking about a single concept. The only thing I can change to break the implicit protocol between the two is to break the each method at a fundamental level.</p>
+
+<p>Composition would have been a terrible choice here, I think providing 94 stub methods and an internal enumerator object would just increase the complexity, not reduce it. Providing an enumerator as an external thing would have made the api much more of a pain to work with. Inheritance would be better then composition or separation, but the problem is that Array is a datastructure, it is not an &ldquo;Enumerable&rdquo;. Enumeration is an ability, not the root of a concept. I think the best choice here is mixin, and that it is fairly obviously the best choice. And I think most people who have implemented data structures in ruby would agree.</p>
+
+<p>So what we have is something that is close to inheritance, but more of a &ldquo;vertical slice&rdquo; of functionality. An &ldquo;ability&rdquo; rather then a &ldquo;thing&rdquo;. This is what mixins give up, the ability to model &ldquo;abilities&rdquo; in a concise way.</p>
+
+<h2>What is complexity</h2>
+
+<p>Rich Hickey defines complexity as an interleaving of ideas. I think that is a great definition. In the case of Enumerable, you are providing significant functionality through providing a simple implementation, the only interleaving is that each method. Sure, the runtime method count is 94 methods higher, but who cares? When you are calling methods on array, you are thinking of it as a single thing. When you are maintaining array, you don&rsquo;t have to worry about any interations with enumerable outside of each.</p>
+
+<p>I think that the amount, and shape, of a mixins interaction with its containing class is a good measure of complexity. The amount and shape of a classes interactions with the internals of a mixin is a great metric of complexity. The only thing the number of runtime methods is telling you is that maybe you should be looking at those other things, which isn&rsquo;t that great a smell.</p>
+
+<h3>The important thing here is interactions.</h3>
+
+<p>Large classes often become complex. But it isn&rsquo;t a property of their runtime method count, or even inherant to their lines of code. It is because large classes and large methods tend to interact in ways that are hard to understand. Small classes can get complex too for the same reasons, but the larger the class, the easier it is to get to that place.</p>
+
+<h2>Why &ldquo;Gut the class and dump&rdquo; it into a mixin doesn&rsquo;t work</h2>
+
+<p>It doesn&rsquo;t work because you haven&rsquo;t tackled the complexity of the interactions in the code. Maybe it needs to get pulled into another class, maybe methods need to get merged together. Or maybe you are just talking about an inherantly complex thing, and doing the earlier things will make it worse. In any case it is not the runtime method count that will tell you this, it is analysis of how the class interacts with itself and others.</p>
+
+<h2>Complexity Smells</h2>
+
+<p>Steve wasn&rsquo;t writing about complexity smells in a general way, but since I have spent so much time talking about what isn&rsquo;t a smell, I sort of feel compelled to talk about what is. I am sure he would agree with most, if not all of the following</p>
+
+<ul>
+<li>When a mixin mucks with class internals.</li>
+<li>When a mixin mucks with other mixins.</li>
+<li>When you read the inheritor of a class, and can&rsquo;t understand it without reading its parent</li>
+<li>When you read an inherited class, but can&rsquo;t understand it without its children</li>
+<li>When there are so many interactions with other things that you have to read many classes to understand how a single thing works</li>
+<li>When classes do too many things</li>
+<li>When classes have too many dependancies</li>
+<li>When classes are aware of too many other objects</li>
+<li>When too many other objects are aware of a class</li>
+</ul>
+
+
+<p>And that is just the tip of the iceburg. I would say that a significant percentage of our job is managing complexity in code, it is a huge and nuanced topic. Mixins are also not a simple thing, and are extremely easy to use in the wrong ways.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Briggs</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-07T17:59:00-04:00" pubdate data-updated="true">May 7<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/oo/'>oo</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattbriggs.net/blog/2012/05/07/mixins-are-not-a-refactoring-anti-pattern/" data-via="googleninja" data-counturl="http://mattbriggs.net/blog/2012/05/07/mixins-are-not-a-refactoring-anti-pattern/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/05/05/the-many-faces-of-ruby-callables/" title="Previous Post: The Many Faces of Ruby Callables">&laquo; The Many Faces of Ruby Callables</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/08/10/data-attributes-are-an-anti-pattern/" title="Next Post: data-attributes are an anti-pattern">data-attributes are an anti-pattern &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/10/how-i-learned-to-stop-worrying/">How I Learned to Stop Worrying, and Love Dart</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/code-organization-in-angular/">Code Organization in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/transclusion-in-angular/">Transclusion in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/scope-in-angular/">Scope in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/14/understanding-angular-directives/">Understanding Angular Directives</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mbriggs">@mbriggs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mbriggs',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/105078754127788731088?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Matt Briggs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'mbriggs';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mattbriggs.net/blog/2012/05/07/mixins-are-not-a-refactoring-anti-pattern/';
+        var disqus_url = 'http://mattbriggs.net/blog/2012/05/07/mixins-are-not-a-refactoring-anti-pattern/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

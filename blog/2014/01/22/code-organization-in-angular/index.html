@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Code Organization in Angular - Matt Briggs</title>
+  <meta name="author" content="Matt Briggs">
+
+  
+  <meta name="description" content="The number one question I see over and over with programmers new to angular is &ldquo;how do I organize my code?&rdquo;. I think that this is because &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mattbriggs.net/blog/2014/01/22/code-organization-in-angular">
+  <link href="/favicon.png?v=2" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Matt Briggs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-10813260-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Briggs</a></h1>
+  
+    <h2>"Not all code needs to be a factory, some of it can just be origami" -why, the lucky stiff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mattbriggs.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="subscription">
+  <li><a href="/.emacs.d" target="_blank" rel="emacs-config" title="Emacs Configuration"><i class="fa fa-code"></i></a></li>
+  <li><a href="http://github.com/mbriggs" target="_blank" rel="github" title="Github Profile"><i class="fa fa-github"></i></a></li>
+  <li><a href="https://twitter.com/intent/user?screen_name=googleninja" rel="follow-twitter" target="_blank" title="Follow on Twitter"><i class="fa fa-twitter"></i></a></li>
+  <li><a href="http://stackoverflow.com/users/10771/matt-briggs" rel="stackoverflow" target="_blank" title="StackOverflow Profile"><i class="fa fa-stack-overflow"></i></a></li>
+  <li><a href="/atom.xml" target="_blank" rel="subscribe-rss" title="Subscribe via RSS"><i class="fa fa-rss"></i></a></li>
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://careers.stackoverflow.com/mattbriggs" target="_blank">CV</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Code Organization in Angular</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-22T14:57:00-05:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>The number one question I see over and over with programmers new to angular is &ldquo;how do I organize my code?&rdquo;. I think that this is because the way you organize sample code is completely different then simple code, which again, is totally different then a complex application, and those transitions are not self-evident.</p>
+
+<h2>Sample Code &ndash; aka One Big File</h2>
+
+<p>This is how you see most code on the internet</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;foobar&#39;</span><span class="p">,</span> <span class="p">[]).</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;MyCoolController&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="c1">// controller</span>
+</span><span class='line'><span class="p">}).</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;evenCoolerDirective&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'> <span class="c1">// directive</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This makes a lot of sense when you are showing some sample code. But it will very quickly become unwieldy and difficult to work with if you are building anything even slightly complex. I would not recommend using this for anything you would check into source control.</p>
+
+<h2>Simple App &ndash; aka The Angular-Seed Method</h2>
+
+<p>The angular project published a sample &ldquo;boilerplate&rdquo; project called &ldquo;angular-seed&rdquo;, as a way to help developers new to angular get rolling without having to do a bunch of grunt work.</p>
+
+<p>The way angular-seed organizes it&rsquo;s files is by type. In a nutshell, it looks like this</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// in app.js</span>
+</span><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;app&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;app.directives&#39;</span><span class="p">,</span> <span class="s1">&#39;app.services&#39;</span><span class="p">,</span> <span class="s1">&#39;app.controllers&#39;</span><span class="p">,</span> <span class="s1">&#39;app.filters&#39;</span><span class="p">]);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// in app.directives.js</span>
+</span><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;app.directives&#39;</span><span class="p">,</span> <span class="p">[]).</span>
+</span><span class='line'><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;myDirective&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'><span class="c1">// stuff</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// in app.services.js</span>
+</span><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;app.services&#39;</span><span class="p">,</span> <span class="p">[]).</span>
+</span><span class='line'><span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;myService&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'><span class="c1">// stuff</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// in app.controllers.js</span>
+</span><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;app.controllers&#39;</span><span class="p">,</span> <span class="p">[]).</span>
+</span><span class='line'><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;myController&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'><span class="c1">// stuff</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// in app.filters.js</span>
+</span><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;app.filters&#39;</span><span class="p">,</span> <span class="p">[]).</span>
+</span><span class='line'><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;myFilters&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'><span class="c1">// stuff</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This has the advantage of at least giving you <em>some</em> precision when trying to locate a given piece of code. It will also scale up well enough so that it is still usable by the time you finish building a simple application.</p>
+
+<p>The problem here is what happens if you are not building a simple application? What happens if you have dozens of directives, and hundreds of controllers and services? At that point, 5 files won&rsquo;t help much.</p>
+
+<h2>Splitting your application up into modules</h2>
+
+<p>This is widely considered to be the best way to organize non-trivial angular code. The idea is instead of thinking of your application as one giant thing, think of it as a number of small, independent modules that come together to form a giant application.</p>
+
+<p>The benefit to structuring your code this way extends beyond being able to find things easily. People get into trouble when building large scale code bases by not thinking about dependancies. When everything in your app can &ldquo;talk to&rdquo; anything else in your app, those dependancies are everywhere. This means that even small, innocuous changes can impact things you couldn&rsquo;t foresee, causing bugs. It also means when you want to re-design something, it is extremely difficult, because it means changing how it is used everywhere in the rest of your application.</p>
+
+<p>This is a very large and complex topic, but as a general rule of thumb, thinking of your application as a group of small, self-contained modules with a limited API used to communicate with each other will go a long way towards the long term health and maintainability of your codebase.</p>
+
+<p>Thankfully, angular has a module construct. Unfortunately, it is extremely primitive, and most of this &ldquo;encapsulation&rdquo; will have to exist in your own head.</p>
+
+<p>When splitting your application apart this way, every module is given its own folder, which contains all the code required for that section of the codebase. These modules should be as small as possible, and should be as self contained as possible. It helps a lot with the containment if you use require.js.</p>
+
+<h2>Angular and Require.js</h2>
+
+<p>Do you even need require if you have angular? There is a lot of division on this topic, many people feel that since angular takes care of most application dependancy issues for you, that you can use a simpler build system and punt on require all together.</p>
+
+<p>I think the real power in require (compared to other module loaders) comes from how you are divorcing dev-time file loading from production-time loading. Since angular has no story at all on file loading (only dependancy management), I think the need for that power is inevitable. You can embrace it immediately, or wait until you feel the pain, but hundreds of files coming down at the same time when the application loads will be brutal to develop against.</p>
+
+<p>But beyond that, since there is no such thing as a module level injectable in angular (all dependancy injection draws from the same pool), it means if you want to have a module level model or service, it is impossible to control visibility. When you use require, you can have source level dependancies which are not published to the rest of the system, and use the angular dependancy injection for exposing an API.</p>
+
+<p>This has worked great for me so far, with the sole exception that it is fairly common that I want to use <code>$http</code> for repository classes (would be the same issue if you wanted to use <code>$resource</code>). In these cases, I will pull that dependancy out of angular, and keep a reference in some sort of shared utility file (or base class). This can be done fairly easily</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">injector</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">injector</span><span class="p">([</span><span class="s1">&#39;ng&#39;</span><span class="p">]);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">injector</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;$http&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">// .instanciate can also be used if you want it to &quot;new&quot; something for you</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The main purpose of dependancy injection in angular is so that you can wire up UI code declaratively, while keeping everything easy to test. Since services like <code>$http</code> are on the edges of the system, I don&rsquo;t think it is going against the spirit of the framework to pull them out. Hopefully, the angular team will add module level visibility in the future, and the whole issue will just go away.</p>
+
+<h2>Choosing what is right for your project</h2>
+
+<p>Since angular has taken such a hands off approach to the subject of code organization, there really is no &ldquo;right&rdquo; answer on what you should use. I have described some common (and less common) ways that people have found work for them, but it really comes down to a project by project choice.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Briggs</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-22T14:57:00-05:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/angular/'>angular</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattbriggs.net/blog/2014/01/22/code-organization-in-angular/" data-via="googleninja" data-counturl="http://mattbriggs.net/blog/2014/01/22/code-organization-in-angular/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/01/22/transclusion-in-angular/" title="Previous Post: Transclusion in Angular">&laquo; Transclusion in Angular</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/03/10/how-i-learned-to-stop-worrying/" title="Next Post: How I Learned to Stop Worrying, and Love Dart">How I Learned to Stop Worrying, and Love Dart &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/10/how-i-learned-to-stop-worrying/">How I Learned to Stop Worrying, and Love Dart</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/code-organization-in-angular/">Code Organization in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/transclusion-in-angular/">Transclusion in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/scope-in-angular/">Scope in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/14/understanding-angular-directives/">Understanding Angular Directives</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mbriggs">@mbriggs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mbriggs',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/105078754127788731088?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Matt Briggs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'mbriggs';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mattbriggs.net/blog/2014/01/22/code-organization-in-angular/';
+        var disqus_url = 'http://mattbriggs.net/blog/2014/01/22/code-organization-in-angular/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

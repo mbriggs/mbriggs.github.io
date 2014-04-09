@@ -1,0 +1,1001 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Matt Briggs</title>
+  <meta name="author" content="Matt Briggs">
+
+  
+  <meta name="description" content="Update I was looking at old posts on my blog, and ran across this
+one. It is more then a little angry, and takes a very hard line. If I
+were to write &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mattbriggs.net/blog/page/2">
+  <link href="/favicon.png?v=2" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Matt Briggs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-10813260-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Briggs</a></h1>
+  
+    <h2>"Not all code needs to be a factory, some of it can just be origami" -why, the lucky stiff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mattbriggs.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="subscription">
+  <li><a href="/.emacs.d" target="_blank" rel="emacs-config" title="Emacs Configuration"><i class="fa fa-code"></i></a></li>
+  <li><a href="http://github.com/mbriggs" target="_blank" rel="github" title="Github Profile"><i class="fa fa-github"></i></a></li>
+  <li><a href="https://twitter.com/intent/user?screen_name=googleninja" rel="follow-twitter" target="_blank" title="Follow on Twitter"><i class="fa fa-twitter"></i></a></li>
+  <li><a href="http://stackoverflow.com/users/10771/matt-briggs" rel="stackoverflow" target="_blank" title="StackOverflow Profile"><i class="fa fa-stack-overflow"></i></a></li>
+  <li><a href="/atom.xml" target="_blank" rel="subscribe-rss" title="Subscribe via RSS"><i class="fa fa-rss"></i></a></li>
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://careers.stackoverflow.com/mattbriggs" target="_blank">CV</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/16/why-i-dont-use-semicolons/">Why I Don&#8217;t Use Semicolons</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-16T18:00:00-04:00" pubdate data-updated="true">Apr 16<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/04/16/why-i-dont-use-semicolons/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>Update</strong> I was looking at old posts on my blog, and ran across this
+one. It is more then a little angry, and takes a very hard line. If I
+were to write this today, it would come out very differently. It was
+written during a time when the JS community flamed each other very hard
+for about a month over this issue. Where I stand now is that honestly,
+it doesn&rsquo;t matter that much. Using semi-colons because most of the
+community does is a perfectly valid reason. I felt attacked in a
+personal way, and responded in kind. Not something I am proud of, but it
+is what it is.</p>
+
+<p>This weekend there was the latest of many outcries over the use of semi-colons. The problem came from twitter bootstrap breaking in jsmin due to a lack of semi-colons, fat saying that he wrote perfectly fine js, and that it is a bug in jsmin, followed by crockford declaring his code bad (in the way only crockford can), and that he wouldn&rsquo;t bring jsmin down to the level of supporting code that bad.</p>
+
+<p>The story hit hacker news, twitter, the irc, and probably other places I don&rsquo;t follow, and caused quite a big deal of nerd rage over how someone could justify not using semicolons in javascript. The next day, Brandon Eich weighed in, and basically said that automatic semi-colon insertion wasn&rsquo;t done properly, if he could go back in time he would have made them fully optional, but since they aren&rsquo;t optional in all circumstances, you should probably use them all the time. This basically threw fuel on the fire, and kept the rage going on for another day or so.</p>
+
+<h2>The Problem With ASI (Automatic Semicolon Insertion) in Javascript</h2>
+
+<p>It really depends on who you ask. If you talk to Crockford, he will say something about how the spec is mystifying and the rules are obtuse so you should just always use them. If you talk to someone else who has read the spec, they will tell you that the spec is pretty clear, and well implemented across browser versions. There is really one place where it does not work they way one would expect.</p>
+
+<p>Basically javascript treats whitespace and newlines for brackets the same across all the different types of brackets so that means both of the following are valid js syntax</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">foo</span> <span class="o">===</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">doSomething</span><span class="p">()</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">foo</span> <span class="o">===</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nx">doSomething</span><span class="p">()</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That is pretty much as one would expect right? The problem comes with the following</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">doSomething</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">// is the same as…</span>
+</span><span class='line'><span class="nx">doSomething</span>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// and…</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">listOfFoo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">// is the same as…</span>
+</span><span class='line'><span class="nx">listOfFoo</span>
+</span><span class='line'><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Why anyone would write that into a language is beyond me, because deliberately writing code like the previous examples is absolutely terrible. But apart from aesthetics, where this will get you into trouble is a case like this</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">wtf</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;this function doesn&#39;t actually return anything&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;So when you call it, it evaluates to undefined&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">wtf</span><span class="p">()</span>
+</span><span class='line'><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="c1">// this pattern is known as an immediately invoking function definition</span>
+</span><span class='line'> <span class="c1">// it is mostly used to introduce local state</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">SomeNamespace</span><span class="p">.</span><span class="nx">funcName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}())</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above is a semi-realistic scenario where asi will punch you in the face in javascript. Basically, the intent is to call <code>wtf()</code>, and then make your immediately invoking function. What actually happens is that <code>wtf</code> gets called, returns <code>undefined</code>, and js attempts to call <code>undefined</code> as a function, passing in that inner function as an argument.</p>
+
+<p>Now, getting <code>undefined is not a function</code> would be pretty confusing in that, and very hard to debug, especially if you don&rsquo;t know the js quirks around ASI.</p>
+
+<h2>So, thats the problem, how do we deal with it?</h2>
+
+<p>There are several schools of thought.</p>
+
+<ul>
+<li>One is to not actually explain the real issue, and give some handwaving and muttering about the inconsistencies of ASI, and how you should never rely on it.</li>
+<li>Another is to learn the reason that bug occurs, and put a semi colon at the end of every line, whether it needs it or not</li>
+<li>A third is to prefix a line when this issue will occur with a semi-colon, and omit them in all other instances, since you know it is safe to do so.</li>
+</ul>
+
+
+<p>The first is the attitude taken by the vast majority of the javascript community. The second and third are taken by a few, more advanced developers. The third however, is shunned, and causes terrible arguments by people who take the first way of dealing with it.</p>
+
+<h2>Why all the hate?</h2>
+
+<p>If you write java code all day, and are appending ; to the end of each line whether it needs it or not, I can totally see it making sense to carry that tradition of needless ceremony over in javascript. If you come from any other language that supports ASI properly, I cannot understand how, after learning the facts about what the issue is, come to the conclusion that appending a redundant character to the end of 99.999% of your code is the way to solve a problem that comes up 0.001% of the time.</p>
+
+<p>But my attitude is live and let live, if you want to do something I don&rsquo;t get, I really don&rsquo;t mind if it genuinely helps you avoid bugs. I would suggest wrapping all statements with parens, since sometimes they are needed and other times they are not (best to be safe!) and maybe append some <code>//</code>s to the end of your lines, just in case someone wants to add a comment later, it won&rsquo;t cause syntax errors. If I saw code that looked like this</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">(</span><span class="kd">var</span> <span class="nx">addStuff</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="p">(</span><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">//</span>
+</span><span class='line'>  <span class="p">(</span><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">//</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">(</span><span class="k">return</span> <span class="p">(</span><span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">););</span> <span class="c1">//</span>
+</span><span class='line'><span class="p">});</span> <span class="c1">//</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I would kind of be scratching my head, and wondering why the person did it that way. But at the end of the day, all of that other extraneous crap has exactly the same amount of reason to be there as the semicolons.</p>
+
+<h2>Whats so bad about a few semicolons?</h2>
+
+<p>I am going to talk about me, personally here, since there is a good chance that this stuff falls under the category of &ldquo;Thats just the way Matts brain works&rdquo;.</p>
+
+<p>First, they are just noise. They have no reason to be there, and noise for me tends to fade into the background. After working with semi-coloned javascript for awhile, I don&rsquo;t even notice the semicolons anymore. This is a really bad thing, because if I miss a semi-colon in the wrong place, I have a hard time linking the code I am looking at to that problem. By contrast, if I lead a line with a semi-colon in the one situation that matters, that stands out to me like a red flag. I can easily tell when its there and when it is not there.</p>
+
+<p>Second, javascript is the only language I use that people even think about using semi-colons in. I spend most of my time in ruby, clojure, sass, html, and javascript. JS is the one difference with regards to ASI. That just exacerbates the problem for me, and makes it more likely I will miss a semi colon.</p>
+
+<p>Third, I have zero problem remembering &ldquo;Lead lines that begin with brackets with a ;&rdquo;. This is a very simple rule, in a world where I have to remember that keypress is less consistent then keydown, hasLayout, how to vertically align things in css, and why onchange isn&rsquo;t working when I programmatically change something in i.e.. You could make an argument that &ldquo;Add a semi colon to the end of each line&rdquo; is an even easier rule, but for me its not (refer to the previous two points for why).</p>
+
+<p>Lastly, both in this post and in terms of importance, semicolons are ugly. They make an already verbose language just that much more verbose, and I actually care about things like aesthetics in code. This reason is far less important then the previous three, but for me it is just one more reason to not use redundant semi-colons</p>
+
+<h2>The hate</h2>
+
+<p>But hey, if you want to use them, I am totally fine with that. If I contribute to your project I will use them too, and if I  miss one and you let me know, I will happily fix it. I have a canned regexp replace in emacs for scanning a file for possible semi-colon omission, and I dutifully run it before committing to someone else&rsquo;s project.</p>
+
+<p>In my experience, this is pretty common for the no-semicolon crowd. But for some reason the attitude of the semi-colon mafia is that of violent and vitriolic hatred. It is not ok that I choose a different way then them to deal with this problem, it is not ok that I talk about it, and try to educate people as to why they are doing this practice in the first place, and it is really, really not ok for me to expect to be afforded the same courtesy I offer them.</p>
+
+<p>Why?</p>
+
+<p>I ask myself this every time one of these arguments happen. I genuinely think that it is a lack of knowledge that causes this knee-jerk reaction, but actually imparting that knowledge usually changes nothing. It is a very big mystery to me, and I have seen others in the js community express similar bafflement (including Isaac, one of the leaders of the node community, node developer and creator/maintainer of npm)</p>
+
+<h2>Can&rsquo;t we all just get along?</h2>
+
+<p>I would love, just absolutely love to hear a good reason why you need semi-colons everywhere. I don&rsquo;t buy that javascript developers can&rsquo;t remember that simple rule, because they deal with far more complex rules every day. I don&rsquo;t buy that it is a tool issue, because every tool of the current generation has no problems with ASI. I don&rsquo;t buy that it is a fundamental flaw in ASI, because I use many languages that I don&rsquo;t write semi colons in, and never seem to have issues with them.</p>
+
+<p>So please convince me. Politely, and in the spirit of coming to an understanding. I don&rsquo;t understand why you make the choice you make, but I don&rsquo;t think you are terrible for making it. Github has plenty of great developers, they ban semis. Thomas Fuches has been a community leader since before there really was a community, he doesn&rsquo;t use them. Isaac is one of the leaders in the node.js world, and a great js developer, he shares most (if not all) of these opinions. Even if you can&rsquo;t convince me, at least come to the same conclusion that I have on this issue, for whatever reason there are good developers who seem to completely abandon common sense around semi-colons, accept that and move on.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/18/awesome-emacs-plugins-ctags/">Awesome Emacs Plugins: CTags</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T00:18:00-04:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/18/awesome-emacs-plugins-ctags/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I wanted to write a series of posts on awesome emacs plugins I use, since I have put a lot of time and effort into <a href="http://github.com/mbriggs/.emacs.d">my emacs configs</a>. The funny thing I find about emacs though is that there is such a massive amount of functionality already provided, most neat things plugins do is augment stuff that is already there. So I think most of these posts are going to be a third about emacs, a third about a plugin, and a third about the glue code tying them together :)</p>
+
+<h2>Code Tags</h2>
+
+<p>The purpose of tags is to parse a codebase, and provide information about its structure (mostly for the purposes of navigation). There are many tools used to create tag index files, emacs even ships with one called etags.</p>
+
+<h2>Tags in Emacs</h2>
+
+<p>Coming from vim, one of the things I found was that emacs tag handling was inferior to vims for some reason. Most of the time, when I would do a <code>c-]</code> in vim I would land exactly where I would expect to. In emacs, I would find I needed to jump through the matches far more often to find what I wanted.</p>
+
+<h2>CTags</h2>
+
+<p>One difference was the tagging program. Vim uses something called exuberant-ctags, while emacs uses something called etags. From what I can tell, for the languages I use (javascript and ruby mostly), exuberant-tags does a noticeably better job.</p>
+
+<p>Thankfully, ctags actually supports the format emacs is expecting, you just have to pass a -e argument. I only had to slightly modify my normal ctags command, and I had</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ctags -e -R --extra<span class="o">=</span>+fq --exclude<span class="o">=</span>db --exclude<span class="o">=</span><span class="nb">test</span> --exclude<span class="o">=</span>.git --exclude<span class="o">=</span>public -f TAGS
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The last thing I want to do is have to jump to a terminal and type that out, so I wrote this quick little function in elisp to do the heavy lifting for me</p>
+
+<figure class='code'><figcaption><span>build-ctags </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">build-ctags</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">message</span> <span class="s">&quot;building project tags&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">root</span> <span class="p">(</span><span class="nf">eproject-root</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&quot;ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f &quot;</span> <span class="nv">root</span> <span class="s">&quot;TAGS &quot;</span> <span class="nv">root</span><span class="p">)))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">visit-project-tags</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">message</span> <span class="s">&quot;tags built successfully&quot;</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">visit-project-tags</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">tags-file</span> <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nf">eproject-root</span><span class="p">)</span> <span class="s">&quot;TAGS&quot;</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">visit-tags-table</span> <span class="nv">tags-file</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">message</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&quot;Loaded &quot;</span> <span class="nv">tags-file</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That may be a bit confusing to people unfamiliar with elisp, so I&rsquo;ll walk through it</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">build-ctags</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This part means &ldquo;Make an elisp function called build-ctags, and mark it as interactive so that it can be invoked via m-x&rdquo;</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">root</span> <span class="p">(</span><span class="nf">eproject-root</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&quot;ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f &quot;</span> <span class="nv">root</span> <span class="s">&quot;TAGS &quot;</span> <span class="nv">root</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This means &ldquo;Make a variable called root that is the result of the eproject-root function&rdquo; <code>eproject</code> is another library I will cover some other time, but one thing it gives you is a function that returns the root path of the current project. You could just as easily replace it with <code>(rinari-root)</code> (if you use rinari for rails projects) and it would work just as well. I will assume <code>shell-command</code> is self explanitory :)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">visit-tags-table</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The last piece just means replace the currently loaded tag file with whats on the disk.</p>
+
+<p>With that function, my navigation became a bit more comfortable in emacs, but I still found sometimes emacs would bring me to really strange places. After a bit of research, I found the incredibly obscurely named <code>tags-case-fold-search</code> variable. From the docs:</p>
+
+<blockquote><blockquote><p>Documentation:
+*Whether tags operations should be case-sensitive.
+A value of t means case-insensitive, a value of nil means case-sensitive.
+Any other value means use the setting of `case-fold-search&#8217;.</p></blockquote></blockquote>
+
+<p>Setting that to <code>nil</code> helped immensely.</p>
+
+<h2>etags-select</h2>
+
+<p>Now for the actual plugin :) <a href="http://www.emacswiki.org/emacs/EtagsSelect">etags-select</a> If there is a single result, you jump straight to it, but if there are multiple results, it will pop up a window showing them all. n will go to the next match, p to the previous, and enter will select the current result and jump to that line.</p>
+
+<p>I made another small command that I could bind to</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">my-find-tag</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">file-exists-p</span> <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nf">eproject-root</span><span class="p">)</span> <span class="s">&quot;TAGS&quot;</span><span class="p">))</span>
+</span><span class='line'>      <span class="p">(</span><span class="nf">visit-project-tags</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">build-ctags</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">etags-select-find-tag-at-point</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;M-.&quot;</span><span class="p">)</span> <span class="ss">&#39;my-find-tag</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That function will check if the tags file is there, if it is, read it, if not, build it, then run that plugin function <code>etags-select-find-tag-at-point</code>.</p>
+
+<p>To invoke it, put the point on a symbol and hit M-.</p>
+
+<h2>.ctags</h2>
+
+<p>Last thing, for some better ctags support for rails, and support for OO javascript, add this to your <code>~/.ctags</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>--regex-ruby=/(^|[:;])[ \t]*([A-Z][[:alnum:]_]+) *=/\2/c,class,constant/
+</span><span class='line'>--regex-ruby=/(^|;)[ \t]*(has_many|belongs_to|has_one|has_and_belongs_to_many)\(? *:([[:alnum:]_]+)/\3/f,function,association/
+</span><span class='line'>--regex-ruby=/(^|;)[ \t]*(named_)?scope\(? *:([[:alnum:]_]+)/\3/f,function,named_scope/
+</span><span class='line'>--regex-ruby=/(^|;)[ \t]*expose\(? *:([[:alnum:]_]+)/\2/f,function,exposure/
+</span><span class='line'>--regex-ruby=/(^|;)[ \t]*event\(? *:([[:alnum:]_]+)/\2/f,function,aasm_event/
+</span><span class='line'>--regex-ruby=/(^|;)[ \t]*event\(? *:([[:alnum:]_]+)/\2!/f,function,aasm_event/
+</span><span class='line'>--regex-ruby=/(^|;)[ \t]*event\(? *:([[:alnum:]_]+)/\2?/f,function,aasm_event/
+</span><span class='line'>
+</span><span class='line'>--langdef=js
+</span><span class='line'>--langmap=js:.js
+</span><span class='line'>--regex-js=/([A-Za-z0-9._$]+)[ \t]*[:=][ \t]*\{/\1/,object/
+</span><span class='line'>--regex-js=/([A-Za-z0-9._$()]+)[ \t]*[:=][ \t]*function[ \t]*\(/\1/,function/
+</span><span class='line'>--regex-js=/function[ \t]+([A-Za-z0-9._$]+)[ \t]*\(([^)])\)/\1/,function/
+</span><span class='line'>--regex-js=/([A-Za-z0-9._$]+)[ \t]*[:=][ \t]*\[/\1/,array/
+</span><span class='line'>--regex-js=/([^= ]+)[ \t]*=[ \t]*[^"]'[^']*/\1/,string/
+</span><span class='line'>--regex-js=/([^= ]+)[ \t]*=[ \t]*[^']"[^"]*/\1/,string/
+</span><span class='line'>
+</span><span class='line'>--exclude=*.min.js
+</span><span class='line'>--exclude=.git</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Navigating with Emacs</h2>
+
+<p>I find my experience now much better then it was before, but there is always room for improvement. Any comments, criticisms, or tips that I am missing would be hugely appreciated :)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/08/why-i-like-object-number-tap/">Why I Like Object#tap</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-08T01:28:00-05:00" pubdate data-updated="true">Mar 8<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/08/why-i-like-object-number-tap/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In a recent <a href="http://www.destroyallsoftware.com">Destroy All Software</a> screencast, Gary mentioned how he really doesn&rsquo;t like <code>Object#tap</code>. He was using it in this sort of context</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">StoreCache</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">for_term</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">begin</span>
+</span><span class='line'>    <span class="no">CachedScore</span><span class="o">.</span><span class="n">for_term</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">rescue</span> <span class="ss">CachedScore</span><span class="p">:</span><span class="ss">:NoScore</span>
+</span><span class='line'>    <span class="no">RockScore</span><span class="o">.</span><span class="n">for_term</span><span class="p">(</span><span class="n">term</span><span class="p">)</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">score</span><span class="o">|</span>
+</span><span class='line'>      <span class="no">CachedScore</span><span class="o">.</span><span class="n">save_score</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>He said he didn&rsquo;t understand why people like that syntax so much, when you could just as easily do</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">StoreCache</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">for_term</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">begin</span>
+</span><span class='line'>    <span class="no">CachedScore</span><span class="o">.</span><span class="n">for_term</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">rescue</span> <span class="ss">CachedScore</span><span class="p">:</span><span class="ss">:NoScore</span>
+</span><span class='line'>    <span class="n">score</span> <span class="o">=</span> <span class="no">RockScore</span><span class="o">.</span><span class="n">for_term</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+</span><span class='line'>    <span class="no">CachedScore</span><span class="o">.</span><span class="n">save_score</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">score</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>with the differences being that the name of the variable is on the left side, and the return is more explicit. I sort of get where he is coming from, but I would not use tap that way.</p>
+
+<h2>What <code>Object#tap</code> means to me</h2>
+
+<p>I think he (and many others) see <code>Object#tap</code> as meaning &ldquo;fancy method that give me a 1 character placeholder variable and implicit return&rdquo;. I see tap as meaning &ldquo;tap into the object initialization&rdquo;, or more practically &ldquo;This entire expression is related to object initialization.&rdquo;</p>
+
+<p>Typically, I wont use <code>tap</code> unless there is a high degree of locality, and you are talking about left-side = right-side type code. Something like this</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">build_foo</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">f</span><span class="o">.</span><span class="n">bar</span> <span class="o">=</span> <span class="s2">&quot;Hi&quot;</span>
+</span><span class='line'>    <span class="n">f</span><span class="o">.</span><span class="n">baz</span> <span class="o">=</span> <span class="s2">&quot;Baz&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Building out values on an object is an incredibly common pattern that is logically a single thing. Visually, tap is grouping the code for that pattern. Also, I find it reduces density in a place where the additional verbosity really doesn&rsquo;t add anything in terms of clarity. At work, we are still using 1.8.7 ree, so when we need ordered hashes (often as identifiers for keys on objects), we have a lot of code that looks like this</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">UNIT_OF_MEASURES</span> <span class="o">=</span> <span class="ss">ActiveSupport</span><span class="p">:</span><span class="ss">:OrderedHash</span>
+</span><span class='line'><span class="no">UNIT_OF_MEASURES</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;Eaches&quot;</span>
+</span><span class='line'><span class="no">UNIT_OF_MEASURES</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;Cases&quot;</span>
+</span><span class='line'><span class="no">UNIT_OF_MEASURES</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;Pallets&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I think the move from that to tap style is a significant improvement</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">UNIT_OF_MEASURES</span> <span class="o">=</span> <span class="ss">ActiveSupport</span><span class="p">:</span><span class="ss">:OrderedHash</span><span class="o">.</span><span class="n">tap</span> <span class="o">|</span><span class="n">uom</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">uom</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;Eaches&quot;</span>
+</span><span class='line'>  <span class="n">uom</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;Cases&quot;</span>
+</span><span class='line'>  <span class="n">uom</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;Pallets&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The last thing is the fact that its a single expression. I love implicit returns in ruby where your entire method is a single expression, it feels kind of lispy. Something like this</p>
+
+<figure class='code'><figcaption><span>me likey </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">foo</span>
+</span><span class='line'>  <span class="n">some_predicate?</span> <span class="p">?</span> <span class="s2">&quot;Hi!&quot;</span> <span class="p">:</span> <span class="s2">&quot;Bye&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However, I am really not a fan of implicit returns when you just end a function with a bare word. If you are writing imperative style of code, I think each statement should actually be a statement that says what it does. Something like this just sort of feels like a mis-use of a language feature.</p>
+
+<figure class='code'><figcaption><span>ugh </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">foo</span>
+</span><span class='line'>  <span class="n">thing</span> <span class="o">=</span> <span class="n">build_thing</span>
+</span><span class='line'>  <span class="n">thing</span><span class="o">.</span><span class="n">some_method</span>
+</span><span class='line'>  <span class="n">thing</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is something that I think falls squarely into personal style. But because of how I enjoy writing more expression oriented code, having an expression for a common pattern is a big plus for me.</p>
+
+<p>Another interesting thing to note is that in rails-land, it is very common to use hash initializers for this kind of thing. Something like this</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Post</span><span class="o">.</span><span class="n">create!</span> <span class="ss">author</span><span class="p">:</span> <span class="n">current_user</span><span class="p">,</span>
+</span><span class='line'>             <span class="ss">published</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span>
+</span><span class='line'>             <span class="ss">category</span><span class="p">:</span> <span class="s2">&quot;some-category&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>While that syntax is very minimal, I actually prefer the <code>Object#tap</code> style of api, because I find it gives a clearer separation between plain old method arguments, and object initialization.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Post</span><span class="o">.</span><span class="n">create!</span> <span class="k">do</span> <span class="o">|</span><span class="nb">p</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">p</span><span class="o">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">current_user</span>
+</span><span class='line'>  <span class="nb">p</span><span class="o">.</span><span class="n">published</span> <span class="o">=</span> <span class="kp">true</span>
+</span><span class='line'>  <span class="nb">p</span><span class="o">.</span><span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;some-category&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Not Hatin On Gary</h2>
+
+<p>The dude is awesome, and everyone who is a professional ruby developer really should subscribe to his podcasts. IMO the guy is a master of OO, and his screencasts are far more valuable then 10$ and 15mins of your life per month.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/27/awesome-emacs-plugins-evil-mode/">Awesome Emacs Plugins: Evil Mode</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-27T15:58:00-05:00" pubdate data-updated="true">Feb 27<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/02/27/awesome-emacs-plugins-evil-mode/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I want to do a series of posts on some of the cool emacs plugins I use. Before I do that though, I want to talk a bit about why I use and love emacs. The saying &ldquo;Care about the code, not the tools&rdquo; is an anathama to me, it is like &ldquo;Care about breathing, but don&rsquo;t worry about drinking&rdquo;. Breathing is incredibly important, I agree, but consuming liquid regularily is pretty high up there on the list too! Anyways, this is my journey through tooling with working with code. This post is going to be a story of epic proportions, with very little &ldquo;hard&rdquo; content, but I plan on doing more posts that are more focused on the awesomeness of emacs plugins.</p>
+
+<h2>The Dark Years: Integrated Development Enviornments</h2>
+
+<p>I used IDEs for years, and while I appreciated the power, there was some things missing. The first thing was even with plugins, the barrier to customization was quite high. I love solving problems with code, and while solving other peoples problems is a fun and interesting (and profitable) endevour, solving your own problems is usually far more satisfying. Second, they are by their nature, built for a specific language and platform. Lastly, they are quite slow, and require quite a bit of resources. At my last job, it would take almost 7 minutes to go from a reboot to everything up and pointing to the right things. Now, even with a boatload of scripts, emacs loads in about 1s.</p>
+
+<h2>The Cult of Vim</h2>
+
+<p>When I started doing rails work, I started taking vim more seriously. Vim gave me the speed, and the custommizability. I quickly crafted a set of fairly elaborate configs where everything was exactly how I liked it. But beyond that, I discovered what a joy modal editing is. The best way I can describe it is a programming language for editing. The ability to think of fragments of code as objects that i can perform functions on is a wonderful and freeing thing. Once it becomes second nature, it feels like I am talking to my editor in a high level way with my fingers. A nice side effect is that my hands <em>never</em> leave the keyboard. It is highly efficient, but efficiency isn&rsquo;t even the biggest benefit, it is a joy thing. I find it much more enjoyable to edit code with modal editing.</p>
+
+<p>Eventually you reach a point where you want to be writing your own stuff in vim as well, and you have to start learning vimscript, which is possibly the most terrible language ever conceived of. Vim is awesome, vim plugins are awesome, but vimscript is just one big WTF. More then that, I was starting to get into lisp in a pretty big way, and you can&rsquo;t compare vim experience to the emacs experience. I also was sort of frustrated by the lack of ability to show the output of an external process in a seperate buffer, especially since I do TDD.</p>
+
+<h2>The Light of Emacs</h2>
+
+<p>The old arguments between vim and emacs focused on speed, but when you are comparing either to eclipse, the amount of speed difference beween vim and emacs now is unnoticable. Same deal with resources, emacs is sitting at 250megs right now, which is more then vim, but a small fraction of chrome. That brings us to the strengths, which for emacs is it does pretty much everything vim does, but better, except for the act of actually editing text. It also does way more then vim can do, some of it quite unique (org mode) useful (regexp-builder) or suprisingly powerful (calc).</p>
+
+<p>The other major thing is elisp vs vimscript. I have a strongly passionate (bordering on irrational) love of lisp, so for me it was not even worth talking about, something lispy vs a really terrible dynamic imperative language, I will choose the lispy thing every time. elisp is far from the greatest lisp out there, but compared to vimscript it is wonderful. There is also a philsophy in emacs that emacs is a platform, with an editor implemented in it. Vim philosphy is vim is an editor that you can script if that makes you happy. Very different, and since I have such a dedication to my tooling, I definately appreciate the emacs side.</p>
+
+<p>The thing that was always a sticking point for me was modal editing. As much as I love modal editing, I hate emacs editing. There is something about the way my brain works that makes it extremely hard to remember key chords. I can happy do &ldquo;<code>ci'blahfT;;.</code>&rdquo; and have no problems, but <code>c-c</code> <code>m-x t</code> will leave my brain after about 10 minutes of not using it.</p>
+
+<p>After some time lusting over emacs and being defeated by its keybindings, I read about viper-mode, which was a vim emulator. I tried it out, but after trying <code>ci"</code> and having it not work, I realized it wasn&rsquo;t enough. I poked around the internet a bit, and found out about vimpulse, which promised much more in terms of vim emulation. I actually went a day on vimpulse before switching back, there were just too many inconsistancies and other small things that were missing, or not working the way they should.</p>
+
+<h2>Evil.</h2>
+
+<p>I went a few months, sort of keeping taps on emacs, but not really expecting to be able to switch. Eventually I heard about evil, and I eagerly installed it. Wow. After trying vim emulators in many other editors, which range from the level of viper mode to a bit under vimpulse, evil was like a light in the darkness. These guys really &ldquo;get&rdquo; vim, and are serious about re-implementing it. I have been using it for a few months every day, and there are only a few things missing.</p>
+
+<ul>
+<li>it ignores punctuation. if you have <code>function foo(){}</code>, and your cursor is at the end of the line, in vim db will leave you with <code>function foo</code>, in evil, it leaves you with <code>function</code>. This is because vim will treat punction as a word, while evil does not. I still find this regularly frustes me.</li>
+<li>there is no <code>:g</code>. There are a ton of <code>:</code> commands missing, but I find the lack of <code>:g</code> the thing I really miss, since most of the other stuff is covered by emacs functions</li>
+<li>the <code>b</code> text object is broken in js2 mode. I use js2 a lot, love it, and consider it one of the reasons as a web developer to switch from vim to emacs.</li>
+</ul>
+
+
+<h2>Evil for Vim users</h2>
+
+<p>First, in emacs, next line/prev line is <code>c-n</code>, <code>c-p</code>. The reason you need to know this is because there are other emacs major modes that have nothing to do with editing, but will usually use <code>c-n</code>/<code>c-p</code> or <code>n</code>/<code>p</code> as the method to navigate from the next and previous item.</p>
+
+<p>In vim, it applies scripts via various events. Combing two things together means running one event, followed by the other event. In emacs, you are composing modes. Every buffer in emacs has a single major mode, that defines what type of thing you are doing. A major mode could be &ldquo;ruby&rdquo;, but it could also be an email client. Emacs is the platform, and a major mode is the application. You also have minor modes, which add additional features to a major mode. I have a plugin called autopair, that will keep delimiters balanced (I use delimMate to do the same thing in vim), that is a minor mode. So your editing experience is basically defined by composing a major mode with multiple minor modes.</p>
+
+<p>This is a really cool thing, if you write vim plugins, usually you see a block where they have to unregister all sorts of things they registered if the filetype changes, that is a non issue in emacs, because nodes are self-contained entities. The bad thing is in the age of web development, we have to deal with files that have multiple major modes (like erb, which can have html, css, ruby, and javascript). This is probably the biggest weakness of emacs at the moment, it was designed with a single major mode per buffer, so you cannot compose major modes. There are many attempted hacks around this, but IMO they are all terrible.</p>
+
+<p><code>M-x</code> in emacs means &ldquo;Execute command&rdquo;. All the commands will be available there. <code>M-x describe-key</code> is extremely useful, you type that then hit a key, and it will tell you what function it is bound to. Once you have that, you can do <code>M-x describe-function</code> and enter that function name to view its documentation.</p>
+
+<p>Lastly, if you are a vim user, you need to know how to bind keys. The idea in emacs is instead of registering keys at a global level, each mode has a keymap that is self contained. So when you compose your modes, you are also composing keymaps. the syntax for keymaps is</p>
+
+<figure class='code'><figcaption><span>keymaps </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">&lt;keymap&gt;</span> <span class="nv">key</span> <span class="ss">&#39;function</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">; evil defines 3 maps for the various states, so to</span>
+</span><span class='line'><span class="c1">; replicate a mapping I had in vim - nmap Y y$</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">copy-to-end-of-line</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">evil-yank</span> <span class="p">(</span><span class="nf">point</span><span class="p">)</span> <span class="p">(</span><span class="nf">point-at-eol</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;Y&quot;</span> <span class="ss">&#39;copy-to-end-of-line</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That was a custom function definition, but you can also use any built in function after the <code>'</code>.</p>
+
+<p>Everything in emacs I know, I know by its function name. If I use it a lot, I will map it to a key, so I have pretty much completely ignored the real keybinds.</p>
+
+<h2>Evil for Emacs Users</h2>
+
+<p>I honestly don&rsquo;t think I am qualified to write this, because I was never a real emacs user. But if you were ever curious about why people go on and on about how awesome vim is, evil will pretty much give you that experience, and you can have it without leaving the editor you already know and love. I believe evil mode is more effective then traditional emacs, but even if it isn&rsquo;t I am pretty sure it is more enjoyable. I would strongly encourage people to give it a chance for a month or so with a &ldquo;Learn vim&rdquo; tutorial, and see how they find thinking in text objects. We are definately in YMMV territory, but I find it a joy. <a href="http://dnquark.com/blog/2012/02/emacs-evil-ecumenicalism/">You may find this post more tailored to your point of view</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/23/repository-pattern-in-ruby/">Repository Pattern in Rails</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-23T22:59:00-05:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2012</time>
+        
+         | <a href="/blog/2012/02/23/repository-pattern-in-ruby/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have been working a lot on an app using MongoDB as the datastore, and Mongoid as the OR/M (or ODM to be more specific). In a relational database, you keep your data as segregated as reasonably possible, and then join it together in appropriate ways when you need it. The up side to this is that it is incredibly flexible, and chances are you wont hit a situation where you need your data in a form that your datastore can&rsquo;t give to you. The down side is that often, your data has a &ldquo;natural&rdquo; way that is joined together, and even though 99.9% of the time you are joining it together in that way, you still pay the cost every time.</p>
+
+<p>In Mongo, your data is stored in that &ldquo;natural&rdquo; way in a json format. That means it is harder to shape the data in different ways, but it is free to get the data in the way it is intended to be used.</p>
+
+<h2>The Problem</h2>
+
+<p>This app was developed using a state-based testing approach, where every test sets up a situation, performs an action, and then asserts on the new state of the world. An interesting side effect of the Mongo way of storing data is that it makes it much harder to test smaller objects in isolation &mdash; if a comment is a hash in an array in a post, it is impossible to save without first saving the post. In more complex scenarios, the problem gets much worse, and I am finding that tests that should be rather simple are requiring far more setup then I would expect.</p>
+
+<h2>A Solution: The Repository</h2>
+
+<p>When it comes to data access, the book Domain Driven Design advocates using a repository layer that separates your domain objects from your data access strategy. This has several benefits:</p>
+
+<ul>
+<li>Your domain objects stay simple. Rails developers tend to follow the &ldquo;Thin controller, fat model&rdquo; heuristic fairly religiously. There is nothing wrong with that per se, but it sort of implies it is ok to have massive classes that do dozens (if not hundreds) of things, so long as it is the model. The problem with that is that as the complexity of the application grows, these &ldquo;God&rdquo; models tend to become harder and harder to maintain &mdash; everything interacts with them, and they interact with everything. That kind of situation is what causes even small changes to cause ripples through your entire applications, and makes even simple maintenance tasks become quite daunting.</li>
+<li>You segregate your interaction with third party code (ActiveRecord, or in my case Mongoid) from the rest of your application. You may say &ldquo;Why is that necessary when you rarely, if ever change your data storage strategy?&rdquo; The reason is that you don&rsquo;t have control over that code, it is managed by a third party. So if they change something, and you are calling their code directly all through your application, your entire application needs to change. I work on quite a large enterprise rails app, and the 2.x &ndash;> 3.x upgrade was a huge undertaking, mostly for this reason.</li>
+<li>By following the Single Responsibility Principal, mocking in tests is a joy. This is going to address the pain I am feeling doing state based testing with a document datastore, and I believe that mockist testing will directly address these problems (I also much prefer mocking, so it is not exactly a direction I am resisting)</li>
+</ul>
+
+
+<h2>First Challenge: Mapping</h2>
+
+<p>I have worked on systems in C# with manual object mapping in repositories, and it is a bit of a nightmare. You end up with hundreds of lines of <code>right_side.property = left_side.property</code> code, which apart from being horribly tedious to write, is actually a terrible source of hard to find bugs. Since we don&rsquo;t have a true data mapper library in ruby, the only way I will even attempt this is if I can automate the process through some clever meta-programming. The first part of that is that I need to be able to retrieve attributes from my domain objects in a simple way, without complicating the objects too much. I also need to be able to get the &ldquo;schema&rdquo; out of my model, so I am able to infer what it wants to save and retrieve.</p>
+
+<h2>This is going to be a lot of work</h2>
+
+<p>The app is currently ~1k loc on the server side, which means it is going to take some time, but is really not an insurmountable task yet. The first step will be figuring out how to tackle the domain model side of the mapping problem, and extracting a domain model out of the current mongoid model. Stay tuned for more!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/10/how-i-learned-to-stop-worrying/">How I Learned to Stop Worrying, and Love Dart</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/code-organization-in-angular/">Code Organization in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/transclusion-in-angular/">Transclusion in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/scope-in-angular/">Scope in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/14/understanding-angular-directives/">Understanding Angular Directives</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/mbriggs">@mbriggs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mbriggs',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/105078754127788731088?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Matt Briggs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'mbriggs';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

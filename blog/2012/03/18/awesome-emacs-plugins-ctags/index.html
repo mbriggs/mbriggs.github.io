@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Awesome Emacs Plugins: CTags - Matt Briggs</title>
+  <meta name="author" content="Matt Briggs">
+
+  
+  <meta name="description" content="I wanted to write a series of posts on awesome emacs plugins I use, since I have put a lot of time and effort into my emacs configs. The funny thing &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mattbriggs.net/blog/2012/03/18/awesome-emacs-plugins-ctags">
+  <link href="/favicon.png?v=2" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Matt Briggs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-10813260-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Briggs</a></h1>
+  
+    <h2>"Not all code needs to be a factory, some of it can just be origami" -why, the lucky stiff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mattbriggs.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="subscription">
+  <li><a href="/.emacs.d" target="_blank" rel="emacs-config" title="Emacs Configuration"><i class="fa fa-code"></i></a></li>
+  <li><a href="http://github.com/mbriggs" target="_blank" rel="github" title="Github Profile"><i class="fa fa-github"></i></a></li>
+  <li><a href="https://twitter.com/intent/user?screen_name=googleninja" rel="follow-twitter" target="_blank" title="Follow on Twitter"><i class="fa fa-twitter"></i></a></li>
+  <li><a href="http://stackoverflow.com/users/10771/matt-briggs" rel="stackoverflow" target="_blank" title="StackOverflow Profile"><i class="fa fa-stack-overflow"></i></a></li>
+  <li><a href="/atom.xml" target="_blank" rel="subscribe-rss" title="Subscribe via RSS"><i class="fa fa-rss"></i></a></li>
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://careers.stackoverflow.com/mattbriggs" target="_blank">CV</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Awesome Emacs Plugins: CTags</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T00:18:00-04:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I wanted to write a series of posts on awesome emacs plugins I use, since I have put a lot of time and effort into <a href="http://github.com/mbriggs/.emacs.d">my emacs configs</a>. The funny thing I find about emacs though is that there is such a massive amount of functionality already provided, most neat things plugins do is augment stuff that is already there. So I think most of these posts are going to be a third about emacs, a third about a plugin, and a third about the glue code tying them together :)</p>
+
+<h2>Code Tags</h2>
+
+<p>The purpose of tags is to parse a codebase, and provide information about its structure (mostly for the purposes of navigation). There are many tools used to create tag index files, emacs even ships with one called etags.</p>
+
+<h2>Tags in Emacs</h2>
+
+<p>Coming from vim, one of the things I found was that emacs tag handling was inferior to vims for some reason. Most of the time, when I would do a <code>c-]</code> in vim I would land exactly where I would expect to. In emacs, I would find I needed to jump through the matches far more often to find what I wanted.</p>
+
+<h2>CTags</h2>
+
+<p>One difference was the tagging program. Vim uses something called exuberant-ctags, while emacs uses something called etags. From what I can tell, for the languages I use (javascript and ruby mostly), exuberant-tags does a noticeably better job.</p>
+
+<p>Thankfully, ctags actually supports the format emacs is expecting, you just have to pass a -e argument. I only had to slightly modify my normal ctags command, and I had</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ctags -e -R --extra<span class="o">=</span>+fq --exclude<span class="o">=</span>db --exclude<span class="o">=</span><span class="nb">test</span> --exclude<span class="o">=</span>.git --exclude<span class="o">=</span>public -f TAGS
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The last thing I want to do is have to jump to a terminal and type that out, so I wrote this quick little function in elisp to do the heavy lifting for me</p>
+
+<figure class='code'><figcaption><span>build-ctags </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">build-ctags</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">message</span> <span class="s">&quot;building project tags&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">root</span> <span class="p">(</span><span class="nf">eproject-root</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&quot;ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f &quot;</span> <span class="nv">root</span> <span class="s">&quot;TAGS &quot;</span> <span class="nv">root</span><span class="p">)))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">visit-project-tags</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">message</span> <span class="s">&quot;tags built successfully&quot;</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">visit-project-tags</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">tags-file</span> <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nf">eproject-root</span><span class="p">)</span> <span class="s">&quot;TAGS&quot;</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">visit-tags-table</span> <span class="nv">tags-file</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">message</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&quot;Loaded &quot;</span> <span class="nv">tags-file</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That may be a bit confusing to people unfamiliar with elisp, so I&rsquo;ll walk through it</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">build-ctags</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This part means &ldquo;Make an elisp function called build-ctags, and mark it as interactive so that it can be invoked via m-x&rdquo;</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">root</span> <span class="p">(</span><span class="nf">eproject-root</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&quot;ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f &quot;</span> <span class="nv">root</span> <span class="s">&quot;TAGS &quot;</span> <span class="nv">root</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This means &ldquo;Make a variable called root that is the result of the eproject-root function&rdquo; <code>eproject</code> is another library I will cover some other time, but one thing it gives you is a function that returns the root path of the current project. You could just as easily replace it with <code>(rinari-root)</code> (if you use rinari for rails projects) and it would work just as well. I will assume <code>shell-command</code> is self explanitory :)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">visit-tags-table</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The last piece just means replace the currently loaded tag file with whats on the disk.</p>
+
+<p>With that function, my navigation became a bit more comfortable in emacs, but I still found sometimes emacs would bring me to really strange places. After a bit of research, I found the incredibly obscurely named <code>tags-case-fold-search</code> variable. From the docs:</p>
+
+<blockquote><blockquote><p>Documentation:
+*Whether tags operations should be case-sensitive.
+A value of t means case-insensitive, a value of nil means case-sensitive.
+Any other value means use the setting of `case-fold-search&#8217;.</p></blockquote></blockquote>
+
+<p>Setting that to <code>nil</code> helped immensely.</p>
+
+<h2>etags-select</h2>
+
+<p>Now for the actual plugin :) <a href="http://www.emacswiki.org/emacs/EtagsSelect">etags-select</a> If there is a single result, you jump straight to it, but if there are multiple results, it will pop up a window showing them all. n will go to the next match, p to the previous, and enter will select the current result and jump to that line.</p>
+
+<p>I made another small command that I could bind to</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">my-find-tag</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">file-exists-p</span> <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nf">eproject-root</span><span class="p">)</span> <span class="s">&quot;TAGS&quot;</span><span class="p">))</span>
+</span><span class='line'>      <span class="p">(</span><span class="nf">visit-project-tags</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">build-ctags</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">etags-select-find-tag-at-point</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;M-.&quot;</span><span class="p">)</span> <span class="ss">&#39;my-find-tag</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That function will check if the tags file is there, if it is, read it, if not, build it, then run that plugin function <code>etags-select-find-tag-at-point</code>.</p>
+
+<p>To invoke it, put the point on a symbol and hit M-.</p>
+
+<h2>.ctags</h2>
+
+<p>Last thing, for some better ctags support for rails, and support for OO javascript, add this to your <code>~/.ctags</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>--regex-ruby=/(^|[:;])[ \t]*([A-Z][[:alnum:]_]+) *=/\2/c,class,constant/
+</span><span class='line'>--regex-ruby=/(^|;)[ \t]*(has_many|belongs_to|has_one|has_and_belongs_to_many)\(? *:([[:alnum:]_]+)/\3/f,function,association/
+</span><span class='line'>--regex-ruby=/(^|;)[ \t]*(named_)?scope\(? *:([[:alnum:]_]+)/\3/f,function,named_scope/
+</span><span class='line'>--regex-ruby=/(^|;)[ \t]*expose\(? *:([[:alnum:]_]+)/\2/f,function,exposure/
+</span><span class='line'>--regex-ruby=/(^|;)[ \t]*event\(? *:([[:alnum:]_]+)/\2/f,function,aasm_event/
+</span><span class='line'>--regex-ruby=/(^|;)[ \t]*event\(? *:([[:alnum:]_]+)/\2!/f,function,aasm_event/
+</span><span class='line'>--regex-ruby=/(^|;)[ \t]*event\(? *:([[:alnum:]_]+)/\2?/f,function,aasm_event/
+</span><span class='line'>
+</span><span class='line'>--langdef=js
+</span><span class='line'>--langmap=js:.js
+</span><span class='line'>--regex-js=/([A-Za-z0-9._$]+)[ \t]*[:=][ \t]*\{/\1/,object/
+</span><span class='line'>--regex-js=/([A-Za-z0-9._$()]+)[ \t]*[:=][ \t]*function[ \t]*\(/\1/,function/
+</span><span class='line'>--regex-js=/function[ \t]+([A-Za-z0-9._$]+)[ \t]*\(([^)])\)/\1/,function/
+</span><span class='line'>--regex-js=/([A-Za-z0-9._$]+)[ \t]*[:=][ \t]*\[/\1/,array/
+</span><span class='line'>--regex-js=/([^= ]+)[ \t]*=[ \t]*[^"]'[^']*/\1/,string/
+</span><span class='line'>--regex-js=/([^= ]+)[ \t]*=[ \t]*[^']"[^"]*/\1/,string/
+</span><span class='line'>
+</span><span class='line'>--exclude=*.min.js
+</span><span class='line'>--exclude=.git</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Navigating with Emacs</h2>
+
+<p>I find my experience now much better then it was before, but there is always room for improvement. Any comments, criticisms, or tips that I am missing would be hugely appreciated :)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Briggs</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T00:18:00-04:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/emacs/'>emacs</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattbriggs.net/blog/2012/03/18/awesome-emacs-plugins-ctags/" data-via="googleninja" data-counturl="http://mattbriggs.net/blog/2012/03/18/awesome-emacs-plugins-ctags/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/03/08/why-i-like-object-number-tap/" title="Previous Post: Why I like Object#tap">&laquo; Why I like Object#tap</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/04/16/why-i-dont-use-semicolons/" title="Next Post: Why I Don't Use Semicolons">Why I Don't Use Semicolons &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/10/how-i-learned-to-stop-worrying/">How I Learned to Stop Worrying, and Love Dart</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/code-organization-in-angular/">Code Organization in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/transclusion-in-angular/">Transclusion in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/scope-in-angular/">Scope in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/14/understanding-angular-directives/">Understanding Angular Directives</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mbriggs">@mbriggs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mbriggs',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/105078754127788731088?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Matt Briggs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'mbriggs';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mattbriggs.net/blog/2012/03/18/awesome-emacs-plugins-ctags/';
+        var disqus_url = 'http://mattbriggs.net/blog/2012/03/18/awesome-emacs-plugins-ctags/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

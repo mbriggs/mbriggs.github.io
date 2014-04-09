@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Understanding Angular Directives - Matt Briggs</title>
+  <meta name="author" content="Matt Briggs">
+
+  
+  <meta name="description" content="Angular is the hottest JavaScript framework out there right now, and for good reason. It is a very powerful, flexible, and well designed framework &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mattbriggs.net/blog/2014/01/14/understanding-angular-directives">
+  <link href="/favicon.png?v=2" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Matt Briggs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-10813260-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Briggs</a></h1>
+  
+    <h2>"Not all code needs to be a factory, some of it can just be origami" -why, the lucky stiff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mattbriggs.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="subscription">
+  <li><a href="/.emacs.d" target="_blank" rel="emacs-config" title="Emacs Configuration"><i class="fa fa-code"></i></a></li>
+  <li><a href="http://github.com/mbriggs" target="_blank" rel="github" title="Github Profile"><i class="fa fa-github"></i></a></li>
+  <li><a href="https://twitter.com/intent/user?screen_name=googleninja" rel="follow-twitter" target="_blank" title="Follow on Twitter"><i class="fa fa-twitter"></i></a></li>
+  <li><a href="http://stackoverflow.com/users/10771/matt-briggs" rel="stackoverflow" target="_blank" title="StackOverflow Profile"><i class="fa fa-stack-overflow"></i></a></li>
+  <li><a href="/atom.xml" target="_blank" rel="subscribe-rss" title="Subscribe via RSS"><i class="fa fa-rss"></i></a></li>
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://careers.stackoverflow.com/mattbriggs" target="_blank">CV</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Understanding Angular Directives</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-14T11:34:00-05:00" pubdate data-updated="true">Jan 14<span>th</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Angular is the hottest JavaScript framework out there right now, and for good reason. It is a very powerful, flexible, and well designed framework for building web applications. However, like many projects, one of its major weaknesses is both the quantity, and quality, of its documentation. Because of that, Angular can be exceptionally difficult to learn.</p>
+
+<p>Thankfully, a lot of Angular is pretty straightforward once you have a basic understanding of the concepts and some of the pitfalls. However, there is one topic that is definitely <em>not</em> straight forward at all, and is essential for any non trivial Angular work. That is directives.</p>
+
+<p>This blog post is written with the assumption that you know basic Angular knowledge (things like <code>ng-if</code>, what a service is, what scope is). Also, when I talk about HTML, I am referring to the markup language, when I talk about the DOM, I am referring to an active, living tree of UI elements that is running in a browser.</p>
+
+<h2>What is a directive?</h2>
+
+<p>The tagline of Angular is &ldquo;Teach HTML New Tricks&rdquo;, and directives are the mechanism you use to make that happen. I would even go so far as to say that directives <em>are</em> Angular, the rest of the framework (with very few exceptions) is there to support the usage of directives.</p>
+
+<p>In a more practical sense, directives are HTML artifacts which handle all DOM manipulation and interaction. This can be everything from jQuery style &ldquo;DOM enhancement&rdquo; code, to HTML control flow (like <code>ng-if</code> or <code>ng-switch</code>), to data binding (<code>ng-bind</code> / <code>ng-model</code>). Unfortunately, with that power and flexibility comes a substantial amount of complexity.</p>
+
+<h2>Comparisons to Backbone Views</h2>
+
+<p>The idea of a directive sort of lines up with a Backbone view, in that it is the place that you put code that interacts with the DOM.</p>
+
+<p>A key difference, is that a Backbone view usually has a one to one relationship with a DOM element. In the case of Angular, it is quite common for multiple directives to be attached to the same DOM element.</p>
+
+<p>Another difference is that in Backbone, there is a substantial amount of code required to wire together, views, the DOM, and the models/collections. In Angular, the wiring up is done by the framework, according to HTML annotations and dependancy injection.</p>
+
+<p>This dramatically reduces the amount of code required to build a complex view. When people talk about writing less code in Angular, the majority of it comes from the lack of this code, which is pure boilerplate 90%+ of the time. However, it also means less flexibility in how to coordinate interactions between components. This is a double edged sword, having a single, well understood way of doing things makes the code easier to understand, but when you are doing something that pushes the framework, it means you have less tools at your disposal.</p>
+
+<h2>Simple directives</h2>
+
+<p>Let&rsquo;s look at what goes into building a simple directive. This directive will make an alert box pop up when you click on an element, which will say &ldquo;Hello, world!&rdquo;. If a name is provided when applying the directive, it will use that instead of &ldquo;world&rdquo;.</p>
+
+<iframe style='width: 100%; height: 500px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/QExEdgNZkEDcwcJwkpuN/preview'></iframe>
+
+
+<p>It is important to note that Angular will translate the name <code>myGreeting</code> which is properly cased JavaScript, into dashed case <code>my-greeting</code>, which is proper for html/css.</p>
+
+<p>The first thing to look at is <code>restrict</code>, which determines how your directive will be used. This can be a combination of the following codes</p>
+
+<ul>
+<li><code>A</code>: restrict to attributes. <code>&lt;input type="text" my-greeting/&gt;</code></li>
+<li><code>E</code>: restrict to elements. <code>&lt;my-greeting&gt;&lt;/my-greeting&gt;</code></li>
+<li><code>C</code>: restrict to class. <code>&lt;button class="my-greeting"&gt;Greet!&lt;/button&gt;</code></li>
+<li><code>M</code>: restrict to comment. <code>&lt;!-- directive: my-greeting --&gt;</code></li>
+</ul>
+
+
+<p>Now four choices in how to apply directives may seem to be a lot. In reality, it is considered to be a best practice to use the first two, since comments and classes are there for edge cases which very rarely occur. Typically, you will have more attribute directives then elements, since those are easier to compose.</p>
+
+<h2>link function</h2>
+
+<p>The next thing we will look at is the <code>link</code> function. To understand why it is named <code>link</code> only becomes clear after understanding the directive life cycle, but for now, think of it as the place where you put your DOM manipulation code.</p>
+
+<p>You can see that we have three arguments being passed in &mdash; <code>scope</code>, <code>element</code>, and <code>attrs</code> (there are an additional two arguments which can be used, but they are for more advanced situations, which we will explore in future posts).</p>
+
+<ul>
+<li><p><code>scope</code> is the current scope of the element. It is hard to list all the ways a scope reference can be used in Angular. But in the context of directives, the core use case is to translate what is in the DOM into JavaScript properties, and apply DOM changes based on JavaScript properties. The best way to think of scope is the glue between the world of the view (HTML) and the world of the rest of your application (JavaScript).</p></li>
+<li><p><code>element</code> is the DOM node on which the directive is applied, wrapped in jQuery. You can do anything to it that you would otherwise be able to do with jQuery. A good rule of thumb is that a directive should only ever really be modifying its own element. I would consider it a very strong code smell if a directive was doing DOM traversal to change other elements, or even worse, looking up other parts of the DOM by id or css.</p></li>
+<li><p><code>attrs</code> is an instance of <code>ng.Attributes</code>. This is primarily useful for reading the properties of other attributes on <code>element</code>. It can also be used to react to an attribute changing (<code>attrs.$observe</code>), or to set a value on an attribute (<code>attrs.$set</code>). A nice property of <code>attrs</code> is that it will do the same casing normalization as what happens with directives &mdash; so if you were looking up the value of <code>my-attr="foo"</code> on an element, you would do it by checking <code>attrs.myAttr</code>.</p></li>
+</ul>
+
+
+<h2>The Angular directive lifecycle</h2>
+
+<p>If you have made it this far, you already understand how to use a directive in a simple fashion. However, to fully understand directives, you have to understand how Angular uses them.</p>
+
+<p>When you start your Angular application, you provide two pieces of information to the framework: A top level module, and a root element. The module is loaded, so that its dependancies can be registered for injections. The DOM node then gets passed to the <code>$compile</code> service for compilation.</p>
+
+<p><code>$compile</code> walks the DOM tree, looking for nodes which have directives it knows about. Once it has this list built, it begins processing each one in turn.</p>
+
+<p>To compile a node, Angular needs to know how to combine the world of HTML (the DOM node) with the world of Angular. When you provide a <code>link</code> function in a directive definition, you are telling Angular how to accomplish that task &mdash; how to link the two worlds together. This is also the point at which directive templates are compiled and inlined into the DOM.</p>
+
+<p>Angular gets these linking functions by calling the <code>compile</code> function on each directive, in order of <code>priority</code>. <code>compile</code> defaults to whatever function is provided by the <code>link</code> property of the directive definition, if present. These linking functions are then combined into a composite linking function for that element.</p>
+
+<p>Once all the linking functions are gathered, Angular will start linking from the bottom of the tree going up.</p>
+
+<h2>compile vs link</h2>
+
+<p>So that begs the question, when should you use <code>compile</code>, and when should you use <code>link</code>?</p>
+
+<p>The easy answer is that you should just use <code>link</code>, unless you need to do something (like manipulate the child DOM nodes) before the linking process starts. Since <code>compile</code> happens before the scope really comes into play, its uses are dramatically limited to cases where you need control over the DOM <em>template</em> rather then the fully realized directive. If you are in a case where you do need <code>compile</code>, you must return your own linking function, since the <code>link</code> property of the directive definition will be ignored.</p>
+
+<h2>Putting it all together</h2>
+
+<p>Let&rsquo;s take <a href="http://c2.com/cgi/wiki?FizzBuzzTest">the classic FizzBuzz interview question</a>, and modify it to be about directives.</p>
+
+<blockquote><p>Write a directive that will be applied to an element with
+children, each containing a number. The directive will then
+modify the child elements to apply a directive. When the
+child element contains a number divisible by 3, apply a
+<code>fizz</code> directive. When the number is divisible by 5, apply
+a <code>buzz</code> directive. When it is divisible by both 3 and 5,
+apply a <code>fizz-buzz</code> directive.</p>
+
+<p>Each of those directives will change the element to display
+the appropriate text (&lsquo;Fizz&rsquo;, &lsquo;Buzz&rsquo;, or &lsquo;FizzBuzz&rsquo;), and
+increment a counter on the page.</p></blockquote>
+
+<iframe style='width: 100%; height: 500px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/fuCL1gTR0nQl5dYGsxU4/preview'></iframe>
+
+
+<p>Directives are one of the most complex parts of Angular, but hopefully this post gives you a good foundation to build your knowledge on. There are more advanced properties and techniques available, but using what was described here will take you very far.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Briggs</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-14T11:34:00-05:00" pubdate data-updated="true">Jan 14<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/angular-javascript/'>angular javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattbriggs.net/blog/2014/01/14/understanding-angular-directives/" data-via="googleninja" data-counturl="http://mattbriggs.net/blog/2014/01/14/understanding-angular-directives/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/04/19/sometimes-its-ok-to-leave-a-mess/" title="Previous Post: Sometimes, It's OK to Leave a Mess">&laquo; Sometimes, It's OK to Leave a Mess</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/01/22/scope-in-angular/" title="Next Post: Scope in Angular">Scope in Angular &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/10/how-i-learned-to-stop-worrying/">How I Learned to Stop Worrying, and Love Dart</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/code-organization-in-angular/">Code Organization in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/transclusion-in-angular/">Transclusion in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/scope-in-angular/">Scope in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/14/understanding-angular-directives/">Understanding Angular Directives</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mbriggs">@mbriggs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mbriggs',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/105078754127788731088?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Matt Briggs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'mbriggs';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mattbriggs.net/blog/2014/01/14/understanding-angular-directives/';
+        var disqus_url = 'http://mattbriggs.net/blog/2014/01/14/understanding-angular-directives/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: oo | Matt Briggs]]></title>
+  <link href="http://mattbriggs.net/blog/categories/oo/atom.xml" rel="self"/>
+  <link href="http://mattbriggs.net/"/>
+  <updated>2014-04-09T00:33:52-04:00</updated>
+  <id>http://mattbriggs.net/</id>
+  <author>
+    <name><![CDATA[Matt Briggs]]></name>
+    <email><![CDATA[matt@mattbriggs.net]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mixins are not always a refactoring anti-pattern]]></title>
+    <link href="http://mattbriggs.net/blog/2012/05/07/mixins-are-not-a-refactoring-anti-pattern/"/>
+    <updated>2012-05-07T17:59:00-04:00</updated>
+    <id>http://mattbriggs.net/blog/2012/05/07/mixins-are-not-a-refactoring-anti-pattern</id>
+    <content type="html"><![CDATA[<p>Steve Klabnik just posted an interesting <a href="http://blog.steveklabnik.com/posts/2012-05-07-mixins--a-refactoring-anti-pattern">post about mixins</a>. Steve is a really smart guy, and I usually agree with him, but I think his justification is a little bit weak in this case.</p>
+
+<h2>Mixin Refactoring through Class Gutting</h2>
+
+<p>Oh man, he is so right that this is an anti-pattern. It happens a lot in ruby, someone says &ldquo;Hey, this thing is doing too much. The only method of code reuse I really believe in is mixins, so I&rsquo;ll just take the implementation, and dump it into a mixin.&rdquo;</p>
+
+<p>By doing that, you haven&rsquo;t decreased complexity, you have actually increased it by breaking locality. Steve introduces the idea of reducing complexity through ecapsulation (right on), and talks about Data Mapper and Repository. Very OOP, and great solutions, especially in larger systems. Still diggin what Steve has to say.</p>
+
+<h2>Method Count as a metric of complexity</h2>
+
+<p>Here is where we part ways. Lets take the Enumerable module in the ruby standard library. It adds 94 methods on to a given thing, with the requirement that that &ldquo;thing&rdquo; provides an each method.</p>
+
+<p>But enumerable is an &ldquo;idea&rdquo;, and if something is enumerable, you sort of know how to work with it &mdash; through those 94 methods.</p>
+
+<p>Steve talks about how encapsulation reduces complexity of the implementation, well Enumerable encapsulates the &ldquo;idea&rdquo; of enumerating. So that means that when providing a public interface, a data structure can focus on its fairly simple implementation, and only provide the most low level and simplist of methods (each), while bringing in Enumerable and let it do the heavy lifting to give the rich interface that people expect from a ruby data structure.</p>
+
+<p>How is that increasing complexity? When I look at Enumerable, it is talking about a single concept. When I look at array, it is talking about a single concept. The only thing I can change to break the implicit protocol between the two is to break the each method at a fundamental level.</p>
+
+<p>Composition would have been a terrible choice here, I think providing 94 stub methods and an internal enumerator object would just increase the complexity, not reduce it. Providing an enumerator as an external thing would have made the api much more of a pain to work with. Inheritance would be better then composition or separation, but the problem is that Array is a datastructure, it is not an &ldquo;Enumerable&rdquo;. Enumeration is an ability, not the root of a concept. I think the best choice here is mixin, and that it is fairly obviously the best choice. And I think most people who have implemented data structures in ruby would agree.</p>
+
+<p>So what we have is something that is close to inheritance, but more of a &ldquo;vertical slice&rdquo; of functionality. An &ldquo;ability&rdquo; rather then a &ldquo;thing&rdquo;. This is what mixins give up, the ability to model &ldquo;abilities&rdquo; in a concise way.</p>
+
+<h2>What is complexity</h2>
+
+<p>Rich Hickey defines complexity as an interleaving of ideas. I think that is a great definition. In the case of Enumerable, you are providing significant functionality through providing a simple implementation, the only interleaving is that each method. Sure, the runtime method count is 94 methods higher, but who cares? When you are calling methods on array, you are thinking of it as a single thing. When you are maintaining array, you don&rsquo;t have to worry about any interations with enumerable outside of each.</p>
+
+<p>I think that the amount, and shape, of a mixins interaction with its containing class is a good measure of complexity. The amount and shape of a classes interactions with the internals of a mixin is a great metric of complexity. The only thing the number of runtime methods is telling you is that maybe you should be looking at those other things, which isn&rsquo;t that great a smell.</p>
+
+<h3>The important thing here is interactions.</h3>
+
+<p>Large classes often become complex. But it isn&rsquo;t a property of their runtime method count, or even inherant to their lines of code. It is because large classes and large methods tend to interact in ways that are hard to understand. Small classes can get complex too for the same reasons, but the larger the class, the easier it is to get to that place.</p>
+
+<h2>Why &ldquo;Gut the class and dump&rdquo; it into a mixin doesn&rsquo;t work</h2>
+
+<p>It doesn&rsquo;t work because you haven&rsquo;t tackled the complexity of the interactions in the code. Maybe it needs to get pulled into another class, maybe methods need to get merged together. Or maybe you are just talking about an inherantly complex thing, and doing the earlier things will make it worse. In any case it is not the runtime method count that will tell you this, it is analysis of how the class interacts with itself and others.</p>
+
+<h2>Complexity Smells</h2>
+
+<p>Steve wasn&rsquo;t writing about complexity smells in a general way, but since I have spent so much time talking about what isn&rsquo;t a smell, I sort of feel compelled to talk about what is. I am sure he would agree with most, if not all of the following</p>
+
+<ul>
+<li>When a mixin mucks with class internals.</li>
+<li>When a mixin mucks with other mixins.</li>
+<li>When you read the inheritor of a class, and can&rsquo;t understand it without reading its parent</li>
+<li>When you read an inherited class, but can&rsquo;t understand it without its children</li>
+<li>When there are so many interactions with other things that you have to read many classes to understand how a single thing works</li>
+<li>When classes do too many things</li>
+<li>When classes have too many dependancies</li>
+<li>When classes are aware of too many other objects</li>
+<li>When too many other objects are aware of a class</li>
+</ul>
+
+
+<p>And that is just the tip of the iceburg. I would say that a significant percentage of our job is managing complexity in code, it is a huge and nuanced topic. Mixins are also not a simple thing, and are extremely easy to use in the wrong ways.</p>
+]]></content>
+  </entry>
+  
+</feed>

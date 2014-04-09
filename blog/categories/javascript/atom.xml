@@ -1,0 +1,1056 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: javascript | Matt Briggs]]></title>
+  <link href="http://mattbriggs.net/blog/categories/javascript/atom.xml" rel="self"/>
+  <link href="http://mattbriggs.net/"/>
+  <updated>2014-04-09T00:33:52-04:00</updated>
+  <id>http://mattbriggs.net/</id>
+  <author>
+    <name><![CDATA[Matt Briggs]]></name>
+    <email><![CDATA[matt@mattbriggs.net]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Code Organization in Angular]]></title>
+    <link href="http://mattbriggs.net/blog/2014/01/22/code-organization-in-angular/"/>
+    <updated>2014-01-22T14:57:00-05:00</updated>
+    <id>http://mattbriggs.net/blog/2014/01/22/code-organization-in-angular</id>
+    <content type="html"><![CDATA[<p>The number one question I see over and over with programmers new to angular is &ldquo;how do I organize my code?&rdquo;. I think that this is because the way you organize sample code is completely different then simple code, which again, is totally different then a complex application, and those transitions are not self-evident.</p>
+
+<h2>Sample Code &ndash; aka One Big File</h2>
+
+<p>This is how you see most code on the internet</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">foobar</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="p">[]).</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">controller</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">MyCoolController</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="c1">// controller</span>
+</span><span class='line'><span class="p">}).</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">directive</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">evenCoolerDirective</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'> <span class="c1">// directive</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>This makes a lot of sense when you are showing some sample code. But it will very quickly become unwieldy and difficult to work with if you are building anything even slightly complex. I would not recommend using this for anything you would check into source control.</p>
+
+<h2>Simple App &ndash; aka The Angular-Seed Method</h2>
+
+<p>The angular project published a sample &ldquo;boilerplate&rdquo; project called &ldquo;angular-seed&rdquo;, as a way to help developers new to angular get rolling without having to do a bunch of grunt work.</p>
+
+<p>The way angular-seed organizes it&rsquo;s files is by type. In a nutshell, it looks like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// in app.js</span>
+</span><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="p">[</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="p">.</span><span class="nx">directives</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="p">.</span><span class="nx">services</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="p">.</span><span class="nx">controllers</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="p">.</span><span class="nx">filters</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;]);</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">// in app.directives.js</span>
+</span><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="p">.</span><span class="nx">directives</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="p">[]).</span>
+</span><span class='line'><span class="nx">directive</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">myDirective</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'><span class="c1">// stuff</span>
+</span><span class='line'><span class="p">});</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">// in app.services.js</span>
+</span><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="p">.</span><span class="nx">services</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="p">[]).</span>
+</span><span class='line'><span class="nx">factory</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">myService</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'><span class="c1">// stuff</span>
+</span><span class='line'><span class="p">});</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">// in app.controllers.js</span>
+</span><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="p">.</span><span class="nx">controllers</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="p">[]).</span>
+</span><span class='line'><span class="nx">directive</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">myController</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'><span class="c1">// stuff</span>
+</span><span class='line'><span class="p">});</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">// in app.filters.js</span>
+</span><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">app</span><span class="p">.</span><span class="nx">filters</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="p">[]).</span>
+</span><span class='line'><span class="nx">directive</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">myFilters</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'><span class="c1">// stuff</span>
+</span><span class='line'><span class="p">});</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>This has the advantage of at least giving you <em>some</em> precision when trying to locate a given piece of code. It will also scale up well enough so that it is still usable by the time you finish building a simple application.</p>
+
+<p>The problem here is what happens if you are not building a simple application? What happens if you have dozens of directives, and hundreds of controllers and services? At that point, 5 files won&rsquo;t help much.</p>
+
+<h2>Splitting your application up into modules</h2>
+
+<p>This is widely considered to be the best way to organize non-trivial angular code. The idea is instead of thinking of your application as one giant thing, think of it as a number of small, independent modules that come together to form a giant application.</p>
+
+<p>The benefit to structuring your code this way extends beyond being able to find things easily. People get into trouble when building large scale code bases by not thinking about dependancies. When everything in your app can &ldquo;talk to&rdquo; anything else in your app, those dependancies are everywhere. This means that even small, innocuous changes can impact things you couldn&rsquo;t foresee, causing bugs. It also means when you want to re-design something, it is extremely difficult, because it means changing how it is used everywhere in the rest of your application.</p>
+
+<p>This is a very large and complex topic, but as a general rule of thumb, thinking of your application as a group of small, self-contained modules with a limited API used to communicate with each other will go a long way towards the long term health and maintainability of your codebase.</p>
+
+<p>Thankfully, angular has a module construct. Unfortunately, it is extremely primitive, and most of this &ldquo;encapsulation&rdquo; will have to exist in your own head.</p>
+
+<p>When splitting your application apart this way, every module is given its own folder, which contains all the code required for that section of the codebase. These modules should be as small as possible, and should be as self contained as possible. It helps a lot with the containment if you use require.js.</p>
+
+<h2>Angular and Require.js</h2>
+
+<p>Do you even need require if you have angular? There is a lot of division on this topic, many people feel that since angular takes care of most application dependancy issues for you, that you can use a simpler build system and punt on require all together.</p>
+
+<p>I think the real power in require (compared to other module loaders) comes from how you are divorcing dev-time file loading from production-time loading. Since angular has no story at all on file loading (only dependancy management), I think the need for that power is inevitable. You can embrace it immediately, or wait until you feel the pain, but hundreds of files coming down at the same time when the application loads will be brutal to develop against.</p>
+
+<p>But beyond that, since there is no such thing as a module level injectable in angular (all dependancy injection draws from the same pool), it means if you want to have a module level model or service, it is impossible to control visibility. When you use require, you can have source level dependancies which are not published to the rest of the system, and use the angular dependancy injection for exposing an API.</p>
+
+<p>This has worked great for me so far, with the sole exception that it is fairly common that I want to use <code>$http</code> for repository classes (would be the same issue if you wanted to use <code>$resource</code>). In these cases, I will pull that dependancy out of angular, and keep a reference in some sort of shared utility file (or base class). This can be done fairly easily</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">injector</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">injector</span><span class="p">([</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">ng</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;]);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">injector</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">$http</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;);</span>
+</span><span class='line'><span class="c1">// .instanciate can also be used if you want it to &amp;ldquo;new&amp;rdquo; something for you</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>The main purpose of dependancy injection in angular is so that you can wire up UI code declaratively, while keeping everything easy to test. Since services like <code>$http</code> are on the edges of the system, I don&rsquo;t think it is going against the spirit of the framework to pull them out. Hopefully, the angular team will add module level visibility in the future, and the whole issue will just go away.</p>
+
+<h2>Choosing what is right for your project</h2>
+
+<p>Since angular has taken such a hands off approach to the subject of code organization, there really is no &ldquo;right&rdquo; answer on what you should use. I have described some common (and less common) ways that people have found work for them, but it really comes down to a project by project choice.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Transclusion in Angular]]></title>
+    <link href="http://mattbriggs.net/blog/2014/01/22/transclusion-in-angular/"/>
+    <updated>2014-01-22T14:54:00-05:00</updated>
+    <id>http://mattbriggs.net/blog/2014/01/22/transclusion-in-angular</id>
+    <content type="html"><![CDATA[<p>Transclusion is almost a gift to people criticizing Angular. It sounds incredibly complicated and computer-science-y. The spotty documentation around the topic and mysterious API only adds to the illusion of what a complicated concept this is. In practice, transclusion is a fairly simple concept, and one that is necessary if you are writing more advanced directives in angular.</p>
+
+<p>In this post, when I talk about the &ldquo;end user&rdquo;, I am referring to the developer using the directive (not the user who uses the application).</p>
+
+<h2>So WTF does it mean anyways?</h2>
+
+<p>The wikipedia definition of transclusion is really pretty simple.</p>
+
+<blockquote><p>In computer science, transclusion is the inclusion of a document or part of a document into another document by reference.</p></blockquote>
+
+<p>So in the context of angular, transclusion would be the embedding of an end user template into the directive template, or the directive template into the end user template. To put it more simply, have a directive (with a template) that either wraps, or is wrapped by end user code.</p>
+
+<h2>Basic Transclusion</h2>
+
+<p>Basic transclusion is when you are simply wrapping end user code. Let&rsquo;s say, for some reason, you are building a blog where each post needs to be programmed in (I know, kind of silly, but just work with me here :) The post would have meta information as attributes, and the content of the directive would become the post body.</p>
+
+<p><iframe style='width: 100%; height: 500px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/NSgVfO6PsgmeK9BO83TU/preview'></iframe></p>
+
+<p>There are two key pieces that make transclusion happen. First, <code>transclude: true</code> in the directive declaration tells angular we are performing transclusion.</p>
+
+<p>The second piece is the presence of the <code>ng-transclude</code> directive in the <code>post</code> template. This tells angular where to embed the end user template.</p>
+
+<h2>Gotcha: Transclusion and scope</h2>
+
+<p>A big thing to keep in mind is that since this is the end users code, it requires the context of the scope tree, not the isolated scope of the directive. Because of that, transcluded content scope is <strong>not</strong> the child of the directive scope, it is instead a child of the directives parent scope, effectively making it like the directive scope does not exist in the inheritance chain.</p>
+
+<h2>transclude: element</h2>
+
+<p><code>transclude: true</code> allows us to wrap a user&rsquo;s template with our template. But what about when we want to wrap <em>everything</em> in a template? For example, we are building a directive that displays a panel under an input box. The easiest way to do this sort of positioning is when you have a wrapper to position against. Here is a quick example</p>
+
+<p><iframe style='width: 100%; height: ; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/PwcrFh6OSpqwxQ7drpxe/preview'></iframe></p>
+
+<p>If you look at the compiled DOM, you will see something like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;drop-panel is-active&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">drop-panel=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;span</span> <span class="na">ng-transclude=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">drop-panel=</span><span class="s">&quot;&quot;</span> <span class="na">class=</span><span class="s">&quot;ng-scope&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/span&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;drop-panel-panel&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    This is some panel content
+</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><code>transclude: element</code> means that the entire element was transcluded into the <code>ng-transclude</code> placeholder (rather then just the elements children). <code>replace: true</code> allows us to define a new root node for the directive, so this is also necessary for wrapping to work.</p>
+
+<h2>Transclude linker function for ultimate power</h2>
+
+<p><code>transclude</code> gives a lot of power, but what happens when you need total control over the transclusion process? This is very rare, but can be needed if you need to transclude the end users template multiple times, or need to choose where to transclude based on some kind of logic (maybe as part of compile). For these cases, angular provides the transclude linker function, which lets you do pretty much anything you want.</p>
+
+<p>Let&rsquo;s say you were building a directive which duplicated it&rsquo;s content a specified amount of times. Each duplication will have access to an <code>$index</code> property on the scope, that will tell it what number it is in the list.</p>
+
+<p><iframe style='width: 100%; height: 500px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/eMCl0kygah7dPzqKP0W8/preview'></iframe></p>
+
+<p>If you understand this, you understand the core of how <code>ng-repeat</code> works, which is one of the most complex directives that ships with angular.</p>
+
+<p>For this one, since we aren&rsquo;t defining a new root element, we don&rsquo;t need <code>replace: true</code>. When <code>replace</code> is set to <code>false</code> (the default), and <code>transclude: 'element'</code> is set, what is actually inserted into the dom is a comment. The way this duplicate directive works is that each &ldquo;duplication&rdquo; is inserted after the previous one, and the first one is inserted after that comment.</p>
+
+<p>You may also notice that <code>priority</code> is set very high. This is because we want our duplication to happen before any other directive gets applied.</p>
+
+<p>Finally, since we are not using <code>ng-transclude</code>, we need to take care of what scope we want our duplication to link to. We do this by manually creating inherited scopes, and setting the <code>$index</code> property accordingly.</p>
+
+<h2>Keys to the City</h2>
+
+<p>Transclusion is considered an advanced topic, but as you can see, there is nothing to be scared of. Even at its most complex, as long as you understand how scope and linking works, transclusion is very easy to understand. This is what I believe to be one of the strengths in the design of angular, everything in the framework is built on top of a handful of core abstractions. If you have a good foundational understanding, advanced topics come very easily.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Scope in Angular]]></title>
+    <link href="http://mattbriggs.net/blog/2014/01/22/scope-in-angular/"/>
+    <updated>2014-01-22T14:34:00-05:00</updated>
+    <id>http://mattbriggs.net/blog/2014/01/22/scope-in-angular</id>
+    <content type="html"><![CDATA[<p>Angular goes in a different direction then most other frameworks, by having the html you write drive the composition of UI components. This allows you to succinctly wire up components without boilerplate, but it also creates some issues. How do you share data? How to components get configured? How do components communicate with each other, or the outside world? The part of angular which answers these questions is scope.</p>
+
+<h2>What is scope?</h2>
+
+<p>The purpose of scope is to hold shared UI state of an element and it&rsquo;s descendants. Since the UI is defined as a tree of nodes, the scope of an element is visible to all descendants of that element. When a descendant introduces a new scope, the new scope inherits properties of it&rsquo;s parent scope.</p>
+
+<p>This is a very elegant solution to the problem, since the further you go down the DOM tree, the more specific the data requirements get.</p>
+
+<p>As an example, here is an extremely basic employee directory, which allows people to add contacts to their personal directories.</p>
+
+<p><iframe style='width: 100%; height: 500px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/AsGQlxSpdOOhIlG9wi4u/preview'></iframe></p>
+
+<p>There is 3 levels of scope in play here. The first is the root scope, which is defined automatically by the angular bootstrapping process. The second is the directory level, which is created by <code>ng-controller</code>. The third level is the employee elements, which are created by <code>ng-repeat</code>.</p>
+
+<p>Each level inherits from the previous level as illustrated here</p>
+
+<p><img src="/images/scopes/scope_tree.png" alt="scope tree" /></p>
+
+<p>This inheritance is very important, as you can see with what is happening with the &ldquo;add to my directory&rdquo; button. <code>currentUser</code> being on the root scope means it is available to all child scopes, so even though most of what needs to happen at the employee scope level is satisfied with the <code>employee</code> object, it is still able to see <code>currentUser</code> if needed.</p>
+
+<h4>ZOMG global state!</h4>
+
+<p>This may be a bit terrifying, especially for JavaScript developers. The difference between this and global state is that the scope tree is directly linked to the DOM tree.</p>
+
+<p>If two different nodes share a parent, usually there is a reason, and if you put state on that parent node, usually it is very applicable to both children. Those children don&rsquo;t make much sense without the parent, so it becomes unlikely they will be accidentally separated.</p>
+
+<p>As long as you keep your state as localized as possible, having state inheritance is a very elegant solution to the very tricky problem of sharing data.</p>
+
+<p>That being said, if you publish everything on <code>$rootScope</code>, yes that is global state, and yes, that is bad. Don&rsquo;t do that.</p>
+
+<h2>Using scope in directives</h2>
+
+<p>Using scope is pretty straight forward when using things like <code>ng-controller</code> and <code>ng-bind</code>. But how about a directive which interacts with the scope?</p>
+
+<p>Here is a directive which exposes a number from the scope, and whether or not the number is even or odd.</p>
+
+<p><iframe style='width: 100%; height: 300px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/SZ1VBX53EidtFEzV2SrD/preview'></iframe></p>
+
+<p>The way angular achieves its data binding, is by constantly checking values on scopes to see if they have changed. This is accomplished by <code>scope.$watch</code>. Angular will automatically create <code>$watch</code> expressions for any data binding you give it, but you can also add custom ones. Every time angular thinks something may have changed, it will call the <code>$digest</code> method on the appropriate scopes, which cycles through watch expressions looking for changes. If an expression is found to have changed, angular will execute whatever the callback is.</p>
+
+<p>Another interesting thing here is the <code>$parse</code> service. <code>$parse</code> is the way angular translates expressions (the things inside <code>{{}}</code>) into javascript. Angular will automatically wrap an expression passed into <code>scope.$watch</code> as a string, but since we are going to assign a value to the same expression, it makes more sense to wrap it ourselves.</p>
+
+<p>Most of the rest of the <code>link</code> function is around synchronizing the value of number from the outer scope to the inner scope. The reason for that is that this directive has a template which requires the number to be passed into it (via <code>ng-model</code>). Because of that, we need a fixed, known value for the scope.</p>
+
+<h2>Isolate scope</h2>
+
+<p>Now, what we have here works, but there is quite a bit of &ldquo;manual lifting&rdquo; going on. It would be nice if the framework could handle that two way scope synchronization for you, wouldn&rsquo;t it? Well it can, using a feature called isolate scope.</p>
+
+<p>Normally, scopes will inherit from their parent. But in the case of directives, this can be undesired. A directive is a generic piece of functionality, and the scope is full of application and context specific values. Isolate scope allows a directive to create a &ldquo;scope sandbox&rdquo;, cutting it off from the rest of the scope tree, except for specific values. Here is the previous example re-done using isolate scope.</p>
+
+<p><iframe style='width: 100%; height: 300px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/riMUgeMoOGbe7DW6QTnB/preview'></iframe></p>
+
+<p>It looks a lot nicer without the synchronization code. That is because we moved that into the <code>scope</code> part of the directive declaration.</p>
+
+<p>The way that the <code>scope</code> property works is the key is name you want to publish on the local scope, the value is a symbol that signifies how the local scope and the outer scope values will get linked.</p>
+
+<ul>
+<li><code>=</code> two way synchronization, by far the most common. This will link an outer scope property to an inner scope property, where the outer scope property is specified by what is in the attribute being referenced.</li>
+<li><code>@</code> one way, this will copy the literal value from the attribute into the isolated scope. If the attribute value changes, the isolated scope property will be updated to reflect the change, but if the isolated property changes it doesn&rsquo;t get copied to the attribute.</li>
+<li><code>&amp;</code> will wrap the expression in a function, which can then be called as needed. If the expression is a function, you can inject arguments into it by passing a context object at the point of invocation. This may not make much sense, but see the next plunk for an example.</li>
+</ul>
+
+
+<p>so for example, <code>scope: { foo: '=' }</code> means &ldquo;Isolate scope for this directive, and set up two way synchronization between a property on the local scope called foo, and whatever expression was entered into the property <code>foo</code> on this directives element&rdquo;.</p>
+
+<p>Often, it is fine to use the same name as the attribute, but if you want to use something different, you can name the key whatever you like, and put the attribute name after the symbol. So <code>scope: { foo: '=bar' }</code> would be synching between the expression in the attribute called <code>bar</code>, and the isolated scope property <code>foo</code>.</p>
+
+<p>Here is an example of all 3 types of isolate scope declarations</p>
+
+<p><iframe style='width: 100%; height: 800px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/Sjm7MsqXbJjcn00yANvl/preview'></iframe></p>
+
+<h2>Why would you ever not want to isolate scope in a directive?</h2>
+
+<p>The only reason you don&rsquo;t isolate all directives is that there can only be one scope per element, so only one directive per element can ask for scope isolation.</p>
+
+<p>In practice, this isn&rsquo;t as limiting as you would expect. Usually there is at most one directive per element which requires complex integration into the rest of the ui state. If there are other directives, they tend to just do things like configure 3rd party libraries.</p>
+
+<p>Unfortunately, you should only use this feature if you really need it. If you are writing library code, you should go to even greater lengths to avoid it, since it can potentially restrict situations where the directive can be used.</p>
+
+<p>This is one of the things I find frustrating about the framework, the properties of isolate scope are so incredibly useful when writing directives, they really should be always available (in my opinion).</p>
+
+<h2>A few words of warning</h2>
+
+<p>Scope enables most of the aspects that have made angular the most popular JavaScript framework today. But there are some gotchas that are good to be aware of</p>
+
+<h3>Beware complex $watch expressions</h3>
+
+<p>Angular takes a brute force approach to dirty checking (until ES6 anyways), which means that your watch expression can be run many, many times. Slow <code>$watch</code>s are the most common source of performance problems in angular apps.</p>
+
+<h3>If there isn&rsquo;t a &ldquo;.&rdquo; in your binding expression, you are doing something wrong</h3>
+
+<p>This is obvious if you understand how inheritance works, but comes up surprisingly often in issues by newbies. If you read from a property that is on ancestor scope, there is no problem. But if you write to a property on an ancestor scope, you will just end up adding the property to your local scope. By publishing objects on the scope instead of values, JavaScript will first have to find the object before writing, bypassing the problem.</p>
+
+<p>Here is an example of the problem</p>
+
+<p><iframe style='width: 100%; height: 500px; background-color: white; margin: 20px 0' sandbox='allow-same-origin allow-scripts' src='http://embed.plnkr.co/zoGNvPsYHo5FnvS7OXn3/preview'></iframe></p>
+
+<p>In general, just stick with the rule of thumb that binding expressions always need a dot in them.</p>
+
+<h3>Think carefully before publishing on $rootScope</h3>
+
+<p>It is a quick way to make something globally accessible, but there are several tradeoffs.</p>
+
+<ul>
+<li>It will make it hard to change in the future, since it is not apparent what is using the variable (since any view code could potentially be using it)</li>
+<li>You are increasing the chance of a name collision. If something further down the page uses the same name, you could introduce a very subtle bug.</li>
+<li>When properties are referenced on the <code>$rootScope</code>, it is not terribly clear where they come from.</li>
+</ul>
+
+
+<p>There is a time and place for <code>$rootScope</code>, but publishing to it should be done with thought and care.</p>
+
+<h3>Debugging</h3>
+
+<p>The <a href="https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk?hl=en">Angular Batarang</a> is an incredibly helpful tool for exploring the current state of the scope on an element. It should be the first thing you reach for when scope isn&rsquo;t behaving the way you think it should</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[NPM style Javascript is the conservative choice]]></title>
+    <link href="http://mattbriggs.net/blog/2012/05/03/npm-style-javascript-is-the-conservative-choice/"/>
+    <updated>2012-05-03T17:40:00-04:00</updated>
+    <id>http://mattbriggs.net/blog/2012/05/03/npm-style-javascript-is-the-conservative-choice</id>
+    <content type="html"><![CDATA[<p>I am sick of talking about semicolons. But after reading some comments on Tom Dale&rsquo;s recent post on best practices, I think I need to talk about the reasoning behind NPM style, and what it does to your code. It is not about being &ldquo;cool&rdquo;, it is about dealing with two of the three types of bugs that are the hardest things to debug in the language.</p>
+
+<h4>I dont care if you use semi-colons or not, that is not what this blog post is about</h4>
+
+<p>What this post is about is</p>
+
+<ul>
+<li>The problems NPM style is trying to address</li>
+<li>How NPM style addresses them</li>
+<li>Some very good reasons why you do not want to use NPM style</li>
+</ul>
+
+
+<p>Even if you don&rsquo;t want to use this style of coding, hopefully this post will give you some ideas on how to develop your own techniques for dealing with some of these issues.</p>
+
+<h2>The Problem With Commas</h2>
+
+<p>Even though we are talking about semi-colons so much, I find you run into bugs with commas in JS far more often. We had a deployment about a year ago that made the app unusable for most of our customers for more then the half day it took for us to find the issue and fix it. It was caused by code that looks something like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">[</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">foo</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">lorem</span> <span class="nx">ipsum</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">foo</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">lorem</span> <span class="nx">ipsum</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">foo</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">lorem</span> <span class="nx">ipsum</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">foo</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">lorem</span> <span class="nx">ipsum</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">foo</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">lorem</span> <span class="nx">ipsum</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">foo</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">lorem</span> <span class="nx">ipsum</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">foo</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">lorem</span> <span class="nx">ipsum</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;},</span>
+</span><span class='line'><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Can you spot the problem? It&rsquo;s the last comma inside the array.</p>
+
+<p>There are two huge issues with misplaced commas. First, it is a really easy to introduce bug. Let&rsquo;s say you are working with backbone, and have something like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">MyModel</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Mode</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//do some stuff</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">},</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="nx">canTransistionState</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newState</span><span class="p">){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;state&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;new&quot;</span> <span class="o">&amp;</span><span class="nx">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">amp</span><span class="p">;</span> <span class="nx">newState</span> <span class="o">==</span> <span class="s2">&quot;published&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">},</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="nx">transitionState</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newState</span><span class="p">){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="nx">state</span><span class="o">:</span> <span class="nx">newState</span><span class="p">});</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>You are looking at the code, and think &ldquo;You know, canTransistion is lower level then transition, how about I move it down?&rdquo; You highlight canTransition, and press the button in your editor that moves the function down one</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">MyModel</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Mode</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//do some stuff</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">},</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="nx">transitionState</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newState</span><span class="p">){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="nx">state</span><span class="o">:</span> <span class="nx">newState</span><span class="p">});</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="nx">canTransistionState</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newState</span><span class="p">){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;state&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;new&quot;</span> <span class="o">&amp;</span><span class="nx">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">amp</span><span class="p">;</span> <span class="nx">newState</span> <span class="o">==</span> <span class="s2">&quot;published&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">},</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>You just got hit by the bug. What is worse, is lets say you fix that one, but then decide to delete the last function</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">MyModel</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Mode</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//do some stuff</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">},</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="nx">transitionState</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newState</span><span class="p">){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="nx">state</span><span class="o">:</span> <span class="nx">newState</span><span class="p">});</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">},</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Now you are hit by a bug that is orders of magnitude worse, since it will be fine in firefox and chrome, but will cause ie to die a horrible confusing death.</p>
+
+<h2>How NPM Style solves the problem</h2>
+
+<p>NPM style says lead the first line with the opening glyph, prefix all following lines with a comma, and close the thing on its own line. So my first example would be</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">[</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">foo</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">lorem</span> <span class="nx">ipsum</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span>      <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
+</span><span class='line'>      <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
+</span><span class='line'>      <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
+</span><span class='line'>      <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
+</span><span class='line'>      <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
+</span><span class='line'>      <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
+</span><span class='line'>      <span class="p">];</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>I know, it looks rather odd. But more important to how things look, there is literally no way you can have a trailing comma if you never put a comma at the end of the line. You can delete or reorder any of the lines without any problem, except for the first one. And the way the first one is prefixed in the same place by a DIFFERENT glyph, makes it very hard to forget to treat it as a special case. Finally, when debugging a problem, it is way more obvious when something is wrong in the npm case</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// NPM missing a comma</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">[</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">foo</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">lorem</span> <span class="nx">ipsum</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span>      <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;fo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">13</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
+</span><span class='line'>      <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo1&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem&quot;</span><span class="p">}</span>
+</span><span class='line'>        <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;fooooo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
+</span><span class='line'>      <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foobar&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">12</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
+</span><span class='line'>      <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;fobin&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem&quot;</span><span class="p">}</span>
+</span><span class='line'>      <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
+</span><span class='line'>      <span class="p">];</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">// Crockford style</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">[</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">foo</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">lorem</span> <span class="nx">ipsum</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">fo</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">13</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">lorem</span> <span class="nx">ipsum</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">foo1</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">lorem</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">fooooo</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">lorem</span> <span class="nx">ipsum</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;}</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">foobar</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">12</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">lorem</span> <span class="nx">ipsum</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">fobin</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">lorem</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">foo</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">lorem</span> <span class="nx">ipsum</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;},</span>
+</span><span class='line'><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Now, if I were scanning through hundreds of lines of code without knowing what I am looking for, the first example would leap out at me WAY more then the second.</p>
+
+<p>You might say &ldquo;In that class example, it would look retarded to align everything on the {&rdquo;. This is true. Which is why I make a compromise, and do the following</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">MyModel</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Mode</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="c1">//do some stuff</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">,</span> <span class="nx">transitionState</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newState</span><span class="p">){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="nx">state</span><span class="o">:</span> <span class="nx">newState</span><span class="p">});</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">,</span> <span class="nx">canTransistionState</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newState</span><span class="p">){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;state&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;new&quot;</span> <span class="o">&amp;</span><span class="nx">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">amp</span><span class="p">;</span> <span class="nx">newState</span> <span class="o">==</span> <span class="s2">&quot;published&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>It is less reliable then true NPM style, but I find it still gives me the benefit of making the comma placement a lot more obvious, and I also find the first thing in my class tends to change far less then the last thing. It is not as fool proof as the top examples, but it is a definite improvement over Crockford style.</p>
+
+<p>I think commas are a much bigger problem then semicolons, and even if you reject semi-colon first style, you should still switch to comma first, because it will dramatically reduce the chance of one of the worst pitfalls in the language from happening.</p>
+
+<h2>The problem with semi-colons</h2>
+
+<p>This is a far less common case then commas, but still really nasty due to how hard it is to debug and to catch. Lets say you are writing Crockford Style code, and do something like this. Note that this is silly code, but the problem is not aparent unless you are doing one of a few fairly abnormal things.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">foo</span><span class="p">(){</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">apples</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">bananas</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">array</span> <span class="o">=</span> <span class="p">[</span><span class="nx">apples</span><span class="p">,</span> <span class="nx">bananas</span><span class="p">];</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">carrots</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'>  <span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="nx">array</span> <span class="o">=</span> <span class="nx">array</span> <span class="o">+</span> <span class="p">[</span><span class="nx">apples</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">bananas</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">carrots</span><span class="p">];</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">}());</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span> <span class="nx">array</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;this whole thing is just for distraction: &quot;</span><span class="p">,</span> <span class="nx">array</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">};</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="k">return</span> <span class="nx">array</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
+</span><span class='line'><span class="p">};</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>When you run <code>foo()</code>, you will get <code>Exception: number is not a function</code>. Whaaa?</p>
+
+<p>The problem is that in javascript, whitespace is insignificant for <code>()</code> and for <code>[]</code>. So the following are the same thing</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">foo</span><span class="p">();</span>
+</span><span class='line'><span class="nx">foo</span>
+</span><span class='line'><span class="p">();</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">// and&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">foo</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'><span class="nx">foo</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Why javascript would support such insane syntax is beyond me, but the (single) case this problem happens in the real world is illustrated by my first example, which means that because the carrot assignment was missing a semi-colon, the immidately invoking function instead calls 3(function(){}). Confused yet?</p>
+
+<p>There are two main things that make this bug a killer. One is that the problem occurs on the line after the line that causes the problem. You need to be looking at pairs of lines to figure out what is happening. The second is what actually goes wrong is a confusing message <em>if you are incredibly lucky</em>. If you are unlucky, it will cause some comletely random behavior in your application that you can spend days trying to track down. Lastly, since this problem happens so incredibly rarely, and you are putting semi-colons at the end of every line, it is very hard to a) actually &ldquo;see&rdquo; the lack of a semi colon (for me at least, they fade into the background), and b) actually remember that this is an issue that can happen.</p>
+
+<h2>How NPM Mitigates the semicolon problem</h2>
+
+<p>Since this happens in one case if you are doing cross platform browser work (a line which starts with an opening parenthesis), and one additional time if you are lucky enough to be guarenteed a relatively new version of ecmascript (a line starting with an opening square bracket), NPM treats those as special cases. So the previous example would be</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">foo</span><span class="p">(){</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">apples</span> <span class="o">=</span> <span class="mi">1</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="p">,</span> <span class="nx">bananas</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class='line'><span class="p">,</span> <span class="nx">array</span> <span class="o">=</span> <span class="p">[</span><span class="nx">apples</span><span class="p">,</span> <span class="nx">bananas</span><span class="p">]</span>
+</span><span class='line'><span class="p">,</span> <span class="nx">carrots</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">;(</span><span class="kd">function</span><span class="p">(){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class='line'><span class="nx">array</span> <span class="o">=</span> <span class="nx">array</span> <span class="o">+</span> <span class="p">[</span><span class="nx">apples</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">bananas</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">carrots</span><span class="p">]</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">}())</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span> <span class="nx">array</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;this whole thing is just for distraction: &quot;</span><span class="p">,</span> <span class="nx">array</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="k">return</span> <span class="nx">array</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Notice the leading semicolon in front of the immediately invoking function?</p>
+
+<p>Now, you might argue that it is even MORE invisible to not have the leading comma. First of all, once you get used to seeing <code>;(function(){}())</code>, not having that leading comma is the thing that makes it look strange. Since it is at the start of the line, the fact it is missing also helps me immensely. Lastly, when debugging the problem, you aren&rsquo;t looking for pairs of lines, you are looking for a single thing (that you can easily grep for)</p>
+
+<h2>Wait, aren&rsquo;t there like, a bajillion other places where no semi-colons will screw you?</h2>
+
+<p>There sure are, but those other cases will never happen in real life, so you don&rsquo;t need to worry. This topic has been discussed at great, great length recently, but if you would like to learn more, I would recommend the following resources</p>
+
+<ul>
+<li><a href="http://mir.aculo.us/2012/04/16/writing-semicolon-less-javascript-the-for-people-who-want-to-get-stuff-done-edition/">Writing Semi-Colonless Javascript, the people-who-want-to-get-stuff-done edition</a> Thomas lays out the essentials of what you need to know</li>
+<li><a href="http://dailyjs.com/2012/04/19/semicolons/">JavaScript and Semi-Colons</a> If you want an in depth walk through of the actual rules, this is the best currently available</li>
+<li><a href="http://blog.izs.me/post/2353458699/an-open-letter-to-javascript-leaders-regarding">An Open Letter To The JavaScript Community</a> Isaac, one of the best server side js guys, pleading with community leaders to educate rather then forbid</li>
+<li><a href="http://mattbriggs.net/blog/2012/04/16/why-i-dont-use-semicolons/">Why I don&rsquo;t use semi colons</a> My personal post detailing what I think of the issue</li>
+</ul>
+
+
+<h2>Enough about the semicolons</h2>
+
+<p>We are talking about an incredibly rare issue in the wild, and it is really time to stop. The much, much, much more common issue is the trailing commas, and really that is the biggest gain from using NPM style javascript</p>
+
+<h2>Why You Should Not Use NPM style javascript</h2>
+
+<p>Like everything else in this job, there are no hard rules, only ideas that are good for certain cases. Here are some great reasons not to use NPM</p>
+
+<ul>
+<li>Your editor doesn&rsquo;t support it</li>
+</ul>
+
+
+<p> NPM style is quite popular, but not to the point where everything supports it. The snide comment would be that if your editor doesn&rsquo;t support it, find a better one. But realistically, that is often not possible or desirable. Both Emacs and Vim support it out of the box, if you use Emacs I would highly recommending installing the excellent JS3 package, which I believe has the best js indentation out of anything out there (and yes, I have tried every popular current editor). In fact, I would say the two best choices currently for javascript work are Emacs with JS3 if you prefer light weight, or IntelliJ WebStorm if you prefer IDEs.</p>
+
+<ul>
+<li>I understand the issues, but I don&rsquo;t think it is worth switching to such a wild coding style because of them</li>
+</ul>
+
+
+<p> There is nothing wrong with making this choice, the important thing is understanding why you are making it. Hopefully this blog post will help you debug a really nasty class of bugs in the future.</p>
+
+<ul>
+<li>I primarily use Java/C#/C++, and this is just too different</li>
+</ul>
+
+
+<p> It is important to remember that this is really a different language, and that even if you write it like java, there are cases where things work differently (especially semicolon stuff). You probably don&rsquo;t want to go to this style if you write similar code all day, but you should try to think of less drastic ways to adjust your style that will help you avoid these pitfalls</p>
+
+<h2>Massive walls of text are fun</h2>
+
+<p>This was a pretty long post, but I think it is important. As a professional developer, it is your job to be educating yourself about the things you use to do your job, and creating processes that help you do it more efficiently and effectively. Most people think that NPM style is about being &ldquo;different&rdquo;, or making your code look &ldquo;cool&rdquo;. It really isn&rsquo;t, it is about contorting the way you code for the benefit of writing better javascript that is easier to debug.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Why I Don't Use Semicolons]]></title>
+    <link href="http://mattbriggs.net/blog/2012/04/16/why-i-dont-use-semicolons/"/>
+    <updated>2012-04-16T18:00:00-04:00</updated>
+    <id>http://mattbriggs.net/blog/2012/04/16/why-i-dont-use-semicolons</id>
+    <content type="html"><![CDATA[<p><strong>Update</strong> I was looking at old posts on my blog, and ran across this
+one. It is more then a little angry, and takes a very hard line. If I
+were to write this today, it would come out very differently. It was
+written during a time when the JS community flamed each other very hard
+for about a month over this issue. Where I stand now is that honestly,
+it doesn&rsquo;t matter that much. Using semi-colons because most of the
+community does is a perfectly valid reason. I felt attacked in a
+personal way, and responded in kind. Not something I am proud of, but it
+is what it is.</p>
+
+<p>This weekend there was the latest of many outcries over the use of semi-colons. The problem came from twitter bootstrap breaking in jsmin due to a lack of semi-colons, fat saying that he wrote perfectly fine js, and that it is a bug in jsmin, followed by crockford declaring his code bad (in the way only crockford can), and that he wouldn&rsquo;t bring jsmin down to the level of supporting code that bad.</p>
+
+<p>The story hit hacker news, twitter, the irc, and probably other places I don&rsquo;t follow, and caused quite a big deal of nerd rage over how someone could justify not using semicolons in javascript. The next day, Brandon Eich weighed in, and basically said that automatic semi-colon insertion wasn&rsquo;t done properly, if he could go back in time he would have made them fully optional, but since they aren&rsquo;t optional in all circumstances, you should probably use them all the time. This basically threw fuel on the fire, and kept the rage going on for another day or so.</p>
+
+<h2>The Problem With ASI (Automatic Semicolon Insertion) in Javascript</h2>
+
+<p>It really depends on who you ask. If you talk to Crockford, he will say something about how the spec is mystifying and the rules are obtuse so you should just always use them. If you talk to someone else who has read the spec, they will tell you that the spec is pretty clear, and well implemented across browser versions. There is really one place where it does not work they way one would expect.</p>
+
+<p>Basically javascript treats whitespace and newlines for brackets the same across all the different types of brackets so that means both of the following are valid js syntax</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">foo</span> <span class="o">===</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">doSomething</span><span class="p">()</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="p">(</span><span class="nx">foo</span> <span class="o">===</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nx">doSomething</span><span class="p">()</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>That is pretty much as one would expect right? The problem comes with the following</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">doSomething</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">// is the same as…</span>
+</span><span class='line'><span class="nx">doSomething</span>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">// and…&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">listOfFoo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">// is the same as…</span>
+</span><span class='line'><span class="nx">listOfFoo</span>
+</span><span class='line'><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Why anyone would write that into a language is beyond me, because deliberately writing code like the previous examples is absolutely terrible. But apart from aesthetics, where this will get you into trouble is a case like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">wtf</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="k">this</span> <span class="kd">function</span> <span class="nx">doesn</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span><span class="nx">t</span> <span class="nx">actually</span> <span class="k">return</span> <span class="nx">anything</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;)</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">So</span> <span class="nx">when</span> <span class="nx">you</span> <span class="nx">call</span> <span class="nx">it</span><span class="p">,</span> <span class="nx">it</span> <span class="nx">evaluates</span> <span class="nx">to</span> <span class="kc">undefined</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;)</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">wtf</span><span class="p">()</span>
+</span><span class='line'><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="c1">// this pattern is known as an immediately invoking function definition</span>
+</span><span class='line'> <span class="c1">// it is mostly used to introduce local state&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="nx">SomeNamespace</span><span class="p">.</span><span class="nx">funcName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">}</span>
+</span><span class='line'><span class="p">}())</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>The above is a semi-realistic scenario where asi will punch you in the face in javascript. Basically, the intent is to call <code>wtf()</code>, and then make your immediately invoking function. What actually happens is that <code>wtf</code> gets called, returns <code>undefined</code>, and js attempts to call <code>undefined</code> as a function, passing in that inner function as an argument.</p>
+
+<p>Now, getting <code>undefined is not a function</code> would be pretty confusing in that, and very hard to debug, especially if you don&rsquo;t know the js quirks around ASI.</p>
+
+<h2>So, thats the problem, how do we deal with it?</h2>
+
+<p>There are several schools of thought.</p>
+
+<ul>
+<li>One is to not actually explain the real issue, and give some handwaving and muttering about the inconsistencies of ASI, and how you should never rely on it.</li>
+<li>Another is to learn the reason that bug occurs, and put a semi colon at the end of every line, whether it needs it or not</li>
+<li>A third is to prefix a line when this issue will occur with a semi-colon, and omit them in all other instances, since you know it is safe to do so.</li>
+</ul>
+
+
+<p>The first is the attitude taken by the vast majority of the javascript community. The second and third are taken by a few, more advanced developers. The third however, is shunned, and causes terrible arguments by people who take the first way of dealing with it.</p>
+
+<h2>Why all the hate?</h2>
+
+<p>If you write java code all day, and are appending ; to the end of each line whether it needs it or not, I can totally see it making sense to carry that tradition of needless ceremony over in javascript. If you come from any other language that supports ASI properly, I cannot understand how, after learning the facts about what the issue is, come to the conclusion that appending a redundant character to the end of 99.999% of your code is the way to solve a problem that comes up 0.001% of the time.</p>
+
+<p>But my attitude is live and let live, if you want to do something I don&rsquo;t get, I really don&rsquo;t mind if it genuinely helps you avoid bugs. I would suggest wrapping all statements with parens, since sometimes they are needed and other times they are not (best to be safe!) and maybe append some <code>//</code>s to the end of your lines, just in case someone wants to add a comment later, it won&rsquo;t cause syntax errors. If I saw code that looked like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">(</span><span class="kd">var</span> <span class="nx">addStuff</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="p">(</span><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">//</span>
+</span><span class='line'>  <span class="p">(</span><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">//&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">(</span><span class="k">return</span> <span class="p">(</span><span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">););</span> <span class="c1">//</span>
+</span><span class='line'><span class="p">});</span> <span class="c1">//</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>I would kind of be scratching my head, and wondering why the person did it that way. But at the end of the day, all of that other extraneous crap has exactly the same amount of reason to be there as the semicolons.</p>
+
+<h2>Whats so bad about a few semicolons?</h2>
+
+<p>I am going to talk about me, personally here, since there is a good chance that this stuff falls under the category of &ldquo;Thats just the way Matts brain works&rdquo;.</p>
+
+<p>First, they are just noise. They have no reason to be there, and noise for me tends to fade into the background. After working with semi-coloned javascript for awhile, I don&rsquo;t even notice the semicolons anymore. This is a really bad thing, because if I miss a semi-colon in the wrong place, I have a hard time linking the code I am looking at to that problem. By contrast, if I lead a line with a semi-colon in the one situation that matters, that stands out to me like a red flag. I can easily tell when its there and when it is not there.</p>
+
+<p>Second, javascript is the only language I use that people even think about using semi-colons in. I spend most of my time in ruby, clojure, sass, html, and javascript. JS is the one difference with regards to ASI. That just exacerbates the problem for me, and makes it more likely I will miss a semi colon.</p>
+
+<p>Third, I have zero problem remembering &ldquo;Lead lines that begin with brackets with a ;&rdquo;. This is a very simple rule, in a world where I have to remember that keypress is less consistent then keydown, hasLayout, how to vertically align things in css, and why onchange isn&rsquo;t working when I programmatically change something in i.e.. You could make an argument that &ldquo;Add a semi colon to the end of each line&rdquo; is an even easier rule, but for me its not (refer to the previous two points for why).</p>
+
+<p>Lastly, both in this post and in terms of importance, semicolons are ugly. They make an already verbose language just that much more verbose, and I actually care about things like aesthetics in code. This reason is far less important then the previous three, but for me it is just one more reason to not use redundant semi-colons</p>
+
+<h2>The hate</h2>
+
+<p>But hey, if you want to use them, I am totally fine with that. If I contribute to your project I will use them too, and if I  miss one and you let me know, I will happily fix it. I have a canned regexp replace in emacs for scanning a file for possible semi-colon omission, and I dutifully run it before committing to someone else&rsquo;s project.</p>
+
+<p>In my experience, this is pretty common for the no-semicolon crowd. But for some reason the attitude of the semi-colon mafia is that of violent and vitriolic hatred. It is not ok that I choose a different way then them to deal with this problem, it is not ok that I talk about it, and try to educate people as to why they are doing this practice in the first place, and it is really, really not ok for me to expect to be afforded the same courtesy I offer them.</p>
+
+<p>Why?</p>
+
+<p>I ask myself this every time one of these arguments happen. I genuinely think that it is a lack of knowledge that causes this knee-jerk reaction, but actually imparting that knowledge usually changes nothing. It is a very big mystery to me, and I have seen others in the js community express similar bafflement (including Isaac, one of the leaders of the node community, node developer and creator/maintainer of npm)</p>
+
+<h2>Can&rsquo;t we all just get along?</h2>
+
+<p>I would love, just absolutely love to hear a good reason why you need semi-colons everywhere. I don&rsquo;t buy that javascript developers can&rsquo;t remember that simple rule, because they deal with far more complex rules every day. I don&rsquo;t buy that it is a tool issue, because every tool of the current generation has no problems with ASI. I don&rsquo;t buy that it is a fundamental flaw in ASI, because I use many languages that I don&rsquo;t write semi colons in, and never seem to have issues with them.</p>
+
+<p>So please convince me. Politely, and in the spirit of coming to an understanding. I don&rsquo;t understand why you make the choice you make, but I don&rsquo;t think you are terrible for making it. Github has plenty of great developers, they ban semis. Thomas Fuches has been a community leader since before there really was a community, he doesn&rsquo;t use them. Isaac is one of the leaders in the node.js world, and a great js developer, he shares most (if not all) of these opinions. Even if you can&rsquo;t convince me, at least come to the same conclusion that I have on this issue, for whatever reason there are good developers who seem to completely abandon common sense around semi-colons, accept that and move on.</p>
+]]></content>
+  </entry>
+  
+</feed>

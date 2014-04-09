@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Awesome Emacs Plugins: Evil Mode - Matt Briggs</title>
+  <meta name="author" content="Matt Briggs">
+
+  
+  <meta name="description" content="I want to do a series of posts on some of the cool emacs plugins I use. Before I do that though, I want to talk a bit about why I use and love emacs &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mattbriggs.net/blog/2012/02/27/awesome-emacs-plugins-evil-mode">
+  <link href="/favicon.png?v=2" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Matt Briggs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-10813260-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Briggs</a></h1>
+  
+    <h2>"Not all code needs to be a factory, some of it can just be origami" -why, the lucky stiff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mattbriggs.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="subscription">
+  <li><a href="/.emacs.d" target="_blank" rel="emacs-config" title="Emacs Configuration"><i class="fa fa-code"></i></a></li>
+  <li><a href="http://github.com/mbriggs" target="_blank" rel="github" title="Github Profile"><i class="fa fa-github"></i></a></li>
+  <li><a href="https://twitter.com/intent/user?screen_name=googleninja" rel="follow-twitter" target="_blank" title="Follow on Twitter"><i class="fa fa-twitter"></i></a></li>
+  <li><a href="http://stackoverflow.com/users/10771/matt-briggs" rel="stackoverflow" target="_blank" title="StackOverflow Profile"><i class="fa fa-stack-overflow"></i></a></li>
+  <li><a href="/atom.xml" target="_blank" rel="subscribe-rss" title="Subscribe via RSS"><i class="fa fa-rss"></i></a></li>
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://careers.stackoverflow.com/mattbriggs" target="_blank">CV</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Awesome Emacs Plugins: Evil Mode</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-27T15:58:00-05:00" pubdate data-updated="true">Feb 27<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I want to do a series of posts on some of the cool emacs plugins I use. Before I do that though, I want to talk a bit about why I use and love emacs. The saying &ldquo;Care about the code, not the tools&rdquo; is an anathama to me, it is like &ldquo;Care about breathing, but don&rsquo;t worry about drinking&rdquo;. Breathing is incredibly important, I agree, but consuming liquid regularily is pretty high up there on the list too! Anyways, this is my journey through tooling with working with code. This post is going to be a story of epic proportions, with very little &ldquo;hard&rdquo; content, but I plan on doing more posts that are more focused on the awesomeness of emacs plugins.</p>
+
+<h2>The Dark Years: Integrated Development Enviornments</h2>
+
+<p>I used IDEs for years, and while I appreciated the power, there was some things missing. The first thing was even with plugins, the barrier to customization was quite high. I love solving problems with code, and while solving other peoples problems is a fun and interesting (and profitable) endevour, solving your own problems is usually far more satisfying. Second, they are by their nature, built for a specific language and platform. Lastly, they are quite slow, and require quite a bit of resources. At my last job, it would take almost 7 minutes to go from a reboot to everything up and pointing to the right things. Now, even with a boatload of scripts, emacs loads in about 1s.</p>
+
+<h2>The Cult of Vim</h2>
+
+<p>When I started doing rails work, I started taking vim more seriously. Vim gave me the speed, and the custommizability. I quickly crafted a set of fairly elaborate configs where everything was exactly how I liked it. But beyond that, I discovered what a joy modal editing is. The best way I can describe it is a programming language for editing. The ability to think of fragments of code as objects that i can perform functions on is a wonderful and freeing thing. Once it becomes second nature, it feels like I am talking to my editor in a high level way with my fingers. A nice side effect is that my hands <em>never</em> leave the keyboard. It is highly efficient, but efficiency isn&rsquo;t even the biggest benefit, it is a joy thing. I find it much more enjoyable to edit code with modal editing.</p>
+
+<p>Eventually you reach a point where you want to be writing your own stuff in vim as well, and you have to start learning vimscript, which is possibly the most terrible language ever conceived of. Vim is awesome, vim plugins are awesome, but vimscript is just one big WTF. More then that, I was starting to get into lisp in a pretty big way, and you can&rsquo;t compare vim experience to the emacs experience. I also was sort of frustrated by the lack of ability to show the output of an external process in a seperate buffer, especially since I do TDD.</p>
+
+<h2>The Light of Emacs</h2>
+
+<p>The old arguments between vim and emacs focused on speed, but when you are comparing either to eclipse, the amount of speed difference beween vim and emacs now is unnoticable. Same deal with resources, emacs is sitting at 250megs right now, which is more then vim, but a small fraction of chrome. That brings us to the strengths, which for emacs is it does pretty much everything vim does, but better, except for the act of actually editing text. It also does way more then vim can do, some of it quite unique (org mode) useful (regexp-builder) or suprisingly powerful (calc).</p>
+
+<p>The other major thing is elisp vs vimscript. I have a strongly passionate (bordering on irrational) love of lisp, so for me it was not even worth talking about, something lispy vs a really terrible dynamic imperative language, I will choose the lispy thing every time. elisp is far from the greatest lisp out there, but compared to vimscript it is wonderful. There is also a philsophy in emacs that emacs is a platform, with an editor implemented in it. Vim philosphy is vim is an editor that you can script if that makes you happy. Very different, and since I have such a dedication to my tooling, I definately appreciate the emacs side.</p>
+
+<p>The thing that was always a sticking point for me was modal editing. As much as I love modal editing, I hate emacs editing. There is something about the way my brain works that makes it extremely hard to remember key chords. I can happy do &ldquo;<code>ci'blahfT;;.</code>&rdquo; and have no problems, but <code>c-c</code> <code>m-x t</code> will leave my brain after about 10 minutes of not using it.</p>
+
+<p>After some time lusting over emacs and being defeated by its keybindings, I read about viper-mode, which was a vim emulator. I tried it out, but after trying <code>ci"</code> and having it not work, I realized it wasn&rsquo;t enough. I poked around the internet a bit, and found out about vimpulse, which promised much more in terms of vim emulation. I actually went a day on vimpulse before switching back, there were just too many inconsistancies and other small things that were missing, or not working the way they should.</p>
+
+<h2>Evil.</h2>
+
+<p>I went a few months, sort of keeping taps on emacs, but not really expecting to be able to switch. Eventually I heard about evil, and I eagerly installed it. Wow. After trying vim emulators in many other editors, which range from the level of viper mode to a bit under vimpulse, evil was like a light in the darkness. These guys really &ldquo;get&rdquo; vim, and are serious about re-implementing it. I have been using it for a few months every day, and there are only a few things missing.</p>
+
+<ul>
+<li>it ignores punctuation. if you have <code>function foo(){}</code>, and your cursor is at the end of the line, in vim db will leave you with <code>function foo</code>, in evil, it leaves you with <code>function</code>. This is because vim will treat punction as a word, while evil does not. I still find this regularly frustes me.</li>
+<li>there is no <code>:g</code>. There are a ton of <code>:</code> commands missing, but I find the lack of <code>:g</code> the thing I really miss, since most of the other stuff is covered by emacs functions</li>
+<li>the <code>b</code> text object is broken in js2 mode. I use js2 a lot, love it, and consider it one of the reasons as a web developer to switch from vim to emacs.</li>
+</ul>
+
+
+<h2>Evil for Vim users</h2>
+
+<p>First, in emacs, next line/prev line is <code>c-n</code>, <code>c-p</code>. The reason you need to know this is because there are other emacs major modes that have nothing to do with editing, but will usually use <code>c-n</code>/<code>c-p</code> or <code>n</code>/<code>p</code> as the method to navigate from the next and previous item.</p>
+
+<p>In vim, it applies scripts via various events. Combing two things together means running one event, followed by the other event. In emacs, you are composing modes. Every buffer in emacs has a single major mode, that defines what type of thing you are doing. A major mode could be &ldquo;ruby&rdquo;, but it could also be an email client. Emacs is the platform, and a major mode is the application. You also have minor modes, which add additional features to a major mode. I have a plugin called autopair, that will keep delimiters balanced (I use delimMate to do the same thing in vim), that is a minor mode. So your editing experience is basically defined by composing a major mode with multiple minor modes.</p>
+
+<p>This is a really cool thing, if you write vim plugins, usually you see a block where they have to unregister all sorts of things they registered if the filetype changes, that is a non issue in emacs, because nodes are self-contained entities. The bad thing is in the age of web development, we have to deal with files that have multiple major modes (like erb, which can have html, css, ruby, and javascript). This is probably the biggest weakness of emacs at the moment, it was designed with a single major mode per buffer, so you cannot compose major modes. There are many attempted hacks around this, but IMO they are all terrible.</p>
+
+<p><code>M-x</code> in emacs means &ldquo;Execute command&rdquo;. All the commands will be available there. <code>M-x describe-key</code> is extremely useful, you type that then hit a key, and it will tell you what function it is bound to. Once you have that, you can do <code>M-x describe-function</code> and enter that function name to view its documentation.</p>
+
+<p>Lastly, if you are a vim user, you need to know how to bind keys. The idea in emacs is instead of registering keys at a global level, each mode has a keymap that is self contained. So when you compose your modes, you are also composing keymaps. the syntax for keymaps is</p>
+
+<figure class='code'><figcaption><span>keymaps </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">&lt;keymap&gt;</span> <span class="nv">key</span> <span class="ss">&#39;function</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">; evil defines 3 maps for the various states, so to</span>
+</span><span class='line'><span class="c1">; replicate a mapping I had in vim - nmap Y y$</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">copy-to-end-of-line</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">evil-yank</span> <span class="p">(</span><span class="nf">point</span><span class="p">)</span> <span class="p">(</span><span class="nf">point-at-eol</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;Y&quot;</span> <span class="ss">&#39;copy-to-end-of-line</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That was a custom function definition, but you can also use any built in function after the <code>'</code>.</p>
+
+<p>Everything in emacs I know, I know by its function name. If I use it a lot, I will map it to a key, so I have pretty much completely ignored the real keybinds.</p>
+
+<h2>Evil for Emacs Users</h2>
+
+<p>I honestly don&rsquo;t think I am qualified to write this, because I was never a real emacs user. But if you were ever curious about why people go on and on about how awesome vim is, evil will pretty much give you that experience, and you can have it without leaving the editor you already know and love. I believe evil mode is more effective then traditional emacs, but even if it isn&rsquo;t I am pretty sure it is more enjoyable. I would strongly encourage people to give it a chance for a month or so with a &ldquo;Learn vim&rdquo; tutorial, and see how they find thinking in text objects. We are definately in YMMV territory, but I find it a joy. <a href="http://dnquark.com/blog/2012/02/emacs-evil-ecumenicalism/">You may find this post more tailored to your point of view</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Briggs</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-27T15:58:00-05:00" pubdate data-updated="true">Feb 27<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/emacs/'>emacs</a>, <a class='category' href='/blog/categories/emacs-plugin/'>emacs-plugin</a>, <a class='category' href='/blog/categories/vim/'>vim</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattbriggs.net/blog/2012/02/27/awesome-emacs-plugins-evil-mode/" data-via="googleninja" data-counturl="http://mattbriggs.net/blog/2012/02/27/awesome-emacs-plugins-evil-mode/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/02/23/repository-pattern-in-ruby/" title="Previous Post: Repository Pattern In Rails">&laquo; Repository Pattern In Rails</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/03/08/why-i-like-object-number-tap/" title="Next Post: Why I like Object#tap">Why I like Object#tap &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/10/how-i-learned-to-stop-worrying/">How I Learned to Stop Worrying, and Love Dart</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/code-organization-in-angular/">Code Organization in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/transclusion-in-angular/">Transclusion in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/scope-in-angular/">Scope in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/14/understanding-angular-directives/">Understanding Angular Directives</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mbriggs">@mbriggs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mbriggs',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/105078754127788731088?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Matt Briggs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'mbriggs';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mattbriggs.net/blog/2012/02/27/awesome-emacs-plugins-evil-mode/';
+        var disqus_url = 'http://mattbriggs.net/blog/2012/02/27/awesome-emacs-plugins-evil-mode/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

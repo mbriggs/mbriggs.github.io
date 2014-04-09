@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: dart | Matt Briggs]]></title>
+  <link href="http://mattbriggs.net/blog/categories/dart/atom.xml" rel="self"/>
+  <link href="http://mattbriggs.net/"/>
+  <updated>2014-04-09T00:33:52-04:00</updated>
+  <id>http://mattbriggs.net/</id>
+  <author>
+    <name><![CDATA[Matt Briggs]]></name>
+    <email><![CDATA[matt@mattbriggs.net]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How I Learned to Stop Worrying, and Love Dart]]></title>
+    <link href="http://mattbriggs.net/blog/2014/03/10/how-i-learned-to-stop-worrying/"/>
+    <updated>2014-03-10T21:04:28-04:00</updated>
+    <id>http://mattbriggs.net/blog/2014/03/10/how-i-learned-to-stop-worrying</id>
+    <content type="html"><![CDATA[<p><a href="https://www.dartlang.org/">Darts</a> history is a little spotty, to put it lightly. When it came out, Google billed it as the JavaScript killer (which it&rsquo;s not), followed by saying it&rsquo;s not the JavaScript killer, it&rsquo;s going to be the dominant mobile platform. Then it wasn&rsquo;t about mobile, or replacing JS anymore, it was a compile-to-js language, and that would be its future.</p>
+
+<p>As someone who tries hard to stay ahead of the curve when it comes to web technology, it was on my radar, but I wasn&rsquo;t terribly interested. It is not exactly an exciting or super interesting language (like <a href="https://github.com/clojure/clojurescript/wiki">clojurescript</a> or <a href="http://roy.brianmckenna.org/">roy</a>), and it seemed to have a questionable future &mdash; Google itself didn&rsquo;t seem to know what it was good for. Finally, the JS interop seemed kind of &ldquo;meh&rdquo;, so using it pretty much meant giving up on the JS eco-system.</p>
+
+<p>Fast forward a few years, and it&rsquo;s situation is dramatically different. It managed to break 1.0, which is always a good sign for a language. Google is starting to push it quite a bit internally, which means it will have an investment in its continuing growth and improvement. There are hard plans for it to get into chrome. The <code>dart2js</code> compiler is approaching vanilla javascript speeds.  And finally, you can build really cool web applications with it, as <a href="https://angulardart.org/">AngularDart</a> is nearing 1.0.</p>
+
+<p>I think at this point, there is a good chance that dart will be a &ldquo;thing&rdquo;. Dart killing JavaScript? That outcome is too far in the future to be predicted. But it doesn&rsquo;t have to kill JavaScript to develop a viable community and infrastructure of its own.</p>
+
+<h1>Dart, The Language</h1>
+
+<p>The first thing to talk about is types. The dynamic revolution has happened, static types are definitely not &ldquo;in&rdquo;. However, what most people rail against in type systems is essentially the Java implementation. Dart takes a very different, more tasteful approach.</p>
+
+<p>First, there is no runtime type checking. The type system is only there to catch a certain class of compile time errors for you, provide documentation, and give you the tools to express protocols and interfaces explicitly. If you don&rsquo;t want to use static typing for something, you don&rsquo;t have to. In fact, the official Dart style guide says type annotations should only be used in method / class signatures. What that means is that we are going from building out documentation like this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="err">/&lt;em&gt;*</span>
+</span><span class='line'> <span class="o">*</span> <span class="err">@</span><span class="nx">description</span>
+</span><span class='line'> <span class="o">*</span> <span class="nx">It</span> <span class="nx">foos</span> <span class="nx">the</span> <span class="nx">bar</span><span class="p">.</span>
+</span><span class='line'> <span class="o">*</span>
+</span><span class='line'> <span class="o">*</span> <span class="err">@</span><span class="nx">param</span> <span class="p">{</span><span class="nx">string</span><span class="p">}</span> <span class="nx">bin</span>
+</span><span class='line'> <span class="o">*</span> <span class="err">@</span><span class="nx">param</span> <span class="p">{</span><span class="nx">string</span><span class="p">[]}</span> <span class="nx">baz</span>
+</span><span class='line'> <span class="o">*</span> <span class="err">@</span><span class="nx">returns</span> <span class="kr">boolean</span>
+</span><span class='line'> <span class="o">&lt;</span><span class="sr">/em&gt;/</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">foobar</span><span class="p">(</span><span class="nx">bin</span><span class="p">,</span> <span class="nx">baz</span><span class="p">){</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>to this</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='dart'><span class='line'><span class="o">/&lt;</span><span class="n">em</span><span class="o">&gt;*</span>
+</span><span class='line'> <span class="o">*</span> <span class="n">It</span> <span class="n">foos</span> <span class="n">the</span> <span class="n">bar</span>
+</span><span class='line'> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
+</span><span class='line'><span class="kt">bool</span> <span class="n">foobar</span><span class="p">(</span><span class="kt">String</span> <span class="n">bin</span><span class="p">,</span> <span class="kt">String</span><span class="p">[]</span> <span class="n">baz</span><span class="p">){</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>You are expressing the exact same information, only</p>
+
+<ul>
+<li>it is easier to read</li>
+<li>it is easier for your editor to parse</li>
+<li>it will throw compile time errors for you when you do something dumb</li>
+</ul>
+
+
+<p>I understand that people don&rsquo;t want to code in Java anymore. I dig it, I don&rsquo;t really like the Java language either. This isn&rsquo;t Java, and by unilaterally panning anything with any form of static type checking, you are really doing yourself a disservice. Darts optional type system gives you another tool to help find bugs during dev mode, while maintaining the flexibility and readability of dynamic languages.</p>
+
+<h1>Classes and their Interfaces</h1>
+
+<p>Classes are pretty straight forward in Dart. The first thing I read about them that was interesting is the way constructors are handled.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='dart'><span class='line'><span class="kd">class</span> <span class="nc">Foobar</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kt">String</span> <span class="n">foo</span><span class="p">;</span> <span class="c1">// class field&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// default constructor</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="n">Foobar</span><span class="p">(){</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">this</span><span class="p">.</span><span class="n">foo</span> <span class="o">=</span> <span class="s2">&quot;Something&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// named constructor which takes a string, and assigns it to the foo field</span>
+</span><span class='line'><span class="n">Foobar</span><span class="p">.</span><span class="n">withValues</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">foo</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Foobar</span><span class="p">();</span> <span class="c1">// invokes the first constructor</span>
+</span><span class='line'><span class="kd">var</span> <span class="n">foo2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Foobar</span><span class="p">.</span><span class="n">withValues</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">hi</span><span class="o">!&amp;</span><span class="n">rdquo</span><span class="p">;);</span> <span class="c1">// invokes the second constructor</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>The <code>this.foo</code> assignment syntax is actually really, really cool. I do my best to keep complex logic out of constructors, so this style of constructor lets me move away from <code>left_hand = right_hand</code> style code. That kind of code is pure boilerplate, and can hide a surprising amount of bugs if there is enough of it.</p>
+
+<p>Since Dart does not support overloading, multiple constructors could potentially be a problem. Dart solves this with named constructors, which actually solve the issue in an interesting way. You can have multiple constructors for different purposes, and actually give a name to why you have them.</p>
+
+<p>One property that is really cool about Dart classes are that they have an implicit interface. So lets say we have a <code>Vehicle</code> class, which takes an <code>Engine</code>.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='dart'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">class</span> <span class="nc">Vehicle</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">Engine</span> <span class="n">engine</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Vehicle</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">engine</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">class</span> <span class="nc">Engine</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">start</span><span class="p">(){</span>
+</span><span class='line'>    <span class="n">print</span><span class="p">(</span><span class="s2">&quot;vroom!&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">var</span> <span class="n">vehicle</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="p">(</span><span class="k">new</span> <span class="n">Engine</span><span class="p">());</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Later on, you want to be able to pass different types of engines into a vehicle. There are several different ways you can go, but implicit interfaces allow you to do a type of pattern that is very similar to duck typing in dynamic languages.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='dart'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">class</span> <span class="nc">Vehicle</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">Engine</span> <span class="n">engine</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Vehicle</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">engine</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">class</span> <span class="nc">Engine</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">start</span><span class="p">(){</span>
+</span><span class='line'>    <span class="n">print</span><span class="p">(</span><span class="s2">&quot;vroom!&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">class</span> <span class="nc">RocketEngine</span> <span class="kd">implements</span> <span class="n">Engine</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">start</span><span class="p">(){</span>
+</span><span class='line'>    <span class="n">print</span><span class="p">(</span><span class="s2">&quot;to the moon!&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">var</span> <span class="n">vehicle</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="p">(</span><span class="k">new</span> <span class="n">RocketEngine</span><span class="p">());</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>You can keep <code>Engine</code> as a basic, default implementation. By having <code>RocketEngine</code> implement <code>Engine</code>, it means that it can be used in places <code>Engine</code> can be used. This allows for a code structure that is very similar to what you would find in dynamic languages. The difference is that in Dart, if <code>RocketEngine</code> ever falls out of sync with the <code>Engine</code> interface, the type checker will let you know.</p>
+
+<h1><code>this</code> and <code>function</code>, I will not miss you at all.</h1>
+
+<p>One of the most irritating things about the javascript syntax is that you end up typing <code>this</code> and <code>function</code>. You type them a lot. A hell of a lot. Often, multiple times per line.</p>
+
+<p>In Dart, <code>this</code> becomes optional when referring to class / instance members. Most functions you write will be methods, when you are doing anonymous functions, you can use the <code>() =&gt;</code> syntax instead.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='dart'><span class='line'><span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">].</span><span class="n">map</span><span class="p">((</span><span class="n">n</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">n</span> <span class="o">*</span> <span class="m">2</span><span class="p">);</span> <span class="c1">//=&gt; [2, 4, 6]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h1>What is better then Angular? AngularDart, thats what.</h1>
+
+<p>AngularDart takes the good parts of angular, and cleans up some of the cruft. For example, there is a unified model for injectable components. So instead of having directives be a strange psudo-dsl, controllers be constructor functions, and services be functions that return objects, they are all implemented as classes. Each class has it&rsquo;s angular specific functionality configured via class annotation.</p>
+
+<p>Another key difference is that instead of element and attribute directives, directives are now explicitly encouraged only for attributes. If you want to implement an element, you probably want to use the new primitive of &ldquo;Component&rdquo;, which is implemented using web components and the shadow DOM.</p>
+
+<p>AngularDart compared to AngularJS is a fairly involved topic, and I doubt I could do as good a job explaining as my friend <a href="http://victorsavkin.com/post/72452331552/angulardart-for-angularjs-developers-introduction-to">Victor Savkin does here</a>.</p>
+
+<p>AngularDart brings a level of practicality to Dart. It is a modern, top tier framework for building web applications in a productive and maintainable fashion. Realistically, for Dart to start gaining traction in the mainstream, this was required. Now it is here.</p>
+
+<h1>Dart is here, and you should pay attention to it.</h1>
+
+<p>With ES6 coming down the pipe, many of the warts and problems with JavaScript will be addressed. However, many will not, as JavaScript needs to maintain backwards compatibility. However, that is not a cross that Dart has to bear, allowing for a very clean (albeit a bit boring) javascript-y language that will run in browsers. The benefits you see are in a much cleaner DOM API, promises used consistently for async, and an extensive, full featured standard library.</p>
+
+<p>Dart is still not my favourite language in the world, but it is a good, consistent, clean language. Which is something we are sorely lacking in the world of the browser.</p>
+]]></content>
+  </entry>
+  
+</feed>
