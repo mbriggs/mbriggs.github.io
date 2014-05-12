@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app='prototypal-inheritance-issue'>
+
+  <head>
+    <link data-require="foundation@*" data-semver="5.0.0" rel="stylesheet" href="//cdn.jsdelivr.net/foundation/5.0.0/css/normalize.css" />
+    <link data-require="foundation@*" data-semver="5.0.0" rel="stylesheet" href="//cdn.jsdelivr.net/foundation/5.0.0/css/foundation.min.css" />
+    <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script data-require="angular.js@*" data-semver="1.2.9" src="http://code.angularjs.org/1.2.9/angular.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+
+  <body ng-controller="Outer">
+    <h4>Outer Scope</h4>
+    <label>someValue: "{{someValue}}"</label>
+    <label>someModel: {{someModel}}</label>
+
+    <div class='inner-scope' ng-controller="Inner">
+      <h4>Inner Scope</h4>
+      <label>someValue: "{{someValue}}"</label>
+      <label>someModel: {{someModel}}</label>
+
+      <form>
+        <label>Value</label>
+        <input type="text" ng-model="someValue"/>
+        <label>Model</label>
+        <input type="text" ng-model="someModel.val"/>
+      </form>
+    </div>
+  </body>
+
+</html>

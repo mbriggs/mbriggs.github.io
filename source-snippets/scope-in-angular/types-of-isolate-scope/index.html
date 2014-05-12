@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app="isolate-scope">
+
+  <head>
+    <link data-require="foundation@*" data-semver="5.0.0" rel="stylesheet" href="//cdn.jsdelivr.net/foundation/5.0.0/css/normalize.css" />
+    <link data-require="foundation@*" data-semver="5.0.0" rel="stylesheet" href="//cdn.jsdelivr.net/foundation/5.0.0/css/foundation.min.css" />
+    <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script data-require="angular.js@*" data-semver="1.2.9" src="http://code.angularjs.org/1.2.9/angular.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+
+  <body ng-controller="Ctrl">
+    <header>
+      <h1>Outer Scope</h1>
+      <label>Two Way:</label> <input type="text" ng-model="twoWayCtrl" />
+      <label>One Way:</label> <input type="text" ng-model="oneWayCtrl" />
+    </header>
+
+    <section isolated two-way="twoWayCtrl" one-way="{{oneWayCtrl}}" method="methodCtrl(message)"></section>
+  </body>
+
+</html>

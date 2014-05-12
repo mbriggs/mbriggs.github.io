@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="fizz-buzz-example">
+
+  <head>
+    <link data-require="foundation@*" data-semver="5.0.0" rel="stylesheet" href="//cdn.jsdelivr.net/foundation/5.0.0/css/normalize.css" />
+    <link data-require="foundation@*" data-semver="5.0.0" rel="stylesheet" href="//cdn.jsdelivr.net/foundation/5.0.0/css/foundation.min.css" />
+    <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script data-require="angular.js@*" data-semver="1.2.8" src="http://code.angularjs.org/1.2.8/angular.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script type="text/javascript" src="app.js"></script>
+  </head>
+
+  <body ng-controller="CountsCtrl">
+    <h1 class='counts'>
+      <ul class='small-block-grid-3'>
+        <li>Fizzing: {{counts.fizz}}</li>
+        <li>Buzzing: {{counts.buzz}}</li>
+        <li>FizzBuzzing: {{counts.fizzBuzz}}</li>
+      </ul>
+    </h1>
+
+    <ul fizz-buzzer>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+      <li>6</li>
+      <li>7</li>
+      <li>8</li>
+      <li>9</li>
+      <li>10</li>
+      <li>11</li>
+      <li>12</li>
+      <li>13</li>
+      <li>14</li>
+      <li>15</li>
+    </ul>
+  </body>
+
+</html>
