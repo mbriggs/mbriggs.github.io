@@ -1,0 +1,20 @@
+post {
+  display: block;
+  padding: 10px 20px;
+  background-color: #EEE;
+  margin-bottom: 20px;
+}
+
+post header {
+  margin-bottom: 50px;
+}
+
+post header h1 {
+  margin-bottom: 0px;
+}
+
+post .post-body {
+  margin-bottom: 30px;
+  font-size: 15px;
+  line-height: 22.5px;
+}

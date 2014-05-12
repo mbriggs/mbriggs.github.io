@@ -1,0 +1,82 @@
+==================================================================
+https://keybase.io/mbriggs
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://mattbriggs.net
+  * I am mbriggs (https://keybase.io/mbriggs) on keybase.
+  * I have a public key with fingerprint 9EF3 F6C7 DE1D C5CB 27E5  A8F9 625A B952 57A9 1190
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "client": {
+            "name": "keybase.io node.js client",
+            "version": "0.6.0"
+        },
+        "key": {
+            "fingerprint": "9ef3f6c7de1dc5cb27e5a8f9625ab95257a91190",
+            "host": "keybase.io",
+            "key_id": "625AB95257A91190",
+            "uid": "bc3c26834223533651941773f5432000",
+            "username": "mbriggs"
+        },
+        "merkle_root": {
+            "ctime": 1410965731,
+            "hash": "463f7abb32aeb1fea40442604ca2c21e478975ba47c24a7aa483a9efdd3466fd7eff16402a47f60cf8618b6af4cc34358c12ebcbabab013f2d16abc884dff12f",
+            "seqno": 49175
+        },
+        "service": {
+            "hostname": "mattbriggs.net",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1410965800,
+    "expire_in": 157680000,
+    "prev": "bfc996bca7b22f605809bf7a5dcb7170a419aedafb9e7abe7eb02a603acfdb7f",
+    "seqno": 2,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1
+
+owFVkntQFWUYxo9HJME0oEyYIcBt7DIxsPc9C4SiIJeGvERiFy7ft/st7AHOOew5
+EMRlKMgZQO6XyXI0gUyCRqCQIab4o4FgIG+IVDgEKglmWRA3B6pdghmd/Wf3/X7v
+s+/zvF/51o06/Qb4Zufh6Ebn8g0D01AX5XbmhSwMmsVMzC8LE5JlZLJpbyaQgjA/
+LAllQmBFPrLZy2QWkY/R6rXGeGPpSLHKZpNK4T6sD47leGu41izJpgSkWBRZ08J4
+JFESK3AiIkSBESDJIQYYJJ4lGQB5hmQ4wBMEj6uSiWar7ZG/YquacbKoVlU+aO8q
+H7TOp60eQIESSNZA0SRJMRTFMgRPExxHSQxNkTi+ClqRsmYpBSpyQoJVGzcFKUnJ
+KE4xm1c9CzZZIwiawHmW4ShCHQhYE9UemqUkDkBIkQBBQkKAxmmaZHFaAKRAEojm
+DDzHQEBzAkkDDgDaQAHVtyhSNMtKIockiWBpnFQJicUFycASBsgCiRYEiqYYg0CQ
+CAoQqA9OUBIpEiyAgsFAi2ojKakOrCjVZMb8aJ7gmBztU0mXBaSNrYW27g3YbP/b
+8zEhbUcWxWwzC+Zk9SzRZrP4aa5tmRaNfQfBuC/WZOKgbBLVpT28VUJFH03EgOPe
+GMqwyAqKkzWC4Vi1plUtCkrXNiEJPM9CAXCQJFWjagsP1eQYUYAcweGAJniARCBB
+Hql5Ig5BNRMWp4AgiZB7yCepzgkSVEmrnGACtjQFYTmFenc73Qa9zn6TXru2OkcH
+p/W7/P2Qk656qo1+MDBSMnS/7O1TYdXURo/qPmtgeuzxa/n3fhnaNNnkf/v6UFiK
+Ie3gvccLp4dOe140+t6IDfDPdI2M72o+UJvjXPxD78+jJ1zYghN979XoiLLx1jw9
+2fr32Efiu8m+UdHb/JP9+jwqB5uWw75pPbLr7GIFjj6oWgy983HhH3NLrzQfq8zL
+uH8+Z+FLvbW9ObN4Yf6fkJqgTseVm5auxaXavt97LnxYFFrV4Uv+OMG7N+0ZfCrq
+tHkm1WVpNvyvJ9vaX7a7tNzy0mhJ/9SlbtGlLK/a3nTl6bnL9aTF1TjQEF6TOXor
+plr/nXLl6nDq3ZZ/sX3GosvuZL9rxKH2jk/3uYrl3NfPf3ugfqz3ZML89CFX/urO
+8IymqPAOz/iKCL+CvZOhPzmVddT1Do+PjPe7rVw3dnhv3q4LDilufHXHqaiDHjuF
+khr8XMDciJ0Y0TL7mHSzYddzwf2V+73f9/0k+/ZwXe+Lda4XPLvY7sAtlqOmXO8j
+Pp/NZ8ki626rGBxamTmT9tWt8xO/LRrDB1uPFQS/7vnW1smpsAn2XPbn9Um1TNHo
+xWtkbv7hNuezE9uNjqXZO25U7d/TFlh2XKrd3SjvpluxCoepN7JKuwPuPpht9PrV
+ui3DAfTk4ieXIzuPbtk8FmkXIvT8mV8Qs/CMPTPRUJocV55YeGdmMWb+tSein411
+i4oP+g8=
+=es+D
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/mbriggs
+
+==================================================================

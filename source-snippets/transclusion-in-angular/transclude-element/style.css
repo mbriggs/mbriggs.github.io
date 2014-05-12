@@ -1,0 +1,22 @@
+.drop-panel {
+  position: relative;
+}
+
+.drop-panel input[drop-panel] {
+  margin-bottom: 0;
+}
+
+.drop-panel-panel {
+  position: absolute;
+  z-index: 100;
+  background-color: white;
+  border: 1px solid black;
+  left: 0;
+  right: 0;
+  padding: 10px 20px;
+  display: none;
+}
+
+.drop-panel.is-active .drop-panel-panel {
+  display: block;
+}
