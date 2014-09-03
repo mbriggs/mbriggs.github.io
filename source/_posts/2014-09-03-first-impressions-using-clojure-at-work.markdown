@@ -28,7 +28,7 @@ I found this the biggest hurdle when learning lisp. Logically, code is structure
 
 ### Use something capable of structural editing
 
-Your choice of editor is extremely important here. What you want is something that will allow you to extend / retract the scope of an s-expression (depth editing), enforce paren balancing, allow you to select your current expression easily, split it apart / splice it together, etc. If you have these capabilities ([structural editing][structural]), then all those parens are a joy to work with. If you don’t have them, they will be the chore that they appear to be at first glance.
+Your choice of editor is extremely important here. What you want is something that will allow you to extend / retract the scope of an s-expression, add a new s-expression / merge the current one into its parent (depth editing), enforce paren balancing, allow you to select your current expression easily, split it apart / join it together, etc. If you have these capabilities ([structured editing][structural]), then all those parens are a joy to work with. If you don’t have them, they will be the chore that they appear to be at first glance.
 
 This may seem to be a pain at first, but proper tooling makes it a more joyful experience to work with parens then without them.
 
