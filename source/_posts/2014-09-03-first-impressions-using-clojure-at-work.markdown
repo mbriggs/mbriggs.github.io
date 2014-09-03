@@ -133,7 +133,7 @@ Unlike unit tests, this is most definitely not a scalable replacement. It will h
 
 Surprisingly, the switch from Object Oriented code to clojure was quite simple for me. You end up with similar separations of code, just the code isn’t attached to the data. So an object with functions maps easily to a namespace with functions which operate on similar (or the same) data-structures.
 
-Most of my time dealing with the new platform was either in basic syntax (there is no implicit `do` in a `catch` expression, anything after the first expression is treated as `finally`, as an example. Or `slurp` and `spit` only work with text, not binary data).
+Most of my time dealing issues with working on clojure came down to not being comfortable with basic syntax and idioms. For example, there is no implicit `do` in a `catch` expression, anything after the first expression is treated as `finally`. Or `slurp` and `spit` only work with text, not binary data. You kind of expect this sort of thing going in, I feel in a few more weeks I wouldnt be hitting those roadblocks.
 
 Using [Langohr][langohr] for [RabbitMQ][rabbit] probably added some time, since it doesn’t try to hide [AMQP][amqp] behind layers of sugar. But at this point I feel pretty comfortable in my understanding of what is going on, so that was probably time well spent.
 
