@@ -1,0 +1,454 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>The Rails Value Proposition No Longer Adds Up - Matt Briggs</title>
+  <meta name="author" content="Matt Briggs">
+
+  
+  <meta name="description" content="In 2005, Ruby on Rails was a breath of fresh air,
+and brought a revolution in how we build applications on the web. It
+had cutting edge ideas, and &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mattbriggs.net/blog/2014/09/09/the-rails-value-proposition-no-longer-adds-up">
+  <link href="/favicon.png?v=2" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Matt Briggs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-10813260-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Briggs</a></h1>
+  
+    <h2>"Not all code needs to be a factory, some of it can just be origami" -why, the lucky stiff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mattbriggs.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="subscription">
+  <li><a href="/.emacs.d" target="_blank" rel="emacs-config" title="Emacs Configuration"><i class="fa fa-code"></i></a></li>
+  <li><a href="http://github.com/mbriggs" target="_blank" rel="github" title="Github Profile"><i class="fa fa-github"></i></a></li>
+  <li><a href="https://twitter.com/intent/user?screen_name=googleninja" rel="follow-twitter" target="_blank" title="Follow on Twitter"><i class="fa fa-twitter"></i></a></li>
+  <li><a href="http://stackoverflow.com/users/10771/matt-briggs" rel="stackoverflow" target="_blank" title="StackOverflow Profile"><i class="fa fa-stack-overflow"></i></a></li>
+  <li><a href="/atom.xml" target="_blank" rel="subscribe-rss" title="Subscribe via RSS"><i class="fa fa-rss"></i></a></li>
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://careers.stackoverflow.com/mattbriggs" target="_blank">CV</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">The Rails Value Proposition No Longer Adds Up</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-09T09:28:57-04:00" pubdate data-updated="true">Sep 9<span>th</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>In 2005, <a href="http://rubyonrails.org/">Ruby on Rails</a> was a <a href="http://www.youtube.com/watch?v=Gzj723LkRJY&amp;feature=youtu.be">breath of fresh air</a>,
+and brought a revolution in how we build applications on the web. It
+had cutting edge ideas, and real solutions to the problems people were
+facing at the time. That was 8 years ago. If rails were to launch in
+todays world, would anyone even notice?</p>
+
+<h2>What makes rails amazing</h2>
+
+<p>In 2005, most people making (serious) web applications were doing it
+using <a href="http://www.oracle.com/technetwork/java/index.html">Java</a> and <a href="http://struts.apache.org/">struts</a>. Rails changed that, and it
+did that by being amazing.</p>
+
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Convention_over_configuration">Convention over configuration</a>. Instead of spending your first
+weeks building structure, configuring infrastructure, and arguing
+about how to architect your application, you have a fully functional
+stack ready to go in seconds.</li>
+<li>Great HTML generation. Rails has “AJAX” out of the box, without
+having to build reams of nasty javascript yourself. It also has form
+helpers, which make HTML make a bit more sense. It uses the
+philosophy of paving over the rough parts of web technology when it
+is possible, giving you more understandable and consistent mental
+models to work with.</li>
+<li>Rails ships with a test suite built in, and ways to test every layer
+of the application.</li>
+<li>Rails lets you quickly generate a scaffolding to give you a
+functional base to start iterating on in seconds.</li>
+<li>Rails has <a href="http://rubygems.org/">plugins</a> for pretty much all problems you will
+ever run into with web development.</li>
+<li>Rails uses <a href="https://www.ruby-lang.org/en/">Ruby</a>, which is a beautiful OO language, FAR more
+powerful than Java.</li>
+</ul>
+
+
+<p>This is a pretty impressive list, many of these features were down
+right revolutionary when they came out. The only serious downside, is
+that rails is slow as a dog and eats ram like potato chips. But hey,
+what is more expensive, building new features, or adding server
+hardware? Adding more servers is a great problem to have, it means you
+have a lot of clients giving you money who need service. Rails and
+ruby are <em>Fast Enough</em>.</p>
+
+<h2>Node.JS… the first cracks</h2>
+
+<p>In 2005, <a href="http://en.wikipedia.org/wiki/Ajax_(programming)">AJAX</a> was a brave new world. “Smartphone” still meant
+either <a href="http://mobilesphonez.blogspot.ca/2011/12/blackberry-models-pictures.html">Blackberry</a>, or <a href="https://www.google.ca/search?q=windows+mobile+6&amp;es_sm=119&amp;tbm=isch&amp;tbo=u&amp;source=univ&amp;sa=X&amp;ei=A3QOVKLEIMGRgwTGkoHoCg&amp;ved=0CCcQsAQ&amp;biw=1585&amp;bih=1164">Windows Mobile 6</a>. By 2008, things
+were starting to change. “Normal” people were interacting with online
+services constantly throughout the day, no matter where they were.</p>
+
+<p><a href="http://nodejs.org/">Node</a> arrived with a bang. It had the right capabilities at the
+right time.</p>
+
+<ul>
+<li>Node is simple, and allows you to expose blocking services to the
+web extremely easily.</li>
+<li>Node is fast, and non-blocking, allowing you to leverage some of the
+<a href="https://developer.mozilla.org/en/docs/WebSockets">more interesting</a> <a href="https://developer.mozilla.org/en-US/docs/Server-sent_events/Using_server-sent_events">features</a> available in modern
+browsers.</li>
+<li>Node is written in JavaScript, not as well designed a language as
+ruby, but faster to build things with than Java, and known well by a
+large percentage of web developers. JavaScript is asynchronous at
+its core, and cheap asynchrony is what enables us to build the type
+of things we are building today.</li>
+</ul>
+
+
+<p>You could still make an argument for rails, in that it was a very good
+<em>framework</em>, while node takes more of a routing library approach to
+building web applications. But even with rails maintaining a lot of
+relevance, there was quite a big “brain drain” from the rails world to
+the node world.</p>
+
+<h2>Go and Clojure, where we are today.</h2>
+
+<p>We are steadily approaching 2015, and the world of web application
+development is continuing the steady shift that has been happen for
+the last 7 years. Even though JavaScript allows for fast and easy
+asynchrony, being limited to the reactor pattern can make certain
+types of problems quite challenging. JavaScript isn’t the greatest
+language at building large apps, and things like visibility, tuning,
+and stability are forcing people to look for alternatives. The folks
+at the cutting edge of the field are starting to move to alternatives,
+and are finding them in one of two places — Google’s <a href="http://golang.org/">golang</a>, and
+<a href="http://clojure.org/">Clojure</a>, a lisp dialect for the JVM.</p>
+
+<p>Both of these are incredible languages for many reasons, two key
+things they have in common is they are both exceptional at
+asynchronous programming, and they are both very, very fast.</p>
+
+<p>Let’s revisit the value proposition of rails.</p>
+
+<ul>
+<li>Convention over Configuration. It turns out the world hasn’t stood
+still. Smart defaults and sane conventions are the norm in web
+frameworks today. Java still kind of sucks, but
+<a href="https://www.playframework.com/">Java 8 with the Play! framework</a> is actually not that far
+behind the Ruby on Rails experience in developer productivity.</li>
+<li>The only people still doing HTML generation for a new application
+nowadays are folks building web “sites” instead of web “apps”. And
+even there, a good front end developer will be frequently asking for
+APIs over templated HTML.</li>
+<li>Testing has taken the world by storm. People don’t talk about <em>if</em>
+they test, they talk about <em>how</em> they test.</li>
+<li>Maybe it is just folks I know, but experienced ruby developers tend
+to wince nowadays when opening a colossal <a href="http://bundler.io/">Gemfile</a> in a
+rails app for the first time. Each gem you add will change rails,
+sometimes in a quite unexpected way. Not only that, but many are
+poorly supported, and it is extremely rare to find one with
+documentation. (beyond a README and method signature stubs)</li>
+<li>Ruby is no longer in competition with Java. It is in competition
+with other languages as productive and powerful, if not more so.</li>
+</ul>
+
+
+<p>And what about our big downside of performance? It turns out
+performance is extremely, sometimes vitally important for us to build
+the services we are asked to build today.</p>
+
+<h2>What is so good about these other platforms?</h2>
+
+<p>It is awesome to be able to build an application that crunches
+reports, and give visibility into its data on demand. What is better
+is an application that tells you about things you care about before
+you even ask. Being able to push messages to your clients is an
+amazingly powerful thing, and it is available today, on mature, well
+tested platforms.</p>
+
+<p>The other point is that performance really does matter in web
+development. A company who spends
+<a href="http://www.techempower.com/benchmarks/#section=data-r9&amp;hw=peak&amp;test=query">a fraction of the cost on hardware</a> is going to have
+higher margins, and be able to buy more / better developers. When
+rails was so far beyond its competition in terms of productivity, that
+tradeoff was worth it. Nowadays, rails has serious competition in
+terms of easy of use and productivity, and that tradeoff is very hard
+to still justify.</p>
+
+<h2>It no longer adds up.</h2>
+
+<p>Rails is not a terrible framework, but its time has passed. There are
+a lot of folks with a heavy rails investment, it probably doesn’t make
+sense to move off of the platform for them, and they are the ones who
+will keep the eco-system moving. But for new development, I think
+rails should no longer be in the running. You are limiting the
+capabilities and future of your product, and not getting enough in
+return.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Briggs</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-09T09:28:57-04:00" pubdate data-updated="true">Sep 9<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/rails/'>rails</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattbriggs.net/blog/2014/09/09/the-rails-value-proposition-no-longer-adds-up/" data-via="googleninja" data-counturl="http://mattbriggs.net/blog/2014/09/09/the-rails-value-proposition-no-longer-adds-up/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/09/03/first-impressions-using-clojure-at-work/" title="Previous Post: First Impressions: Using Clojure at Work">&laquo; First Impressions: Using Clojure at Work</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/09/the-rails-value-proposition-no-longer-adds-up/">The Rails Value Proposition No Longer Adds Up</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/03/first-impressions-using-clojure-at-work/">First Impressions: Using Clojure at Work</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/10/how-i-learned-to-stop-worrying/">How I Learned to Stop Worrying, and Love Dart</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/code-organization-in-angular/">Code Organization in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/transclusion-in-angular/">Transclusion in Angular</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mbriggs">@mbriggs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mbriggs',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/105078754127788731088?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Matt Briggs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'mbriggs';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mattbriggs.net/blog/2014/09/09/the-rails-value-proposition-no-longer-adds-up/';
+        var disqus_url = 'http://mattbriggs.net/blog/2014/09/09/the-rails-value-proposition-no-longer-adds-up/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

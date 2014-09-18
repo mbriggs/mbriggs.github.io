@@ -9,7 +9,9 @@
   <meta name="author" content="Matt Briggs">
 
   
-  <meta name="description" content="Darts history is a little spotty, to put it lightly. When it came out, Google billed it as the JavaScript killer (which it&rsquo;s not), followed by &hellip;">
+  <meta name="description" content="In 2005, Ruby on Rails was a breath of fresh air,
+and brought a revolution in how we build applications on the web. It
+had cutting edge ideas, and &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +82,390 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/09/the-rails-value-proposition-no-longer-adds-up/">The Rails Value Proposition No Longer Adds Up</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-09T09:28:57-04:00" pubdate data-updated="true">Sep 9<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/09/09/the-rails-value-proposition-no-longer-adds-up/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In 2005, <a href="http://rubyonrails.org/">Ruby on Rails</a> was a <a href="http://www.youtube.com/watch?v=Gzj723LkRJY&amp;feature=youtu.be">breath of fresh air</a>,
+and brought a revolution in how we build applications on the web. It
+had cutting edge ideas, and real solutions to the problems people were
+facing at the time. That was 8 years ago. If rails were to launch in
+todays world, would anyone even notice?</p>
+
+<h2>What makes rails amazing</h2>
+
+<p>In 2005, most people making (serious) web applications were doing it
+using <a href="http://www.oracle.com/technetwork/java/index.html">Java</a> and <a href="http://struts.apache.org/">struts</a>. Rails changed that, and it
+did that by being amazing.</p>
+
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Convention_over_configuration">Convention over configuration</a>. Instead of spending your first
+weeks building structure, configuring infrastructure, and arguing
+about how to architect your application, you have a fully functional
+stack ready to go in seconds.</li>
+<li>Great HTML generation. Rails has “AJAX” out of the box, without
+having to build reams of nasty javascript yourself. It also has form
+helpers, which make HTML make a bit more sense. It uses the
+philosophy of paving over the rough parts of web technology when it
+is possible, giving you more understandable and consistent mental
+models to work with.</li>
+<li>Rails ships with a test suite built in, and ways to test every layer
+of the application.</li>
+<li>Rails lets you quickly generate a scaffolding to give you a
+functional base to start iterating on in seconds.</li>
+<li>Rails has <a href="http://rubygems.org/">plugins</a> for pretty much all problems you will
+ever run into with web development.</li>
+<li>Rails uses <a href="https://www.ruby-lang.org/en/">Ruby</a>, which is a beautiful OO language, FAR more
+powerful than Java.</li>
+</ul>
+
+
+<p>This is a pretty impressive list, many of these features were down
+right revolutionary when they came out. The only serious downside, is
+that rails is slow as a dog and eats ram like potato chips. But hey,
+what is more expensive, building new features, or adding server
+hardware? Adding more servers is a great problem to have, it means you
+have a lot of clients giving you money who need service. Rails and
+ruby are <em>Fast Enough</em>.</p>
+
+<h2>Node.JS… the first cracks</h2>
+
+<p>In 2005, <a href="http://en.wikipedia.org/wiki/Ajax_(programming)">AJAX</a> was a brave new world. “Smartphone” still meant
+either <a href="http://mobilesphonez.blogspot.ca/2011/12/blackberry-models-pictures.html">Blackberry</a>, or <a href="https://www.google.ca/search?q=windows+mobile+6&amp;es_sm=119&amp;tbm=isch&amp;tbo=u&amp;source=univ&amp;sa=X&amp;ei=A3QOVKLEIMGRgwTGkoHoCg&amp;ved=0CCcQsAQ&amp;biw=1585&amp;bih=1164">Windows Mobile 6</a>. By 2008, things
+were starting to change. “Normal” people were interacting with online
+services constantly throughout the day, no matter where they were.</p>
+
+<p><a href="http://nodejs.org/">Node</a> arrived with a bang. It had the right capabilities at the
+right time.</p>
+
+<ul>
+<li>Node is simple, and allows you to expose blocking services to the
+web extremely easily.</li>
+<li>Node is fast, and non-blocking, allowing you to leverage some of the
+<a href="https://developer.mozilla.org/en/docs/WebSockets">more interesting</a> <a href="https://developer.mozilla.org/en-US/docs/Server-sent_events/Using_server-sent_events">features</a> available in modern
+browsers.</li>
+<li>Node is written in JavaScript, not as well designed a language as
+ruby, but faster to build things with than Java, and known well by a
+large percentage of web developers. JavaScript is asynchronous at
+its core, and cheap asynchrony is what enables us to build the type
+of things we are building today.</li>
+</ul>
+
+
+<p>You could still make an argument for rails, in that it was a very good
+<em>framework</em>, while node takes more of a routing library approach to
+building web applications. But even with rails maintaining a lot of
+relevance, there was quite a big “brain drain” from the rails world to
+the node world.</p>
+
+<h2>Go and Clojure, where we are today.</h2>
+
+<p>We are steadily approaching 2015, and the world of web application
+development is continuing the steady shift that has been happen for
+the last 7 years. Even though JavaScript allows for fast and easy
+asynchrony, being limited to the reactor pattern can make certain
+types of problems quite challenging. JavaScript isn’t the greatest
+language at building large apps, and things like visibility, tuning,
+and stability are forcing people to look for alternatives. The folks
+at the cutting edge of the field are starting to move to alternatives,
+and are finding them in one of two places — Google’s <a href="http://golang.org/">golang</a>, and
+<a href="http://clojure.org/">Clojure</a>, a lisp dialect for the JVM.</p>
+
+<p>Both of these are incredible languages for many reasons, two key
+things they have in common is they are both exceptional at
+asynchronous programming, and they are both very, very fast.</p>
+
+<p>Let’s revisit the value proposition of rails.</p>
+
+<ul>
+<li>Convention over Configuration. It turns out the world hasn’t stood
+still. Smart defaults and sane conventions are the norm in web
+frameworks today. Java still kind of sucks, but
+<a href="https://www.playframework.com/">Java 8 with the Play! framework</a> is actually not that far
+behind the Ruby on Rails experience in developer productivity.</li>
+<li>The only people still doing HTML generation for a new application
+nowadays are folks building web “sites” instead of web “apps”. And
+even there, a good front end developer will be frequently asking for
+APIs over templated HTML.</li>
+<li>Testing has taken the world by storm. People don’t talk about <em>if</em>
+they test, they talk about <em>how</em> they test.</li>
+<li>Maybe it is just folks I know, but experienced ruby developers tend
+to wince nowadays when opening a colossal <a href="http://bundler.io/">Gemfile</a> in a
+rails app for the first time. Each gem you add will change rails,
+sometimes in a quite unexpected way. Not only that, but many are
+poorly supported, and it is extremely rare to find one with
+documentation. (beyond a README and method signature stubs)</li>
+<li>Ruby is no longer in competition with Java. It is in competition
+with other languages as productive and powerful, if not more so.</li>
+</ul>
+
+
+<p>And what about our big downside of performance? It turns out
+performance is extremely, sometimes vitally important for us to build
+the services we are asked to build today.</p>
+
+<h2>What is so good about these other platforms?</h2>
+
+<p>It is awesome to be able to build an application that crunches
+reports, and give visibility into its data on demand. What is better
+is an application that tells you about things you care about before
+you even ask. Being able to push messages to your clients is an
+amazingly powerful thing, and it is available today, on mature, well
+tested platforms.</p>
+
+<p>The other point is that performance really does matter in web
+development. A company who spends
+<a href="http://www.techempower.com/benchmarks/#section=data-r9&amp;hw=peak&amp;test=query">a fraction of the cost on hardware</a> is going to have
+higher margins, and be able to buy more / better developers. When
+rails was so far beyond its competition in terms of productivity, that
+tradeoff was worth it. Nowadays, rails has serious competition in
+terms of easy of use and productivity, and that tradeoff is very hard
+to still justify.</p>
+
+<h2>It no longer adds up.</h2>
+
+<p>Rails is not a terrible framework, but its time has passed. There are
+a lot of folks with a heavy rails investment, it probably doesn’t make
+sense to move off of the platform for them, and they are the ones who
+will keep the eco-system moving. But for new development, I think
+rails should no longer be in the running. You are limiting the
+capabilities and future of your product, and not getting enough in
+return.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/03/first-impressions-using-clojure-at-work/">First Impressions: Using Clojure at Work</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-03T09:31:47-04:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2014</time>
+        
+         | <a href="/blog/2014/09/03/first-impressions-using-clojure-at-work/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>TL;DR: I am a developer with a Java / C# / JavaScript / Rails background, and am building a small piece of infrastructure with Clojure at work. So far it has been a joy, and exceeded expectations.</p>
+
+<p>I feel like I need to set the stage for this blog post. The first Clojure book I read was <a href="http://stuartsierra.com/">Stuart Sierra’s</a> excellent <a href="https://pragprog.com/book/shcloj/programming-Clojure">Programming Clojure</a> book back in 2009. At that point I had zero professional experience with functional, dynamic, or declarative styles of programming, and Clojure blew my mind. It fit well with how I like to think about programming, and shaped a lot of my ideals about the properties of good code.</p>
+
+<p>Soon after, I left the C#/Java world behind, and worked at a company doing enterprise Ruby on Rails. Clojure helped me understand a lot of what ruby was trying to accomplish. It also paved the way to using <a href="http://www.gnu.org/software/emacs/">emacs</a>, and learning <a href="http://en.wikipedia.org/wiki/Emacs_Lisp">elisp</a>. During this time, I also became a card-carrying member of Rich Hickey’s cult of personality. It is hard not to hero worship the guy, after listening to him talk about <a href="http://www.youtube.com/watch?v=f84n5oFoZBc">how he thinks about big problems</a>, or <a href="http://www.infoq.com/presentations/Simple-Made-Easy">how he defines simplicity, and advocates its usage</a>. I think <a href="http://thechangelog.com/rich-hickeys-greatest-hits/">most of his talks</a> should be mandatory for people practicing software development, they are just that good.</p>
+
+<p>So this is not from the perspective of a total newcomer to Clojure. This is from the perspective of a developer who has used rails for years, and yearned to be working on the other side of the fence.</p>
+
+<h2>“But who wants to deal with all those parenthesis?”</h2>
+
+<p>This has been the mantra of the lisp hater for the last 50 years. <a href="http://xkcd.com/297/">Lisp doesn’t look like anything else out there</a>, and has huge amount of parens as its primary form of syntax. This property may be off-putting at first, but it turns out that lisp parenthesis are a problem that has been solved pretty much completely. Once you get used to them and the tools which exist to interact with them, eventually you miss them when they are not there in other languages.</p>
+
+<h3>Only read the opening parens</h3>
+
+<p>There is a reason that people stack up all the closing parens at the end, because they are there for the <a href="http://en.wikipedia.org/wiki/Lisp_reader">lisp reader</a>, and for your editor. Lisp strikes an amazing balance between being very terse, and being extremely explicit. Balanced parens are a big part of what allows for that.</p>
+
+<h3>Learn how to read code “inside out” at the same time as reading it “outside in”</h3>
+
+<p>I found this the biggest hurdle when learning lisp. Logically, code is structured outside in, but it will execute inside out. This is “normal” as programming languages go, what isn’t normal is that idiomatic Clojure is built using nested expressions — a <a href="http://en.wikipedia.org/wiki/Declarative_programming">declarative style of programming</a>. <a href="http://www.pythonforbeginners.com/basics/list-comprehensions-in-python">Python comprehensions</a> are a similar thing, you need to learn how to read it properly. Before you do that, its foreign gibberish. Afterwards, they become a great, concise way to express common code.</p>
+
+<h3>Use something capable of structural editing</h3>
+
+<p>Your choice of editor is extremely important here. What you want is something that will allow you to extend / retract the scope of an s-expression, add a new s-expression / merge the current one into its parent (depth editing), enforce paren balancing, allow you to select your current expression easily, split it apart / join it together, etc. If you have these capabilities (<a href="https://cursiveclojure.com/userguide/paredit.html">structured editing</a>), then all those parens are a joy to work with. If you don’t have them, they will be the chore that they appear to be at first glance.</p>
+
+<p>This may seem to be a pain at first, but proper tooling makes it a more joyful experience to work with parens then without them.</p>
+
+<p>If you are looking for an IDE, <a href="https://cursiveclojure.com/">cursive</a> seems to be the best bet. If you are using <a href="http://www.gnu.org/software/emacs/">emacs</a>, its <a href="http://clojure.jr0cket.co.uk/perfect-environment/paredit-guide">paredit</a> or <a href="https://github.com/Fuco1/smartparens">smartparens</a>. If  you are using <a href="http://www.vim.org/">vim</a>, it is <a href="https://github.com/vim-scripts/paredit.vim">paredit.vim</a>.</p>
+
+<h2>Using Clojure at work</h2>
+
+<p>There is a huge difference using something from a hobbyist point of view, and using it 8+ hours a day. Some of my challenges were</p>
+
+<ul>
+<li>logging</li>
+<li>wrapping my head around “interactive development”</li>
+<li>common “new platform” issues (basic syntax / idioms that need to be fully grasped)</li>
+</ul>
+
+
+<p>I am building a fairly simple application which watches the end of a queue, and perform actions on external resources based on the message. It is currently sitting at ~400loc, and is the sort of thing where if it breaks 1000loc it will be way overdue to be broken apart into smaller apps.</p>
+
+<p>It is not that much output for the time I put into it, but it was my first time building something serious on the platform, as well as the first time I worked with AMQP.</p>
+
+<h3>Logging</h3>
+
+<p>Clojure inherits Java’s insanely complex logging legacy, and understanding what the hell is going on took me easily more then half a day. At first, there was no logging frameworks for Java, so IBM released log4j, which is incredibly powerful, and does pretty much everything you could want from a logging framework. Sun didn’t really like how everyone was using a vital piece of infrastructure like logging from IBM, so they built java.util.Logging, not quite as good, but built into the platform.</p>
+
+<p>Since logging is something that things like libraries need to do quite frequently, this split become quite nightmarish. So people started using a logging abstraction frameworks, the most recent of which is slf4j.</p>
+
+<p>Now, Java interop in Clojure is absolutely fantastic, and it is not uncommon to use Java libraries directly. So Clojure adds another layer to the onion — clojure.tools.logging, which is an abstraction layer over the java abstraction layers…</p>
+
+<p>Long story short: if you are building a new project, what you want is <a href="https://github.com/clojure/tools.logging">clojure.tools.logging</a> with <a href="http://www.slf4j.org/">slf4j</a> and <a href="http://logback.qos.ch/">logback</a>. This is the current “recommended stack”, and is incredibly powerful, if quite complex.</p>
+
+<h3>Interactive Development</h3>
+
+<p>Lisp developers practice something called “interactive development”, where they are constantly interacting with a running instance of their application. If you are a rails developer, you may be saying “no big deal, we have rails console!”. Imagine a console that is always attached to the development <em>instance</em> of your application, not as its own process. Now, imagine your editor could send it commands, like “run all the tests”, or “load changed code” or “reload application configuration”, and it would perform these tasks <em>instantly</em>. Imagine your editor could query the repl very quickly and efficiently for auto-completions and for symbol locations in the codebase. Imaging your editor could ask it for function documentation and method signatures. Imagine that the repl was embedded into your editor, living side by side with your code, always ready to give immediate feedback on the code you wrote or are debugging.</p>
+
+<p>This is interactive development.</p>
+
+<p>Modern IDEs approach this level of quality of life, but only for languages which are friendly to tooling. But they tend to lose a lot of their power, and sometimes downright lie when it comes to dynamic languages.</p>
+
+<h4>Interactive Development vs TDD</h4>
+
+<p>Clojure folks are known for their disdain of Test Driven Development. TDD comes at a high cost; writing, running, and maintaining a comprehensive test suite can become a substantial portion of the cost of building and maintaining an application. But that test suite gives you a benefit that makes it worthwhile, it allows you close to instant feedback on whether a change did what you thought it was going to do.</p>
+
+<p>Getting that feedback is extremely difficult in Object Oriented languages. The reason for that is that most methods interact with state, so to reliably get feedback on a change, you need to get feedback on that function running against an object with as many variations of state it is likely to have.</p>
+
+<p>By contrast, in clojure you usually have a lot of small functions that take inputs and return outputs, a few functions that perform side effects, and then “abstraction” functions which tie everything together and do something interesting. Because the pieces are much more granular, and state is treated as a dangerous property rather then tied into the most fundamental building blocks of the language, it turns out getting quick feedback on a function is typically incredibly simple.</p>
+
+<p>Here is an example of interactive development of a small function which takes a clojure keyword and turns it into something ruby would expect from a hash key</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="nv">user&gt;</span> <span class="p">(</span><span class="nf">message/rubyify-keyword</span> <span class="ss">:hi-buddy</span><span class="p">)</span>
+</span><span class='line'><span class="ss">::hi-buddy</span>
+</span><span class='line'><span class="ss">:reloading</span> <span class="p">(</span><span class="nf">poops.message</span> <span class="nv">poops.message-test</span> <span class="nv">poops.core</span> <span class="nv">poops.core-test</span> <span class="nv">user</span><span class="p">)</span>
+</span><span class='line'><span class="nv">user&gt;</span> <span class="p">(</span><span class="nf">message/rubyify-keyword</span> <span class="ss">:hi-buddy</span><span class="p">)</span>
+</span><span class='line'><span class="s">&quot;:hi_buddy&quot;</span>
+</span><span class='line'><span class="ss">:reloading</span> <span class="p">(</span><span class="nf">poops.message</span> <span class="nv">poops.message-test</span> <span class="nv">poops.core</span> <span class="nv">poops.core-test</span> <span class="nv">user</span><span class="p">)</span>
+</span><span class='line'><span class="nv">user&gt;</span> <span class="p">(</span><span class="nf">message/rubyify-keyword</span> <span class="ss">:hi-buddy</span><span class="p">)</span>
+</span><span class='line'><span class="s">&quot;hi_buddy&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>that whole process took in the range of 5-10 seconds, which is FAR less then I would expect if I had test driven it. What I am missing from this is that if I want to test it in the future, I have to repeat what I wrote in the repl. But that is totally fine, this function has no dependancies (which unit tests suck at testing anyways if they live outside the class under test), and it either works or it doesn’t work.</p>
+
+<p>This this is not to say that unit tests have no place in a clojure project, or that test driving code is something which is never useful on the platform — both still have their place. But the properties of the language design coupled with the incredible power you get from interactive development changes the value proposition of using these practices for the majority of code you write.</p>
+
+<h4>Unit Testing can still make sense in clojure</h4>
+
+<p>So where does unit testing still make sense? It’s very easy — listen to the code! In my opinion, the prime lesson of TDD is never make a change without getting feedback on it, the tighter that feedback cycle the better. If you find it starting to be a pain to get feedback through the REPL, write a test! This is what they are good at, taking the effort away and shrinking that feedback loop.</p>
+
+<p>I am far from an expert, and my view on these things will probably change over time, but these are some examples of situations where the REPL probably wouldn’t cut it.</p>
+
+<ul>
+<li>Functions which have a high number code paths without being “coordinators” (who should be end to end tested, not unit tested)</li>
+<li>Functions which perform a calculation that depends on more then a single property of their arguments. Testing these would require multiple calls for every change, probably better to automate it.</li>
+<li>Functions that deal with money calculations. I tend to pay attention to this type of code as much as I possibly can, because I am terrified of screwing it up.</li>
+</ul>
+
+
+<p>This type of code should also be minimized, and isolated if at all possible. The ideal function takes an argument, and returns a value, it is good to keep to that ideal as much as possible.</p>
+
+<h4>Interactive Development vs Acceptance Testing</h4>
+
+<p>“Acceptance” testing is very different then Unit testing, but clojure has you covered here too. The <code>user</code> namespace is basically there to be decked out with functions and tools to make your life easier. In my case, I was dealing with inputs coming from a RabbitMQ queue, and outputs getting published to different queues.</p>
+
+<p>Rabbit has a great feature that lets you create transient queues which disappear when the connection closes. I use those during development, and have a few helper functions which will test my whole code base.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">watch</span>
+</span><span class='line'>  <span class="p">[]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">core/watch-for-assets</span> <span class="nv">system</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">publish-bad-message</span>
+</span><span class='line'>  <span class="p">[]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">queue/publish</span> <span class="p">(</span><span class="ss">:print-assets-q</span> <span class="nv">system</span><span class="p">)</span> <span class="p">{</span><span class="ss">:fart</span> <span class="s">&quot;butt&quot;</span><span class="p">}))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">publish-test-message</span>
+</span><span class='line'>  <span class="p">([]</span>
+</span><span class='line'>     <span class="p">(</span><span class="nf">publish-test-message</span> <span class="mi">366</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">([</span><span class="nv">id</span><span class="p">]</span>
+</span><span class='line'>     <span class="p">(</span><span class="nf">queue/publish</span> <span class="p">(</span><span class="ss">:print-assets-q</span> <span class="nv">system</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">{</span><span class="ss">:id</span> <span class="mi">1</span> <span class="ss">:artwork_id</span> <span class="nv">id</span> <span class="ss">:device_id</span> <span class="mi">2</span> <span class="ss">:product_type</span> <span class="s">&quot;type&quot;</span><span class="p">})))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Again, getting end to end feedback means typing <code>(watch)</code> followed by <code>(publish-test-message)</code> in my repl.</p>
+
+<p>Unlike unit tests, this is most definitely not a scalable replacement. It will however take you surprisingly far.</p>
+
+<h3>Expected “Platform Issues”</h3>
+
+<p>Surprisingly, the switch from Object Oriented code to clojure was quite simple for me. You end up with similar separations of code, just the code isn’t attached to the data. So an object with functions maps easily to a namespace with functions which operate on similar (or the same) data-structures.</p>
+
+<p>Most of my time dealing issues with working on clojure came down to not being comfortable with basic syntax and idioms. For example, there is no implicit <code>do</code> in a <code>catch</code> expression, anything after the first expression is treated as <code>finally</code>. Or <code>slurp</code> and <code>spit</code> only work with text, not binary data. You kind of expect this sort of thing going in, I feel in a few more weeks I wouldnt be hitting those roadblocks.</p>
+
+<p>Using <a href="http://clojurerabbitmq.info/">Langohr</a> for <a href="http://www.rabbitmq.com/">RabbitMQ</a> probably added some time, since it doesn’t try to hide <a href="http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol">AMQP</a> behind layers of sugar. But at this point I feel pretty comfortable in my understanding of what is going on, so that was probably time well spent.</p>
+
+<h2>Overall impressions</h2>
+
+<p>I went into this <strong>extremely</strong> prepared, and very biased in favour of clojure. What I am working on will probably not be enough to hit the major pain points of using the language, so I am still in the “honeymoon” phase of using a new platform.</p>
+
+<p>That being said, I have found the development experience to be absolutely delightful. I find in general, clojure libraries, and developers, seem to be very high quality. My big take away is how profoundly awesome interactive development can be. I am a big fan of testing, and have spent a large part of my career learning how to do it well. As someone with a huge investment in testing culture, I would call life without the constant need to write tests downright freeing.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1209,618 +1595,6 @@ This is where all of those things come together. The DOM is the in memory repres
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/05/the-many-faces-of-ruby-callables/">The Many Faces of Ruby Callables</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-05T15:58:00-04:00" pubdate data-updated="true">May 5<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/05/05/the-many-faces-of-ruby-callables/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>One of the most valuable ideas from functional programming is the idea of <em>Higher Order Functions</em>, or functions that take functions as an argument. It is such a good idea that it has become part of pretty much every modern language, whether functional or not. Amoung the OO imperative languages that have embraced this idea, the ruby community has probably gone the furthest, where it is the first tool a library writer will reach for more often then not.</p>
-
-<p>The language feature required for this style of programming is known as <em>first class functions</em>, meaning functions that can be defined as a variable, passed around, and called by other parts of code. Ruby has four constructs for this, which are all similar, but have slight differences.</p>
-
-<h2>The Block</h2>
-
-<p>The idea behind blocks is sort of a way to implement really light weight strategy patterns. A block will define a coroutine on the function, which the function can delegate control to with the yield keyword. We use blocks for just about everything in ruby, including pretty much all the looping constructs. Anything outside the block is in scope for the block, however the inverse is not true, with the exception that return inside the block will return the outer scope. They look like this</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">foo</span>
-</span><span class='line'>  <span class="k">yield</span> <span class="s1">&#39;called foo&#39;</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">#usage</span>
-</span><span class='line'><span class="n">foo</span> <span class="p">{</span><span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">msg</span><span class="p">}</span> <span class="c1">#idiomatic for one liners</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">foo</span> <span class="k">do</span> <span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="c1">#idiomatic for multiline blocks</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="n">msg</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Proc</h2>
-
-<p>The best way to think of a proc is that it is the more general form of a block. A block is tied to a specifc function (the whole coroutine thing), while a proc is just a variable. This means that you can easily convert a block to a proc.</p>
-
-<p>An interesting use is that you can pass a proc in as a replacement for a block in another method. Ruby has a special character for proc coercion which is <code>&amp;</code>, and a special rule that if the last param in a method signature starts with an <code>&amp;</code>, it will be a proc representation of the block for the method call. Finally, there is a builtin method called <code>block_given?</code>, which will return <code>true</code> if the current method has a block defined. It looks like this</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">return</span> <span class="n">block</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">b</span> <span class="o">=</span> <span class="n">foo</span> <span class="p">{</span><span class="nb">puts</span> <span class="s1">&#39;hi&#39;</span><span class="p">}</span>
-</span><span class='line'><span class="n">b</span><span class="o">.</span><span class="n">call</span> <span class="c1"># hi</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>To go a little further with this, there is a really neat trick that rails added to <code>Symbol</code> (and got merged into core ruby in 1.9). That <code>&amp;</code> coercion does its magic by calling <code>to_proc</code> on whatever it is next to. So adding a <code>Symbol#to_proc</code> that calls itself on whatever is passed in lets you write some really terse code for any aggregation style function that is just calling a method on every object in a list.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Foo</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">bar</span>
-</span><span class='line'>    <span class="s1">&#39;this is from bar&#39;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">list</span> <span class="o">=</span> <span class="o">[</span><span class="no">Foo</span><span class="o">.</span><span class="n">new</span><span class="p">,</span> <span class="no">Foo</span><span class="o">.</span><span class="n">new</span><span class="p">,</span> <span class="no">Foo</span><span class="o">.</span><span class="n">new</span><span class="o">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">list</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span><span class="o">|</span><span class="n">foo</span><span class="o">|</span> <span class="n">foo</span><span class="o">.</span><span class="n">bar</span><span class="p">}</span> <span class="c1"># returns [&#39;this is from bar&#39;, &#39;this is from bar&#39;, &#39;this is from bar&#39;]</span>
-</span><span class='line'><span class="n">list</span><span class="o">.</span><span class="n">map</span> <span class="o">&amp;</span><span class="ss">:bar</span> <span class="c1"># returns _exactly_ the same thing</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This is fairly advanced stuff, but I think it illustrates the power of this construct.</p>
-
-<h2>Lambdas</h2>
-
-<p>The purpose of a lambda is pretty much the same as the first class functions in other languages, a way to create an inline function to either pass around, or use internally. Like blocks and procs, lambdas are closures, but unlike the first two it enforces arity, and return from a lambda exits the lambda, not the containing scope. You create one by passing a block to the lambda method, or to &ndash;> in ruby 1.9</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">l</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">msg</span><span class="p">}</span> <span class="c1">#ruby 1.8</span>
-</span><span class='line'><span class="n">l</span> <span class="o">=</span> <span class="o">-&gt;</span> <span class="p">{</span><span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">msg</span><span class="p">}</span> <span class="c1">#ruby 1.9</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">l</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="c1"># =&gt; foo</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Methods</h2>
-
-<p>Only serious ruby geeks really understand this one :) A method is a way to turn an existing function into something you can put in a variable. You get a method by calling the <code>method</code> function, and passing in a symbol as the method name. You can re bind a method, or you can coerce it into a proc if you want to show off. A way to re-write the previous method would be</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">l</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="o">&amp;</span><span class="nb">method</span><span class="p">(</span><span class="ss">:puts</span><span class="p">)</span>
-</span><span class='line'><span class="n">l</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>What is happening here is that you are creating a method for puts, coercing it into a proc, passing that in as a replacement for a block for the lambda method, which in turn returns you the lambda. One thing I often use this for is debugging in concert with tap.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">].</span><span class="n">map</span> <span class="p">{</span><span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span><span class="p">}</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="ss">:+</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This code maps an array of integers to an array of integers that have been doubled, and then sums them. If you want to see the result of the map, you can do something like this</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">].</span><span class="n">map</span> <span class="p">{</span><span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span><span class="p">}</span><span class="o">.</span><span class="n">tap</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">method</span><span class="p">(</span><span class="ss">:puts</span><span class="p">))</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="ss">:+</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>tap</code> will yield the thing that it is called on to a block, and then return the original thing. So what I am doing is saying turn <code>puts</code> (which takes a single argument) into a method, coerce it into a block, and give it as the implementation for <code>tap</code>, meaning just puts out the value. Since tap returns the original thing, the rest of the method chain will be undisturbed.</p>
-
-<h2>Going Deeper with &amp;:symbol</h2>
-
-<p>Lets say you are really digging the trick of <code>&amp;:sym</code>, and you have a case where the block is going to yield additional arguments, but you actually WANT those arguments to be passed in as well when the <code>Obj.send :sym</code> happens. <code>Symbol#to_proc</code> is basically implemented like this</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Symbol</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">to_proc</span>
-</span><span class='line'>    <span class="no">Proc</span><span class="o">.</span><span class="n">new</span> <span class="p">{</span> <span class="o">|</span><span class="n">obj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="o">|</span> <span class="n">obj</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="p">}</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So, <code>&amp;:sym</code> is going to make a new proc, that calls <code>.send :sym</code> on the first argument passed to it. If any additional args are passed, they are globbed up into an array called <code>args</code>, and then splatted into the <code>send</code> method call.</p>
-
-<h2>Ruby is pretty awesome</h2>
-
-<p>A lot of these capabilities exist in other languages, but very few imperative OO communities have run with them the way that rubyists have. A deep understanding of the tools available is an important part of any ruby developers journey to becoming an expert at the language. Back when I was looking for some new language to try and was trying to decide whether to roll with ruby or python first, rubys block obsession was what made me go ruby.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/03/npm-style-javascript-is-the-conservative-choice/">NPM Style Javascript Is the Conservative Choice</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-03T17:40:00-04:00" pubdate data-updated="true">May 3<span>rd</span>, 2012</time>
-        
-         | <a href="/blog/2012/05/03/npm-style-javascript-is-the-conservative-choice/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I am sick of talking about semicolons. But after reading some comments on Tom Dale&rsquo;s recent post on best practices, I think I need to talk about the reasoning behind NPM style, and what it does to your code. It is not about being &ldquo;cool&rdquo;, it is about dealing with two of the three types of bugs that are the hardest things to debug in the language.</p>
-
-<h4>I dont care if you use semi-colons or not, that is not what this blog post is about</h4>
-
-<p>What this post is about is</p>
-
-<ul>
-<li>The problems NPM style is trying to address</li>
-<li>How NPM style addresses them</li>
-<li>Some very good reasons why you do not want to use NPM style</li>
-</ul>
-
-
-<p>Even if you don&rsquo;t want to use this style of coding, hopefully this post will give you some ideas on how to develop your own techniques for dealing with some of these issues.</p>
-
-<h2>The Problem With Commas</h2>
-
-<p>Even though we are talking about semi-colons so much, I find you run into bugs with commas in JS far more often. We had a deployment about a year ago that made the app unusable for most of our customers for more then the half day it took for us to find the issue and fix it. It was caused by code that looks something like this</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">[</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">},</span>
-</span><span class='line'><span class="p">];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Can you spot the problem? It&rsquo;s the last comma inside the array.</p>
-
-<p>There are two huge issues with misplaced commas. First, it is a really easy to introduce bug. Let&rsquo;s say you are working with backbone, and have something like this</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">MyModel</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Mode</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
-</span><span class='line'>  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="c1">//do some stuff</span>
-</span><span class='line'>  <span class="p">},</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">canTransistionState</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newState</span><span class="p">){</span>
-</span><span class='line'>    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;state&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;new&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">newState</span> <span class="o">==</span> <span class="s2">&quot;published&quot;</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">},</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">transitionState</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newState</span><span class="p">){</span>
-</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="nx">state</span><span class="o">:</span> <span class="nx">newState</span><span class="p">});</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You are looking at the code, and think &ldquo;You know, canTransistion is lower level then transition, how about I move it down?&rdquo; You highlight canTransition, and press the button in your editor that moves the function down one</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">MyModel</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Mode</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
-</span><span class='line'>  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="c1">//do some stuff</span>
-</span><span class='line'>  <span class="p">},</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">transitionState</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newState</span><span class="p">){</span>
-</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="nx">state</span><span class="o">:</span> <span class="nx">newState</span><span class="p">});</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">canTransistionState</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newState</span><span class="p">){</span>
-</span><span class='line'>    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;state&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;new&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">newState</span> <span class="o">==</span> <span class="s2">&quot;published&quot;</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">},</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You just got hit by the bug. What is worse, is lets say you fix that one, but then decide to delete the last function</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">MyModel</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Mode</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
-</span><span class='line'>  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="c1">//do some stuff</span>
-</span><span class='line'>  <span class="p">},</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">transitionState</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newState</span><span class="p">){</span>
-</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="nx">state</span><span class="o">:</span> <span class="nx">newState</span><span class="p">});</span>
-</span><span class='line'>  <span class="p">},</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now you are hit by a bug that is orders of magnitude worse, since it will be fine in firefox and chrome, but will cause ie to die a horrible confusing death.</p>
-
-<h2>How NPM Style solves the problem</h2>
-
-<p>NPM style says lead the first line with the opening glyph, prefix all following lines with a comma, and close the thing on its own line. So my first example would be</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">[</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
-</span><span class='line'>          <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
-</span><span class='line'>          <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
-</span><span class='line'>          <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
-</span><span class='line'>          <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
-</span><span class='line'>          <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
-</span><span class='line'>          <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
-</span><span class='line'>          <span class="p">];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I know, it looks rather odd. But more important to how things look, there is literally no way you can have a trailing comma if you never put a comma at the end of the line. You can delete or reorder any of the lines without any problem, except for the first one. And the way the first one is prefixed in the same place by a DIFFERENT glyph, makes it very hard to forget to treat it as a special case. Finally, when debugging a problem, it is way more obvious when something is wrong in the npm case</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// NPM missing a comma</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">[</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
-</span><span class='line'>          <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;fo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">13</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
-</span><span class='line'>          <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo1&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem&quot;</span><span class="p">}</span>
-</span><span class='line'>            <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;fooooo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
-</span><span class='line'>          <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foobar&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">12</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
-</span><span class='line'>          <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;fobin&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem&quot;</span><span class="p">}</span>
-</span><span class='line'>          <span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
-</span><span class='line'>          <span class="p">];</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Crockford style</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">[</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;fo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">13</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo1&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem&quot;</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;fooooo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">}</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foobar&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">12</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;fobin&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem&quot;</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;lorem ipsum&quot;</span><span class="p">},</span>
-</span><span class='line'><span class="p">];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now, if I were scanning through hundreds of lines of code without knowing what I am looking for, the first example would leap out at me WAY more then the second.</p>
-
-<p>You might say &ldquo;In that class example, it would look retarded to align everything on the {&rdquo;. This is true. Which is why I make a compromise, and do the following</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">MyModel</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Mode</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
-</span><span class='line'>  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="c1">//do some stuff</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">,</span> <span class="nx">transitionState</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newState</span><span class="p">){</span>
-</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="nx">state</span><span class="o">:</span> <span class="nx">newState</span><span class="p">});</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">,</span> <span class="nx">canTransistionState</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newState</span><span class="p">){</span>
-</span><span class='line'>    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;state&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;new&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">newState</span> <span class="o">==</span> <span class="s2">&quot;published&quot;</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It is less reliable then true NPM style, but I find it still gives me the benefit of making the comma placement a lot more obvious, and I also find the first thing in my class tends to change far less then the last thing. It is not as fool proof as the top examples, but it is a definite improvement over Crockford style.</p>
-
-<p>I think commas are a much bigger problem then semicolons, and even if you reject semi-colon first style, you should still switch to comma first, because it will dramatically reduce the chance of one of the worst pitfalls in the language from happening.</p>
-
-<h2>The problem with semi-colons</h2>
-
-<p>This is a far less common case then commas, but still really nasty due to how hard it is to debug and to catch. Lets say you are writing Crockford Style code, and do something like this. Note that this is silly code, but the problem is not aparent unless you are doing one of a few fairly abnormal things.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">foo</span><span class="p">(){</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">apples</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">bananas</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">array</span> <span class="o">=</span> <span class="p">[</span><span class="nx">apples</span><span class="p">,</span> <span class="nx">bananas</span><span class="p">];</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">carrots</span> <span class="o">=</span> <span class="mi">3</span>
-</span><span class='line'>  <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-</span><span class='line'>    <span class="nx">array</span> <span class="o">=</span> <span class="nx">array</span> <span class="o">+</span> <span class="p">[</span><span class="nx">apples</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">bananas</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">carrots</span><span class="p">];</span>
-</span><span class='line'>  <span class="p">}());</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">array</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">){</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;this whole thing is just for distraction: &quot;</span><span class="p">,</span> <span class="nx">array</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
-</span><span class='line'>  <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">return</span> <span class="nx">array</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
-</span><span class='line'><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>When you run <code>foo()</code>, you will get <code>Exception: number is not a function</code>. Whaaa?</p>
-
-<p>The problem is that in javascript, whitespace is insignificant for <code>()</code> and for <code>[]</code>. So the following are the same thing</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">foo</span><span class="p">();</span>
-</span><span class='line'><span class="nx">foo</span>
-</span><span class='line'><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// and</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">foo</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-</span><span class='line'><span class="nx">foo</span>
-</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Why javascript would support such insane syntax is beyond me, but the (single) case this problem happens in the real world is illustrated by my first example, which means that because the carrot assignment was missing a semi-colon, the immidately invoking function instead calls 3(function(){}). Confused yet?</p>
-
-<p>There are two main things that make this bug a killer. One is that the problem occurs on the line after the line that causes the problem. You need to be looking at pairs of lines to figure out what is happening. The second is what actually goes wrong is a confusing message <em>if you are incredibly lucky</em>. If you are unlucky, it will cause some comletely random behavior in your application that you can spend days trying to track down. Lastly, since this problem happens so incredibly rarely, and you are putting semi-colons at the end of every line, it is very hard to a) actually &ldquo;see&rdquo; the lack of a semi colon (for me at least, they fade into the background), and b) actually remember that this is an issue that can happen.</p>
-
-<h2>How NPM Mitigates the semicolon problem</h2>
-
-<p>Since this happens in one case if you are doing cross platform browser work (a line which starts with an opening parenthesis), and one additional time if you are lucky enough to be guarenteed a relatively new version of ecmascript (a line starting with an opening square bracket), NPM treats those as special cases. So the previous example would be</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">foo</span><span class="p">(){</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">apples</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span class='line'>    <span class="p">,</span> <span class="nx">bananas</span> <span class="o">=</span> <span class="mi">2</span>
-</span><span class='line'>    <span class="p">,</span> <span class="nx">array</span> <span class="o">=</span> <span class="p">[</span><span class="nx">apples</span><span class="p">,</span> <span class="nx">bananas</span><span class="p">]</span>
-</span><span class='line'>    <span class="p">,</span> <span class="nx">carrots</span> <span class="o">=</span> <span class="mi">3</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="p">;(</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span>
-</span><span class='line'>    <span class="nx">array</span> <span class="o">=</span> <span class="nx">array</span> <span class="o">+</span> <span class="p">[</span><span class="nx">apples</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">bananas</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">carrots</span><span class="p">]</span>
-</span><span class='line'>  <span class="p">}())</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">array</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">){</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;this whole thing is just for distraction: &quot;</span><span class="p">,</span> <span class="nx">array</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">return</span> <span class="nx">array</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Notice the leading semicolon in front of the immediately invoking function?</p>
-
-<p>Now, you might argue that it is even MORE invisible to not have the leading comma. First of all, once you get used to seeing <code>;(function(){}())</code>, not having that leading comma is the thing that makes it look strange. Since it is at the start of the line, the fact it is missing also helps me immensely. Lastly, when debugging the problem, you aren&rsquo;t looking for pairs of lines, you are looking for a single thing (that you can easily grep for)</p>
-
-<h2>Wait, aren&rsquo;t there like, a bajillion other places where no semi-colons will screw you?</h2>
-
-<p>There sure are, but those other cases will never happen in real life, so you don&rsquo;t need to worry. This topic has been discussed at great, great length recently, but if you would like to learn more, I would recommend the following resources</p>
-
-<ul>
-<li><a href="http://mir.aculo.us/2012/04/16/writing-semicolon-less-javascript-the-for-people-who-want-to-get-stuff-done-edition/">Writing Semi-Colonless Javascript, the people-who-want-to-get-stuff-done edition</a> Thomas lays out the essentials of what you need to know</li>
-<li><a href="http://dailyjs.com/2012/04/19/semicolons/">JavaScript and Semi-Colons</a> If you want an in depth walk through of the actual rules, this is the best currently available</li>
-<li><a href="http://blog.izs.me/post/2353458699/an-open-letter-to-javascript-leaders-regarding">An Open Letter To The JavaScript Community</a> Isaac, one of the best server side js guys, pleading with community leaders to educate rather then forbid</li>
-<li><a href="http://mattbriggs.net/blog/2012/04/16/why-i-dont-use-semicolons/">Why I don&rsquo;t use semi colons</a> My personal post detailing what I think of the issue</li>
-</ul>
-
-
-<h2>Enough about the semicolons</h2>
-
-<p>We are talking about an incredibly rare issue in the wild, and it is really time to stop. The much, much, much more common issue is the trailing commas, and really that is the biggest gain from using NPM style javascript</p>
-
-<h2>Why You Should Not Use NPM style javascript</h2>
-
-<p>Like everything else in this job, there are no hard rules, only ideas that are good for certain cases. Here are some great reasons not to use NPM</p>
-
-<ul>
-<li>Your editor doesn&rsquo;t support it</li>
-</ul>
-
-
-<p> NPM style is quite popular, but not to the point where everything supports it. The snide comment would be that if your editor doesn&rsquo;t support it, find a better one. But realistically, that is often not possible or desirable. Both Emacs and Vim support it out of the box, if you use Emacs I would highly recommending installing the excellent JS3 package, which I believe has the best js indentation out of anything out there (and yes, I have tried every popular current editor). In fact, I would say the two best choices currently for javascript work are Emacs with JS3 if you prefer light weight, or IntelliJ WebStorm if you prefer IDEs.</p>
-
-<ul>
-<li>I understand the issues, but I don&rsquo;t think it is worth switching to such a wild coding style because of them</li>
-</ul>
-
-
-<p> There is nothing wrong with making this choice, the important thing is understanding why you are making it. Hopefully this blog post will help you debug a really nasty class of bugs in the future.</p>
-
-<ul>
-<li>I primarily use Java/C#/C++, and this is just too different</li>
-</ul>
-
-
-<p> It is important to remember that this is really a different language, and that even if you write it like java, there are cases where things work differently (especially semicolon stuff). You probably don&rsquo;t want to go to this style if you write similar code all day, but you should try to think of less drastic ways to adjust your style that will help you avoid these pitfalls</p>
-
-<h2>Massive walls of text are fun</h2>
-
-<p>This was a pretty long post, but I think it is important. As a professional developer, it is your job to be educating yourself about the things you use to do your job, and creating processes that help you do it more efficiently and effectively. Most people think that NPM style is about being &ldquo;different&rdquo;, or making your code look &ldquo;cool&rdquo;. It really isn&rsquo;t, it is about contorting the way you code for the benefit of writing better javascript that is easier to debug.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1836,6 +1610,14 @@ This is where all of those things come together. The DOM is the in memory repres
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/09/09/the-rails-value-proposition-no-longer-adds-up/">The Rails Value Proposition No Longer Adds Up</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/03/first-impressions-using-clojure-at-work/">First Impressions: Using Clojure at Work</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/03/10/how-i-learned-to-stop-worrying/">How I Learned to Stop Worrying, and Love Dart</a>
       </li>
     
@@ -1845,14 +1627,6 @@ This is where all of those things come together. The DOM is the in memory repres
     
       <li class="post">
         <a href="/blog/2014/01/22/transclusion-in-angular/">Transclusion in Angular</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/22/scope-in-angular/">Scope in Angular</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/14/understanding-angular-directives/">Understanding Angular Directives</a>
       </li>
     
   </ul>

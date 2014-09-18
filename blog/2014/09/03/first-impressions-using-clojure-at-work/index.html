@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>First Impressions: Using Clojure at Work - Matt Briggs</title>
+  <meta name="author" content="Matt Briggs">
+
+  
+  <meta name="description" content="TL;DR: I am a developer with a Java / C# / JavaScript / Rails background, and am building a small piece of infrastructure with Clojure at work. So &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mattbriggs.net/blog/2014/09/03/first-impressions-using-clojure-at-work">
+  <link href="/favicon.png?v=2" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Matt Briggs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-10813260-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Briggs</a></h1>
+  
+    <h2>"Not all code needs to be a factory, some of it can just be origami" -why, the lucky stiff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mattbriggs.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="subscription">
+  <li><a href="/.emacs.d" target="_blank" rel="emacs-config" title="Emacs Configuration"><i class="fa fa-code"></i></a></li>
+  <li><a href="http://github.com/mbriggs" target="_blank" rel="github" title="Github Profile"><i class="fa fa-github"></i></a></li>
+  <li><a href="https://twitter.com/intent/user?screen_name=googleninja" rel="follow-twitter" target="_blank" title="Follow on Twitter"><i class="fa fa-twitter"></i></a></li>
+  <li><a href="http://stackoverflow.com/users/10771/matt-briggs" rel="stackoverflow" target="_blank" title="StackOverflow Profile"><i class="fa fa-stack-overflow"></i></a></li>
+  <li><a href="/atom.xml" target="_blank" rel="subscribe-rss" title="Subscribe via RSS"><i class="fa fa-rss"></i></a></li>
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://careers.stackoverflow.com/mattbriggs" target="_blank">CV</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">First Impressions: Using Clojure at Work</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-03T09:31:47-04:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>TL;DR: I am a developer with a Java / C# / JavaScript / Rails background, and am building a small piece of infrastructure with Clojure at work. So far it has been a joy, and exceeded expectations.</p>
+
+<p>I feel like I need to set the stage for this blog post. The first Clojure book I read was <a href="http://stuartsierra.com/">Stuart Sierra’s</a> excellent <a href="https://pragprog.com/book/shcloj/programming-Clojure">Programming Clojure</a> book back in 2009. At that point I had zero professional experience with functional, dynamic, or declarative styles of programming, and Clojure blew my mind. It fit well with how I like to think about programming, and shaped a lot of my ideals about the properties of good code.</p>
+
+<p>Soon after, I left the C#/Java world behind, and worked at a company doing enterprise Ruby on Rails. Clojure helped me understand a lot of what ruby was trying to accomplish. It also paved the way to using <a href="http://www.gnu.org/software/emacs/">emacs</a>, and learning <a href="http://en.wikipedia.org/wiki/Emacs_Lisp">elisp</a>. During this time, I also became a card-carrying member of Rich Hickey’s cult of personality. It is hard not to hero worship the guy, after listening to him talk about <a href="http://www.youtube.com/watch?v=f84n5oFoZBc">how he thinks about big problems</a>, or <a href="http://www.infoq.com/presentations/Simple-Made-Easy">how he defines simplicity, and advocates its usage</a>. I think <a href="http://thechangelog.com/rich-hickeys-greatest-hits/">most of his talks</a> should be mandatory for people practicing software development, they are just that good.</p>
+
+<p>So this is not from the perspective of a total newcomer to Clojure. This is from the perspective of a developer who has used rails for years, and yearned to be working on the other side of the fence.</p>
+
+<h2>“But who wants to deal with all those parenthesis?”</h2>
+
+<p>This has been the mantra of the lisp hater for the last 50 years. <a href="http://xkcd.com/297/">Lisp doesn’t look like anything else out there</a>, and has huge amount of parens as its primary form of syntax. This property may be off-putting at first, but it turns out that lisp parenthesis are a problem that has been solved pretty much completely. Once you get used to them and the tools which exist to interact with them, eventually you miss them when they are not there in other languages.</p>
+
+<h3>Only read the opening parens</h3>
+
+<p>There is a reason that people stack up all the closing parens at the end, because they are there for the <a href="http://en.wikipedia.org/wiki/Lisp_reader">lisp reader</a>, and for your editor. Lisp strikes an amazing balance between being very terse, and being extremely explicit. Balanced parens are a big part of what allows for that.</p>
+
+<h3>Learn how to read code “inside out” at the same time as reading it “outside in”</h3>
+
+<p>I found this the biggest hurdle when learning lisp. Logically, code is structured outside in, but it will execute inside out. This is “normal” as programming languages go, what isn’t normal is that idiomatic Clojure is built using nested expressions — a <a href="http://en.wikipedia.org/wiki/Declarative_programming">declarative style of programming</a>. <a href="http://www.pythonforbeginners.com/basics/list-comprehensions-in-python">Python comprehensions</a> are a similar thing, you need to learn how to read it properly. Before you do that, its foreign gibberish. Afterwards, they become a great, concise way to express common code.</p>
+
+<h3>Use something capable of structural editing</h3>
+
+<p>Your choice of editor is extremely important here. What you want is something that will allow you to extend / retract the scope of an s-expression, add a new s-expression / merge the current one into its parent (depth editing), enforce paren balancing, allow you to select your current expression easily, split it apart / join it together, etc. If you have these capabilities (<a href="https://cursiveclojure.com/userguide/paredit.html">structured editing</a>), then all those parens are a joy to work with. If you don’t have them, they will be the chore that they appear to be at first glance.</p>
+
+<p>This may seem to be a pain at first, but proper tooling makes it a more joyful experience to work with parens then without them.</p>
+
+<p>If you are looking for an IDE, <a href="https://cursiveclojure.com/">cursive</a> seems to be the best bet. If you are using <a href="http://www.gnu.org/software/emacs/">emacs</a>, its <a href="http://clojure.jr0cket.co.uk/perfect-environment/paredit-guide">paredit</a> or <a href="https://github.com/Fuco1/smartparens">smartparens</a>. If  you are using <a href="http://www.vim.org/">vim</a>, it is <a href="https://github.com/vim-scripts/paredit.vim">paredit.vim</a>.</p>
+
+<h2>Using Clojure at work</h2>
+
+<p>There is a huge difference using something from a hobbyist point of view, and using it 8+ hours a day. Some of my challenges were</p>
+
+<ul>
+<li>logging</li>
+<li>wrapping my head around “interactive development”</li>
+<li>common “new platform” issues (basic syntax / idioms that need to be fully grasped)</li>
+</ul>
+
+
+<p>I am building a fairly simple application which watches the end of a queue, and perform actions on external resources based on the message. It is currently sitting at ~400loc, and is the sort of thing where if it breaks 1000loc it will be way overdue to be broken apart into smaller apps.</p>
+
+<p>It is not that much output for the time I put into it, but it was my first time building something serious on the platform, as well as the first time I worked with AMQP.</p>
+
+<h3>Logging</h3>
+
+<p>Clojure inherits Java’s insanely complex logging legacy, and understanding what the hell is going on took me easily more then half a day. At first, there was no logging frameworks for Java, so IBM released log4j, which is incredibly powerful, and does pretty much everything you could want from a logging framework. Sun didn’t really like how everyone was using a vital piece of infrastructure like logging from IBM, so they built java.util.Logging, not quite as good, but built into the platform.</p>
+
+<p>Since logging is something that things like libraries need to do quite frequently, this split become quite nightmarish. So people started using a logging abstraction frameworks, the most recent of which is slf4j.</p>
+
+<p>Now, Java interop in Clojure is absolutely fantastic, and it is not uncommon to use Java libraries directly. So Clojure adds another layer to the onion — clojure.tools.logging, which is an abstraction layer over the java abstraction layers…</p>
+
+<p>Long story short: if you are building a new project, what you want is <a href="https://github.com/clojure/tools.logging">clojure.tools.logging</a> with <a href="http://www.slf4j.org/">slf4j</a> and <a href="http://logback.qos.ch/">logback</a>. This is the current “recommended stack”, and is incredibly powerful, if quite complex.</p>
+
+<h3>Interactive Development</h3>
+
+<p>Lisp developers practice something called “interactive development”, where they are constantly interacting with a running instance of their application. If you are a rails developer, you may be saying “no big deal, we have rails console!”. Imagine a console that is always attached to the development <em>instance</em> of your application, not as its own process. Now, imagine your editor could send it commands, like “run all the tests”, or “load changed code” or “reload application configuration”, and it would perform these tasks <em>instantly</em>. Imagine your editor could query the repl very quickly and efficiently for auto-completions and for symbol locations in the codebase. Imaging your editor could ask it for function documentation and method signatures. Imagine that the repl was embedded into your editor, living side by side with your code, always ready to give immediate feedback on the code you wrote or are debugging.</p>
+
+<p>This is interactive development.</p>
+
+<p>Modern IDEs approach this level of quality of life, but only for languages which are friendly to tooling. But they tend to lose a lot of their power, and sometimes downright lie when it comes to dynamic languages.</p>
+
+<h4>Interactive Development vs TDD</h4>
+
+<p>Clojure folks are known for their disdain of Test Driven Development. TDD comes at a high cost; writing, running, and maintaining a comprehensive test suite can become a substantial portion of the cost of building and maintaining an application. But that test suite gives you a benefit that makes it worthwhile, it allows you close to instant feedback on whether a change did what you thought it was going to do.</p>
+
+<p>Getting that feedback is extremely difficult in Object Oriented languages. The reason for that is that most methods interact with state, so to reliably get feedback on a change, you need to get feedback on that function running against an object with as many variations of state it is likely to have.</p>
+
+<p>By contrast, in clojure you usually have a lot of small functions that take inputs and return outputs, a few functions that perform side effects, and then “abstraction” functions which tie everything together and do something interesting. Because the pieces are much more granular, and state is treated as a dangerous property rather then tied into the most fundamental building blocks of the language, it turns out getting quick feedback on a function is typically incredibly simple.</p>
+
+<p>Here is an example of interactive development of a small function which takes a clojure keyword and turns it into something ruby would expect from a hash key</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="nv">user&gt;</span> <span class="p">(</span><span class="nf">message/rubyify-keyword</span> <span class="ss">:hi-buddy</span><span class="p">)</span>
+</span><span class='line'><span class="ss">::hi-buddy</span>
+</span><span class='line'><span class="ss">:reloading</span> <span class="p">(</span><span class="nf">poops.message</span> <span class="nv">poops.message-test</span> <span class="nv">poops.core</span> <span class="nv">poops.core-test</span> <span class="nv">user</span><span class="p">)</span>
+</span><span class='line'><span class="nv">user&gt;</span> <span class="p">(</span><span class="nf">message/rubyify-keyword</span> <span class="ss">:hi-buddy</span><span class="p">)</span>
+</span><span class='line'><span class="s">&quot;:hi_buddy&quot;</span>
+</span><span class='line'><span class="ss">:reloading</span> <span class="p">(</span><span class="nf">poops.message</span> <span class="nv">poops.message-test</span> <span class="nv">poops.core</span> <span class="nv">poops.core-test</span> <span class="nv">user</span><span class="p">)</span>
+</span><span class='line'><span class="nv">user&gt;</span> <span class="p">(</span><span class="nf">message/rubyify-keyword</span> <span class="ss">:hi-buddy</span><span class="p">)</span>
+</span><span class='line'><span class="s">&quot;hi_buddy&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>that whole process took in the range of 5-10 seconds, which is FAR less then I would expect if I had test driven it. What I am missing from this is that if I want to test it in the future, I have to repeat what I wrote in the repl. But that is totally fine, this function has no dependancies (which unit tests suck at testing anyways if they live outside the class under test), and it either works or it doesn’t work.</p>
+
+<p>This this is not to say that unit tests have no place in a clojure project, or that test driving code is something which is never useful on the platform — both still have their place. But the properties of the language design coupled with the incredible power you get from interactive development changes the value proposition of using these practices for the majority of code you write.</p>
+
+<h4>Unit Testing can still make sense in clojure</h4>
+
+<p>So where does unit testing still make sense? It’s very easy — listen to the code! In my opinion, the prime lesson of TDD is never make a change without getting feedback on it, the tighter that feedback cycle the better. If you find it starting to be a pain to get feedback through the REPL, write a test! This is what they are good at, taking the effort away and shrinking that feedback loop.</p>
+
+<p>I am far from an expert, and my view on these things will probably change over time, but these are some examples of situations where the REPL probably wouldn’t cut it.</p>
+
+<ul>
+<li>Functions which have a high number code paths without being “coordinators” (who should be end to end tested, not unit tested)</li>
+<li>Functions which perform a calculation that depends on more then a single property of their arguments. Testing these would require multiple calls for every change, probably better to automate it.</li>
+<li>Functions that deal with money calculations. I tend to pay attention to this type of code as much as I possibly can, because I am terrified of screwing it up.</li>
+</ul>
+
+
+<p>This type of code should also be minimized, and isolated if at all possible. The ideal function takes an argument, and returns a value, it is good to keep to that ideal as much as possible.</p>
+
+<h4>Interactive Development vs Acceptance Testing</h4>
+
+<p>“Acceptance” testing is very different then Unit testing, but clojure has you covered here too. The <code>user</code> namespace is basically there to be decked out with functions and tools to make your life easier. In my case, I was dealing with inputs coming from a RabbitMQ queue, and outputs getting published to different queues.</p>
+
+<p>Rabbit has a great feature that lets you create transient queues which disappear when the connection closes. I use those during development, and have a few helper functions which will test my whole code base.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">watch</span>
+</span><span class='line'>  <span class="p">[]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">core/watch-for-assets</span> <span class="nv">system</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">publish-bad-message</span>
+</span><span class='line'>  <span class="p">[]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">queue/publish</span> <span class="p">(</span><span class="ss">:print-assets-q</span> <span class="nv">system</span><span class="p">)</span> <span class="p">{</span><span class="ss">:fart</span> <span class="s">&quot;butt&quot;</span><span class="p">}))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">publish-test-message</span>
+</span><span class='line'>  <span class="p">([]</span>
+</span><span class='line'>     <span class="p">(</span><span class="nf">publish-test-message</span> <span class="mi">366</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">([</span><span class="nv">id</span><span class="p">]</span>
+</span><span class='line'>     <span class="p">(</span><span class="nf">queue/publish</span> <span class="p">(</span><span class="ss">:print-assets-q</span> <span class="nv">system</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">{</span><span class="ss">:id</span> <span class="mi">1</span> <span class="ss">:artwork_id</span> <span class="nv">id</span> <span class="ss">:device_id</span> <span class="mi">2</span> <span class="ss">:product_type</span> <span class="s">&quot;type&quot;</span><span class="p">})))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Again, getting end to end feedback means typing <code>(watch)</code> followed by <code>(publish-test-message)</code> in my repl.</p>
+
+<p>Unlike unit tests, this is most definitely not a scalable replacement. It will however take you surprisingly far.</p>
+
+<h3>Expected “Platform Issues”</h3>
+
+<p>Surprisingly, the switch from Object Oriented code to clojure was quite simple for me. You end up with similar separations of code, just the code isn’t attached to the data. So an object with functions maps easily to a namespace with functions which operate on similar (or the same) data-structures.</p>
+
+<p>Most of my time dealing issues with working on clojure came down to not being comfortable with basic syntax and idioms. For example, there is no implicit <code>do</code> in a <code>catch</code> expression, anything after the first expression is treated as <code>finally</code>. Or <code>slurp</code> and <code>spit</code> only work with text, not binary data. You kind of expect this sort of thing going in, I feel in a few more weeks I wouldnt be hitting those roadblocks.</p>
+
+<p>Using <a href="http://clojurerabbitmq.info/">Langohr</a> for <a href="http://www.rabbitmq.com/">RabbitMQ</a> probably added some time, since it doesn’t try to hide <a href="http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol">AMQP</a> behind layers of sugar. But at this point I feel pretty comfortable in my understanding of what is going on, so that was probably time well spent.</p>
+
+<h2>Overall impressions</h2>
+
+<p>I went into this <strong>extremely</strong> prepared, and very biased in favour of clojure. What I am working on will probably not be enough to hit the major pain points of using the language, so I am still in the “honeymoon” phase of using a new platform.</p>
+
+<p>That being said, I have found the development experience to be absolutely delightful. I find in general, clojure libraries, and developers, seem to be very high quality. My big take away is how profoundly awesome interactive development can be. I am a big fan of testing, and have spent a large part of my career learning how to do it well. As someone with a huge investment in testing culture, I would call life without the constant need to write tests downright freeing.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Briggs</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-03T09:31:47-04:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/clojure/'>clojure</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattbriggs.net/blog/2014/09/03/first-impressions-using-clojure-at-work/" data-via="googleninja" data-counturl="http://mattbriggs.net/blog/2014/09/03/first-impressions-using-clojure-at-work/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/03/10/how-i-learned-to-stop-worrying/" title="Previous Post: How I Learned to Stop Worrying, and Love Dart">&laquo; How I Learned to Stop Worrying, and Love Dart</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/09/09/the-rails-value-proposition-no-longer-adds-up/" title="Next Post: The Rails Value Proposition No Longer Adds Up">The Rails Value Proposition No Longer Adds Up &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/09/the-rails-value-proposition-no-longer-adds-up/">The Rails Value Proposition No Longer Adds Up</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/03/first-impressions-using-clojure-at-work/">First Impressions: Using Clojure at Work</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/10/how-i-learned-to-stop-worrying/">How I Learned to Stop Worrying, and Love Dart</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/code-organization-in-angular/">Code Organization in Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/22/transclusion-in-angular/">Transclusion in Angular</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mbriggs">@mbriggs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mbriggs',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/105078754127788731088?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Matt Briggs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'mbriggs';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mattbriggs.net/blog/2014/09/03/first-impressions-using-clojure-at-work/';
+        var disqus_url = 'http://mattbriggs.net/blog/2014/09/03/first-impressions-using-clojure-at-work/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

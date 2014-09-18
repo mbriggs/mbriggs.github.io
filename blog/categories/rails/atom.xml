@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: rails | Matt Briggs]]></title>
+  <link href="http://mattbriggs.net/blog/categories/rails/atom.xml" rel="self"/>
+  <link href="http://mattbriggs.net/"/>
+  <updated>2014-09-18T16:26:38-04:00</updated>
+  <id>http://mattbriggs.net/</id>
+  <author>
+    <name><![CDATA[Matt Briggs]]></name>
+    <email><![CDATA[matt@mattbriggs.net]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[The Rails Value Proposition No Longer Adds Up]]></title>
+    <link href="http://mattbriggs.net/blog/2014/09/09/the-rails-value-proposition-no-longer-adds-up/"/>
+    <updated>2014-09-09T09:28:57-04:00</updated>
+    <id>http://mattbriggs.net/blog/2014/09/09/the-rails-value-proposition-no-longer-adds-up</id>
+    <content type="html"><![CDATA[<p>In 2005, <a href="http://rubyonrails.org/">Ruby on Rails</a> was a <a href="http://www.youtube.com/watch?v=Gzj723LkRJY&amp;feature=youtu.be">breath of fresh air</a>,
+and brought a revolution in how we build applications on the web. It
+had cutting edge ideas, and real solutions to the problems people were
+facing at the time. That was 8 years ago. If rails were to launch in
+todays world, would anyone even notice?</p>
+
+<h2>What makes rails amazing</h2>
+
+<p>In 2005, most people making (serious) web applications were doing it
+using <a href="http://www.oracle.com/technetwork/java/index.html">Java</a> and <a href="http://struts.apache.org/">struts</a>. Rails changed that, and it
+did that by being amazing.</p>
+
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Convention_over_configuration">Convention over configuration</a>. Instead of spending your first
+weeks building structure, configuring infrastructure, and arguing
+about how to architect your application, you have a fully functional
+stack ready to go in seconds.</li>
+<li>Great HTML generation. Rails has “AJAX” out of the box, without
+having to build reams of nasty javascript yourself. It also has form
+helpers, which make HTML make a bit more sense. It uses the
+philosophy of paving over the rough parts of web technology when it
+is possible, giving you more understandable and consistent mental
+models to work with.</li>
+<li>Rails ships with a test suite built in, and ways to test every layer
+of the application.</li>
+<li>Rails lets you quickly generate a scaffolding to give you a
+functional base to start iterating on in seconds.</li>
+<li>Rails has <a href="http://rubygems.org/">plugins</a> for pretty much all problems you will
+ever run into with web development.</li>
+<li>Rails uses <a href="https://www.ruby-lang.org/en/">Ruby</a>, which is a beautiful OO language, FAR more
+powerful than Java.</li>
+</ul>
+
+
+<p>This is a pretty impressive list, many of these features were down
+right revolutionary when they came out. The only serious downside, is
+that rails is slow as a dog and eats ram like potato chips. But hey,
+what is more expensive, building new features, or adding server
+hardware? Adding more servers is a great problem to have, it means you
+have a lot of clients giving you money who need service. Rails and
+ruby are <em>Fast Enough</em>.</p>
+
+<h2>Node.JS… the first cracks</h2>
+
+<p>In 2005, <a href="http://en.wikipedia.org/wiki/Ajax_(programming)">AJAX</a> was a brave new world. “Smartphone” still meant
+either <a href="http://mobilesphonez.blogspot.ca/2011/12/blackberry-models-pictures.html">Blackberry</a>, or <a href="https://www.google.ca/search?q=windows+mobile+6&amp;es_sm=119&amp;tbm=isch&amp;tbo=u&amp;source=univ&amp;sa=X&amp;ei=A3QOVKLEIMGRgwTGkoHoCg&amp;ved=0CCcQsAQ&amp;biw=1585&amp;bih=1164">Windows Mobile 6</a>. By 2008, things
+were starting to change. “Normal” people were interacting with online
+services constantly throughout the day, no matter where they were.</p>
+
+<p><a href="http://nodejs.org/">Node</a> arrived with a bang. It had the right capabilities at the
+right time.</p>
+
+<ul>
+<li>Node is simple, and allows you to expose blocking services to the
+web extremely easily.</li>
+<li>Node is fast, and non-blocking, allowing you to leverage some of the
+<a href="https://developer.mozilla.org/en/docs/WebSockets">more interesting</a> <a href="https://developer.mozilla.org/en-US/docs/Server-sent_events/Using_server-sent_events">features</a> available in modern
+browsers.</li>
+<li>Node is written in JavaScript, not as well designed a language as
+ruby, but faster to build things with than Java, and known well by a
+large percentage of web developers. JavaScript is asynchronous at
+its core, and cheap asynchrony is what enables us to build the type
+of things we are building today.</li>
+</ul>
+
+
+<p>You could still make an argument for rails, in that it was a very good
+<em>framework</em>, while node takes more of a routing library approach to
+building web applications. But even with rails maintaining a lot of
+relevance, there was quite a big “brain drain” from the rails world to
+the node world.</p>
+
+<h2>Go and Clojure, where we are today.</h2>
+
+<p>We are steadily approaching 2015, and the world of web application
+development is continuing the steady shift that has been happen for
+the last 7 years. Even though JavaScript allows for fast and easy
+asynchrony, being limited to the reactor pattern can make certain
+types of problems quite challenging. JavaScript isn’t the greatest
+language at building large apps, and things like visibility, tuning,
+and stability are forcing people to look for alternatives. The folks
+at the cutting edge of the field are starting to move to alternatives,
+and are finding them in one of two places — Google’s <a href="http://golang.org/">golang</a>, and
+<a href="http://clojure.org/">Clojure</a>, a lisp dialect for the JVM.</p>
+
+<p>Both of these are incredible languages for many reasons, two key
+things they have in common is they are both exceptional at
+asynchronous programming, and they are both very, very fast.</p>
+
+<p>Let’s revisit the value proposition of rails.</p>
+
+<ul>
+<li>Convention over Configuration. It turns out the world hasn’t stood
+still. Smart defaults and sane conventions are the norm in web
+frameworks today. Java still kind of sucks, but
+<a href="https://www.playframework.com/">Java 8 with the Play! framework</a> is actually not that far
+behind the Ruby on Rails experience in developer productivity.</li>
+<li>The only people still doing HTML generation for a new application
+nowadays are folks building web “sites” instead of web “apps”. And
+even there, a good front end developer will be frequently asking for
+APIs over templated HTML.</li>
+<li>Testing has taken the world by storm. People don’t talk about <em>if</em>
+they test, they talk about <em>how</em> they test.</li>
+<li>Maybe it is just folks I know, but experienced ruby developers tend
+to wince nowadays when opening a colossal <a href="http://bundler.io/">Gemfile</a> in a
+rails app for the first time. Each gem you add will change rails,
+sometimes in a quite unexpected way. Not only that, but many are
+poorly supported, and it is extremely rare to find one with
+documentation. (beyond a README and method signature stubs)</li>
+<li>Ruby is no longer in competition with Java. It is in competition
+with other languages as productive and powerful, if not more so.</li>
+</ul>
+
+
+<p>And what about our big downside of performance? It turns out
+performance is extremely, sometimes vitally important for us to build
+the services we are asked to build today.</p>
+
+<h2>What is so good about these other platforms?</h2>
+
+<p>It is awesome to be able to build an application that crunches
+reports, and give visibility into its data on demand. What is better
+is an application that tells you about things you care about before
+you even ask. Being able to push messages to your clients is an
+amazingly powerful thing, and it is available today, on mature, well
+tested platforms.</p>
+
+<p>The other point is that performance really does matter in web
+development. A company who spends
+<a href="http://www.techempower.com/benchmarks/#section=data-r9&amp;hw=peak&amp;test=query">a fraction of the cost on hardware</a> is going to have
+higher margins, and be able to buy more / better developers. When
+rails was so far beyond its competition in terms of productivity, that
+tradeoff was worth it. Nowadays, rails has serious competition in
+terms of easy of use and productivity, and that tradeoff is very hard
+to still justify.</p>
+
+<h2>It no longer adds up.</h2>
+
+<p>Rails is not a terrible framework, but its time has passed. There are
+a lot of folks with a heavy rails investment, it probably doesn’t make
+sense to move off of the platform for them, and they are the ones who
+will keep the eco-system moving. But for new development, I think
+rails should no longer be in the running. You are limiting the
+capabilities and future of your product, and not getting enough in
+return.</p>
+]]></content>
+  </entry>
+  
+</feed>

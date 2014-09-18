@@ -65,12 +65,22 @@
         <lastmod>2014-04-09T00:29:45-04:00</lastmod>
     </url>
     <url>
+        <loc>http://mattbriggs.net/blog/2014/09/03/first-impressions-using-clojure-at-work/</loc>
+        <lastmod>2014-09-18T16:24:08-04:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://mattbriggs.net/blog/2014/09/09/the-rails-value-proposition-no-longer-adds-up/
+        </loc>
+        <lastmod>2014-09-18T16:24:08-04:00</lastmod>
+    </url>
+    <url>
         <loc>http://mattbriggs.net/blog/archives/</loc>
-        <lastmod>2014-05-15T09:08:37-04:00</lastmod>
+        <lastmod>2014-09-18T16:24:08-04:00</lastmod>
     </url>
     <url>
         <loc>http://mattbriggs.net/</loc>
-        <lastmod>2014-05-15T09:08:37-04:00</lastmod>
+        <lastmod>2014-09-18T16:24:08-04:00</lastmod>
     </url>
     <url>
         <loc>http://mattbriggs.net/robots.txt</loc>
