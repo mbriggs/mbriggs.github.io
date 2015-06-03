@@ -2,16 +2,15 @@
 layout: post
 title: "The role of a Senior Developer"
 date: 2015-06-01 12:18:26 -0400
-comments: **true**
+comments: true
 categories: leadership
 ---
 
-We work in a strange industry. There is a _much_ higher need for developers than new developers coming into the field, this is a problem that has existed for years, and it is getting worse, not better, as time goes on.
+We work in a strange industry. There is a _much_ higher need for developers than can be satisfied by new developers coming into the field. This is a problem that has existed for years, and it is getting worse as time goes on.
 
-Consider that, with how young the field of software development really is. We are really still figuring stuff out. Most software projects fail. Nearly all of them 
-come in over budget. The best guidance we have on this subject from thought leaders boils down to "These are some common ways we have solved these problems, but they are inappropriate quite frequently, so the only thing you can really do is try it out and see if it works for you".
+We have a serious shortage of talent to meet the demand, but our industry is really quite young . Most software projects fail. Nearly all of them come in over budget. The best guidance we have on this subject from thought leaders boils down to "These are some common ways we solve these problems, but our solutions frequently don't work, so the only thing you can really do is try it out and see if it works for you".
 
-The reality we live in is that "Senior Developer" means a person who has been slinging code for more than 3 years. These people are put into leadership positions, and typically things play out as you would expect -- quite badly.
+The reality we live in is that "Senior Developer" means a person who has been slinging code for more then 3 years. These people are put into leadership positions, and typically things play out as you would expect -- quite badly.
 
 This is my take on the terms we use in the industry. Really, putting people into 3 buckets is a huge over-simplification of the nuance, knowledge, and experience of progressing through this profession, but it is what it is. If we are going to classify people in this way, then we need to take time in the industry off the table. A person with 10  years experience is quite different than someone who has experienced the same year 10 times. 
 
@@ -23,27 +22,27 @@ This is the life of the junior developer. You are fresh out of school, and think
 
 Dealing with this is really all you can focus on, and it is what you really should be trying your best to learn. Junior developers need a lot of direction, supervision, and mentoring because of this, or they can stay in this place for a very, very long time (I recently encountered a fellow who had been building software for almost a decade who I would say is still a junior). You can say that this period is really about acquisition of tactical, day to day techniques. 
 
-A junior developer is code focused, not development focused, and doesn't understand the distinction. When a programmer talks about how they love coding if it weren't for all the users, I assume I am talking to a junior developer.
+A junior developer is code focused, not development focused, and doesn't understand the distinction. When a programmer talks about how they "would love coding more, if it weren't for all the users", I assume I am talking to a junior developer.
 
-__A good junior developer can be given a known task, and be expected to execute it quickly, and well.__
+#### A good junior developer can be given a known task, and be expected to execute it quickly, and well.
 
-An intermediate developer is one who begins to see patterns in failure (usually their own failure), and recognize that it takes a lot more than banging out focused tasks to actually build something that works, and will not completely fall over the first time someone needs to change it. They have also gone through the unique experience of looking at something they wrote a year ago they were extremely proud of, and realizing it was actually pure garbage. 
+An intermediate developer is one who begins to see patterns in failure (usually their own failure), and recognize that it takes a lot more than banging out focused tasks to actually build something that works, and won't completely fall over the first time someone needs to change it. They have also gone through the unique experience of looking at something they were proud of writing a year ago, and realizing it was actually pure garbage. 
 
-An intermediate is someone who is looking for answers on how to build things The Right Way, and finding them through experimentation, literature, and discussion with other programmers. This level is really one of learning theory of the building of software, rather than the theory of building code (which is learned in school). 
+An intermediate is someone who is looking for answers on how to build things _The Right Way_, and finding them through experimentation, literature, and discussion with other programmers. This level is really about learning the theory of building of software, rather than the theory of building code (which is learned in school). 
 
-This theory acquisition is vital, but systems built by unsupervised intermediate developers are going to fail for completely different reasons than systems built by juniors. A junior will build a big pile of algorithms that sort of work. A good intermediate will build pages out of "Design Patterns" and "Domain Driven Design". While those are great books for learning how to build large OO systems,  direct application of this sort of theory results in over engineered systems that are flexible in ways that don't matter, and inflexible in ones that do matter. 
+Systems built by unsupervised intermediate developers are going to fail for completely different reasons than systems built by juniors. A junior will build a big pile of algorithms that sort of work. A good intermediate will build pages out of "Design Patterns" and "Domain Driven Design". While those are great books for learning how to build large OO systems,  direct application of this sort of theory results in over engineered systems that are flexible in ways that don't matter, and inflexible in ones that do matter. 
 
-You can trust an intermediate to build systems that will work for far longer than a junior, but will lead to a different sort of disaster down the road. The sad fact is that the vast majority of not only senior developers, but team leaders are in fact, intermediate devs. Most do not realize this, and have the best intentions, but have simply never worked with anyone at a higher level.
+You can trust an intermediate to build systems that will work for far longer than a junior, but will lead to a different sort of disaster down the road. The sad fact is that the vast majority of not only senior developers, but team leaders are in fact, intermediate devs. Most do not realize this, and have the best intentions, but have simply never worked with anyone who is at a higher level.
 
-Intermediates are quite aware of their role in their organization, and the value they bring. A good intermediate understands how using code to solve a problem is the means to an end, not the end in and of itself. However, they are still in love with ivory tower design, and are still on a quest for "The Right Way" to build software.
+Intermediates are quite aware of their role in their organization, and the value they bring. A good intermediate understands how using code to solve a problem is the means to an end, not the end in and of itself. However, they are still in love with ivory tower design, and are still on a quest for _"The Right Way"_ to build software.
 
-__A good intermediate developer needs less supervision. They can be trusted to raise issues of code design, and play a valuable role in design discussions. They are also the "workhorses" of the dev team. However, further mentoring and higher  level supervision is still vital.__
+#### A good intermediate developer needs less supervision. They can be trusted to raise issues of code design, and play a valuable role in design discussions. They are also the "workhorses" of the dev team. However, further mentoring and higher  level supervision is still vital.
 
-A senior developer is intimately familiar with their own failure. They written code both under, and over designed, and seen both fail. They are reflective about the things that they do, evaluating their successes and failures when approaching problems with intellectual honesty. A senior developer has fallen out of love of the complexity which dominates the intermediate, and is obsessed with simplicity.
+A senior developer is intimately familiar with their own failure. They have written code both under, and over designed, and have seen both fail. They are reflective about the things that they do, evaluating their successes and failures when approaching problems with intellectual honesty. A senior developer has fallen out of love of the complexity which dominates the intermediate, and is obsessed with simplicity.
 
-A senior developer stops putting developers in buckets of "good" and "bad" based on knowledge, and instead understands that there is a spectrum of strengths and weaknesses.  They are more intimately aware of their own strengths and weaknesses than anyone else could ever be, and strive to play to their strengths whenever possible.
+A senior developer stops classifying developers based on their knowledge, and instead understands that there is a spectrum of strengths and weaknesses.  They are more intimately aware of their own strengths and weaknesses than anyone else could ever be, and strive to play to their own strengths whenever possible.
 
-A senior developer thinks in terms of "context" when applying theory. They understand that there is no "Right Way" to build software, and that the only way to build good software is by adapting theory to fit the needs of the client, codebase, team, tools, and organization.
+A senior developer thinks in terms of "context" when applying theory. They understand that there is no _"Right Way"_ to build software, and that the only way to build good software is by adapting theory to fit the needs of the client, codebase, team, tools, and organization.
 
 A senior developer understands that everything in our field involves tradeoff, and will look for what that is for design patterns, libraries, frameworks, and processes.
 
@@ -57,10 +56,10 @@ A senior developer understands that you cannot do everything yourself, and that 
 
 A senior developer understands that leadership is not about power, it is about empowerment. It is not about direction, it is about serving.
 
-__If you do not have at least one senior developer in a leadership role on your team, you are doomed for failure. A team of great intermediates will get you very far, but the days of the software you are building are numbered, and the end result is either closing shop, or costly / risky rewrites. A senior developer is the _only_ person fully qualified to choose technology and platforms, so not having one from _day one_ will hurt you.__
+#### If you do not have at least one senior developer in a leadership role on your team, your project is doomed to fail. A team of great intermediates will get you very far, but the days of the software you are building are numbered, and the end result is either closing shop, or costly / risky rewrites. A senior developer is the _only_ person fully qualified to choose technology and platforms, so not having one from _day one_ will hurt you.
 
 ##  This is a giant over-simplification
 
-The reality is nobody fits into these buckets perfectly. I am just tired of "years of experience" based classification. "Years of experience" tells you something, but is almost pointless information without a heck of a lot more context. 
+The reality is nobody fits into these buckets perfectly. I am just tired of the "years of experience" based classification. Years of experience tells you _something_, but is almost pointless information without a lot more context. 
 
-More than that, our industry values wicked smart young guys fresh out of university. Those people _are_ valuable, and necessary, but so are people who have 15-20 years experience in the field. We need to stop hiring according to stereotypes, and really thinking of team and organizational talent composition. If everyone on your team thinks the same, you are doing your product and your organization a disservice.
+More than that, our industry values wicked smart young guys fresh out of university. Those people _are_ valuable, and necessary, but so are people who have 15-20 years experience in the field. We need to stop hiring according to stereotypes, and start really thinking of team and organizational talent composition. If everyone on your team thinks the same, you are doing your product and your organization a disservice.
