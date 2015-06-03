@@ -4,7 +4,7 @@
   <title><![CDATA[Matt Briggs]]></title>
   <link href="http://mattbriggs.net/atom.xml" rel="self"/>
   <link href="http://mattbriggs.net/"/>
-  <updated>2015-06-02T20:11:00-04:00</updated>
+  <updated>2015-06-02T20:17:55-04:00</updated>
   <id>http://mattbriggs.net/</id>
   <author>
     <name><![CDATA[Matt Briggs]]></name>
@@ -36,7 +36,7 @@
 
 <p>A junior developer is code focused, not development focused, and doesn&rsquo;t understand the distinction. When a programmer talks about how they &ldquo;would love coding more, if it weren&rsquo;t for all the users&rdquo;, I assume I am talking to a junior developer.</p>
 
-<p><strong>A good junior developer can be given a known task, and be expected to execute it quickly, and well.</strong></p>
+<h4>A good junior developer can be given a known task, and be expected to execute it quickly, and well.</h4>
 
 <p>An intermediate developer is one who begins to see patterns in failure (usually their own failure), and recognize that it takes a lot more than banging out focused tasks to actually build something that works, and will not completely fall over the first time someone needs to change it. They have also gone through the unique experience of looking at something they wrote a year ago they were extremely proud of, and realizing it was actually pure garbage.</p>
 
@@ -48,7 +48,7 @@
 
 <p>Intermediates are quite aware of their role in their organization, and the value they bring. A good intermediate understands how using code to solve a problem is the means to an end, not the end in and of itself. However, they are still in love with ivory tower design, and are still on a quest for &ldquo;The Right Way&rdquo; to build software.</p>
 
-<p><strong>A good intermediate developer needs less supervision. They can be trusted to raise issues of code design, and play a valuable role in design discussions. They are also the &ldquo;workhorses&rdquo; of the dev team. However, further mentoring and higher  level supervision is still vital.</strong></p>
+<h4>A good intermediate developer needs less supervision. They can be trusted to raise issues of code design, and play a valuable role in design discussions. They are also the &ldquo;workhorses&rdquo; of the dev team. However, further mentoring and higher  level supervision is still vital.</h4>
 
 <p>A senior developer is intimately familiar with their own failure. They written code both under, and over designed, and seen both fail. They are reflective about the things that they do, evaluating their successes and failures when approaching problems with intellectual honesty. A senior developer has fallen out of love of the complexity which dominates the intermediate, and is obsessed with simplicity.</p>
 
@@ -68,7 +68,7 @@
 
 <p>A senior developer understands that leadership is not about power, it is about empowerment. It is not about direction, it is about serving.</p>
 
-<p><strong>If you do not have at least one senior developer in a leadership role on your team, you are doomed for failure. A team of great intermediates will get you very far, but the days of the software you are building are numbered, and the end result is either closing shop, or costly / risky rewrites. A senior developer is the <em>only</em> person fully qualified to choose technology and platforms, so not having one from <em>day one</em> will hurt you.</strong></p>
+<h4>If you do not have at least one senior developer in a leadership role on your team, you are doomed for failure. A team of great intermediates will get you very far, but the days of the software you are building are numbered, and the end result is either closing shop, or costly / risky rewrites. A senior developer is the <em>only</em> person fully qualified to choose technology and platforms, so not having one from <em>day one</em> will hurt you.</h4>
 
 <h2>This is a giant over-simplification</h2>
 
